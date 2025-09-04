@@ -129,21 +129,10 @@
                         method: 'DELETE'
                     });
 
-                    // if successfullly deleted from server, remove from UI
+                    // if successfullly deleted from server, remove from UI by refreshing data
                     if (response.ok) {
-                        const rowCells = Array.from(gridContainer.children).filter(cell => {
-                            const btn = cell.querySelector('.delete-btn');
-                            return btn && btn.dataset.id === idToDelete;
-                        });
-                        // Find all cells of the row by finding the one with the button, and then its siblings
-                        const cellWithButton = button.parentElement;
-                        const allRowCells = [cellWithButton];
-                        let prev = cellWithButton.previousElementSibling;
-                        while(prev && prev.classList.contains('grid-item')) {
-                            allRowCells.unshift(prev);
-                            prev = prev.previousElementSibling;
-                        }
-                        allRowCells.forEach(cell => cell.remove());
+                      console.log('Successfully deleted. Refreshing data...');
+                      fetchAndRenderData();
                     } else {
                         const error = await response.json();
                         alert(`Error: ${error.error}`);
@@ -234,7 +223,8 @@
                 loadingIndicator.remove();
             }
 
-            // Add the fresh server data
+            // Add the fresh server data after deleting previous rows (if any)
+            document.querySelectorAll('.grid-item').forEach(item => item.remove());
             data.forEach(addGridRow);
 
         } catch (error) {
