@@ -113,3 +113,12 @@ label {
   background-color: #e9f5ff; /* Light blue on hover */
   cursor: text;
 }
+
+/* For loading */
+.grid-full-width { 
+  grid-column: 1 / -1; 
+  text-align: center;
+  padding: 40px;
+  background-color: #f9f9f9;
+  color: #555;
+}
