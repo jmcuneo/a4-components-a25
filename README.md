@@ -1,7 +1,7 @@
 README
 ---
 
-## BMI Simulator
+## BMI Simulator: https://a2-kensebastian.onrender.com/
 Allows users to input their height and weight, and automatically calculates their BMI, and whether it's at a healthy level.
 
 ### Technical Achievements
@@ -18,7 +18,23 @@ Allows users to input their height and weight, and automatically calculates thei
         - PUT request implementation
 
 ### Design/Evaluation Achievements
-- **Design Achievement 1**: FILL IN AFTER GETTING PEER FEEDBACK
+- **User Feedback (Olson):**
+    -  Problems
+        - Editing only works after pressing enter, (clicking out of the cell doesn't update the data)
+    - Comments
+        - Unclear initially that weight can be entered in lbs.
+    - What he would change
+        - Entering feet in decimal form is unintuitive, allowing feet + inches would be better for the user
+        - The weight/height increment/decrement buttons are unnecessary
+- **User Feedback (Sebastian):**
+    -  Problems
+        - None, completed the tasks easily
+    - Comments
+        - Dislikes that after entering units in lbs, it's converted to kg in the table
+    - What he would change
+        - Entering feet in decimal form is unintuitive, allowing feet + inches would be better for the user
+
+
 
 
 ### AI usage for this project
@@ -26,6 +42,5 @@ Allows users to input their height and weight, and automatically calculates thei
     - GitHub Copilot
     - Google Gemini
 - Uses:
-    - 
     - Debugging assistant
     - Styling suggestions (colors, on-hover styles, etc)
