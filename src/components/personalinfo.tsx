@@ -1,5 +1,6 @@
 'use client'
 import {FormEvent, useState} from "react";
+import axios from "axios";
 
 const states = [
     "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida",
@@ -20,7 +21,19 @@ export default function PersonalInfo() {
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
-        console.log({firstName, lastName, dob, gender, state});
+        axios.post('/api/submit', {
+            firstName,
+            lastName,
+            dob,
+            gender,
+            state
+        })
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
 
@@ -32,7 +45,8 @@ export default function PersonalInfo() {
                 <input type="text" className="input" placeholder={"John"}
                        onChange={(e) => setFirstName(e.target.value)} required/>
                 <label className={"label"}>Last</label>
-                <input type="text" className="input" placeholder={"Doe"} onChange={(e) => setLastName(e.target.value)} required/>
+                <input type="text" className="input" placeholder={"Doe"} onChange={(e) => setLastName(e.target.value)}
+                       required/>
                 <label className={"label"}>Date of Birth</label>
                 <input type="date" className="input" onChange={(e) => setDob(e.target.value)} required/>
                 <label className={"label"}>Preferred Gender</label>
@@ -59,7 +73,8 @@ export default function PersonalInfo() {
                     </div>
                 </div>
                 <label className={"label"}>State of Residence</label>
-                <select defaultValue="Select an option" className="select" onChange={(e) => setState(e.target.value)} required>
+                <select defaultValue="Select an option" className="select" onChange={(e) => setState(e.target.value)}
+                        required>
                     {states.map((state) => (
                         <option key={state} value={state}>{state}</option>
                     ))}
