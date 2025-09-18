@@ -21,7 +21,8 @@ export default function PersonalInfo() {
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
-        axios.post('/api/submit', {
+        // todo: fix localhost to env variable
+        axios.post('http://localhost:4242/api/submit', {
             firstName,
             lastName,
             dob,

@@ -1,12 +1,20 @@
 import express from 'express'
 import mongoose from 'mongoose'
-import * as dotenv from 'dotenv';
-
+import dotenv from 'dotenv';
+import path from 'path';
+import {fileURLToPath} from 'node:url';
+import cors from 'cors';
 const app = express()
 const port = 4242
 
-// load mongo uri from .env
-dotenv.config({ path: __dirname + '/.env' });
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+
+dotenv.config({ path: path.join(__dirname, ".env") });
+
+app.use(cors())
+
 const mongoUri = process.env.MONGO_URI;
 if (!mongoUri) {
     console.log(mongoUri);
@@ -17,6 +25,7 @@ if (!mongoUri) {
 // connect to mongodb atlas
 try {
     await mongoose.connect(mongoUri)
+    console.log('Connected to MongoDB')
 } catch (e) {
     console.error('Failed to connect to MongoDB', e)
     process.exit(1)
