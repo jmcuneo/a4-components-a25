@@ -17,9 +17,9 @@ dotenv.config({path: path.join(__dirname, ".env")});
 server.use(cors())
 
 // load mongo uri from environment variable
-const mongoUri = process.env.MONGO_URI as string;
+const mongoUri = process.env.MONGODB_URI as string;
 if (!mongoUri) {
-    console.error('MONGO_URI is not defined in environment variables')
+    console.error('MONGODB_URI is not defined in environment variables')
     process.exit(1)
 }
 
