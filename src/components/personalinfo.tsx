@@ -22,7 +22,7 @@ export default function PersonalInfo() {
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
         // todo: fix localhost to env variable
-        axios.post('/api/submit', {
+        axios.post('http://localhost:4242/api/submit', {
             firstName,
             lastName,
             dob,
@@ -74,6 +74,7 @@ export default function PersonalInfo() {
                     </div>
                 </div>
                 <label className={"label"}>State of Residence</label>
+                {/* todo: fix default value to be placeholder, right now default is Alabama but isn't recorded */}
                 <select defaultValue="Select an option" className="select" onChange={(e) => setState(e.target.value)}
                         required>
                     {states.map((state) => (

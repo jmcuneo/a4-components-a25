@@ -1,11 +1,7 @@
-import PersonalInfo from "@/components/personalinfo";
-import ContactInfo from "@/components/contactinfo";
-
-export default function Page() {
+export default function Home() {
     return (
-        <div className={"flex justify-center align-baseline gap-4"}>
-            <PersonalInfo />
-            <ContactInfo />
+        <div>
+            Home
         </div>
-    );
+    )
 }
