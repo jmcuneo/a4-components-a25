@@ -74,22 +74,22 @@ async function main() {
 
     // todo: implement update endpoint
     server.post('/api/update', async (req, res) => {
-        const { data } = req.body;
-
-        // try {
-        //     const entry = await Table.findOneAndUpdate(
-        //         { email },
-        //         { firstName, lastName, dob, gender, state },
-        //         { new: true }
-        //     );
-        //     if (!entry) {
-        //         return res.status(404).json({ message: 'Entry not found' });
-        //     }
-        //     console.log('Updated firstname:', entry.firstName);
-        //     res.status(200).json({ message: 'Data updated successfully', entry });
-        // } catch (e) {
-        //     res.status(500).json({ message: 'Failed to update data', error: e });
-        // }
+        const {firstName, lastName, email} = req.body
+        if (!firstName || !lastName || !email) {
+            return res.status(400).json({message: 'Missing required fields'})
+        }
+        try {
+            const entry = await Table.findOne({email})
+            if (!entry) {
+                return res.status(404).json({message: 'Entry not found'})
+            }
+            entry.firstName = firstName
+            entry.lastName = lastName
+            await entry.save()
+            res.status(200).json({message: 'Data updated successfully'})
+        } catch (e) {
+            res.status(500).json({message: 'Failed to update data', error: e})
+        }
     });
 
 
