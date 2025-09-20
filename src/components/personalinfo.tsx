@@ -16,16 +16,18 @@ export default function PersonalInfo() {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [dob, setDob] = useState("");
+    const [email, setEmail] = useState("");
     const [gender, setGender] = useState("");
     const [state, setState] = useState("");
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
         // todo: fix localhost to env variable
-        axios.post('/api/submit', {
+        axios.post('http://localhost:4242/api/submit', {
             firstName,
             lastName,
             dob,
+            email,
             gender,
             state
         })
@@ -50,6 +52,9 @@ export default function PersonalInfo() {
                        required/>
                 <label className={"label"}>Date of Birth</label>
                 <input type="date" className="input" onChange={(e) => setDob(e.target.value)} required/>
+                <label className={"label"}>Email</label>
+                <input type={"email"} className={"input"} placeholder={"example@gmail.com"}
+                       onChange={(e) => setEmail(e.target.value)} required/>
                 <label className={"label"}>Preferred Gender</label>
                 <div className={"flex flex-col gap-2 mb-2"}>
                     <div className={"flex w-full gap-2"}>

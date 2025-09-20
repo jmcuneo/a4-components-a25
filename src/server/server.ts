@@ -31,10 +31,10 @@ const tableSchema = new mongoose.Schema({
     age: Number,
     gender: String,
     state: String,
-    email: String,
-    phone: String,
-    comments: String
+    email: {type: String, unique: true}
 })
+
+
 
 // create mongoose model
 const Table = mongoose.model('Table', tableSchema)
@@ -54,14 +54,14 @@ async function main() {
 
     // form submission endpoint
     server.post('/api/submit', async (req, res) => {
-        const {firstName, lastName, dob, gender, state, email, phone, comments} = req.body
+        const {firstName, lastName, dob, gender, state, email} = req.body
         console.log(req.body)
         // Return 400 if any required field is missing
-        if (!firstName || !lastName || !dob || !gender || !state || !email || !phone) {
+        if (!firstName || !lastName || !dob || !gender || !state || !email) {
             //return res.status(400).json({message: 'Missing required fields'})
         }
         const age = new Date().getFullYear() - new Date(dob).getFullYear()
-        const newEntry = new Table({firstName, lastName, dob, age, gender, state, email, phone, comments})
+        const newEntry = new Table({firstName, lastName, dob, age, gender, state, email})
 
         try {
             await newEntry.save()
@@ -71,6 +71,28 @@ async function main() {
         }
 
     })
+
+    // todo: implement update endpoint
+    server.post('/api/update', async (req, res) => {
+        const { data } = req.body;
+
+        // try {
+        //     const entry = await Table.findOneAndUpdate(
+        //         { email },
+        //         { firstName, lastName, dob, gender, state },
+        //         { new: true }
+        //     );
+        //     if (!entry) {
+        //         return res.status(404).json({ message: 'Entry not found' });
+        //     }
+        //     console.log('Updated firstname:', entry.firstName);
+        //     res.status(200).json({ message: 'Data updated successfully', entry });
+        // } catch (e) {
+        //     res.status(500).json({ message: 'Failed to update data', error: e });
+        // }
+    });
+
+
 
     server.get('/api/table', async (req, res) => {
         try {
@@ -83,8 +105,14 @@ async function main() {
 
 }
 
-// vercel is serverless so i have to do this
+// vercel is serverless so I have to do this
+if (process.env.PRODUCTION === 'false') {
+    server.listen(process.env.PORT || 3000, () => {
+        console.log('Server is running on port', process.env.PORT || 3000)
+    })
+}
 export default serverless(server)
+
 
 // catch any errors starting the server
 main().catch((err) => {
