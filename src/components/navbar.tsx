@@ -1,6 +1,9 @@
 import Link from "next/link";
+import { auth0 } from "@/lib/auth0";
 
-export default function Navbar() {
+export default async function Navbar() {
+    const session = await auth0.getSession();
+
     return (
         <nav className="navbar bg-base-300 px-4">
             <div className="navbar-start">
@@ -15,7 +18,7 @@ export default function Navbar() {
                 </Link>
             </div>
             <div className="navbar-end">
-                <button className="btn btn-primary">Login</button>
+                {!session ? <a href={"auth/login"} className="btn btn-primary">Login</a> : <a href={"auth/logout"} className="btn btn-primary">Logout</a>}
             </div>
         </nav>
     );

@@ -43,7 +43,7 @@ Deliverables
 Do the following to complete this assignment:
 
 1. Implement your project with the above requirements. I'd begin by converting your A2 assignment. First, change the server to use express. Then, modify the server to use mongodb instead of storing data locally. Last but not least, implement user accounts and login. User accounts and login is often the hardest part of this assignment, so budget your time accordingly.
-2. If you developed your project locally, deploy your project to Render (unless completing the alternative server technical acheivement described below), and fill in the appropriate fields in your package.json file.
+2. If you developed your project locally, deploy your project to Render (unless completing the alternative server technical achievement described below), and fill in the appropriate fields in your package.json file.
 3. Test your project to make sure that when someone goes to your main page on Render (or an alternative server), it displays correctly.
 4. Ensure that your project has the proper naming scheme `a3-FirstnameLastname` so we can find it.
 5. Fork this repository and modify the README to the specifications below.
