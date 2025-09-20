@@ -52,7 +52,7 @@ export default async function Home() {
                         <td>{data.age}</td>
                         <td>{data.state}</td>
                     </tr> : <tr>
-                        <td colSpan={7}>Loading...</td>
+                        <td colSpan={7}>Please log in to see your data!</td>
                     </tr>}
                     </tbody>
                 </table>
