@@ -39,6 +39,7 @@ export default function Home() {
 
     const saveChanges = () => {
         console.log(data);
+        // todo: fix localhost to env variable
         axios.post("http://localhost:4242/api/update", data)
             .then((response) => {
                 console.log("Data updated successfully:", response.data);
