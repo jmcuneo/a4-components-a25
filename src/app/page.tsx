@@ -1,8 +1,6 @@
-"use client";
-
 // todo: change from csr to ssr
 import axios from "axios";
-import {useEffect, useState} from "react";
+import {auth0} from "@/lib/auth0";
 
 interface Data {
     firstName: string;
@@ -14,42 +12,18 @@ interface Data {
     state: string;
 }
 
-export default function Home() {
-    const [data, setData] = useState<Data[] | null>(null);
-
-    useEffect(() => {
-        // todo: fix localhost to env variable
-        axios.get("http://localhost:4242/api/table")
-            .then((response) => {
-                setData(response.data);
-            })
-            .catch((error) => {
-                console.error("Error fetching data:", error);
-            });
-    }, []);
-
-    const handleInputChange = (index: number, field: string, value: string) => {
-        if (data) {
-            const updatedData = [...data];
-            // @ts-ignore
-            updatedData[index][field] = value;
-            setData(updatedData);
-        }
+export default async function Home() {
+    // gross let instead of hook bc ssr
+    let data: Data | undefined = undefined;
+    try {
+        const session = await auth0.getSession();
+        // todo: change localhost to env variable
+        const res = await axios.get(`http://localhost:4242/api/my-info?email=${session?.user?.email}`);
+        data = res.data;
+    } catch (error) {
+        console.error("Error fetching data:", error);
     }
 
-    const saveChanges = () => {
-        console.log(data);
-        // todo: fix localhost to env variable
-        axios.post("http://localhost:4242/api/update", data)
-            .then((response) => {
-                console.log("Data updated successfully:", response.data);
-            })
-            .catch((error) => {
-                console.error("Error updating data:", error);
-            });
-    }
-
-    console.log(data)
 
     return (
         <>
@@ -67,33 +41,24 @@ export default function Home() {
                     </tr>
                     </thead>
                     <tbody>
-                    {data ? data.map((entry: any, index: number) => (
-                        <tr className={"hover:bg-base-300"} key={index}>
-                            <td>{entry.email}</td>
-                            <td>
-                                <input
-                                    className={"input w-full max-w-xs"}
-                                    type={"text"}
-                                    value={entry.firstName}
-                                    onChange={(e) => handleInputChange(index, 'firstName', e.target.value)}
-                                />
-                            </td>
-                            <td>{entry.lastName}</td>
-                            <td>{entry.gender}</td>
-                            <td>{new Date(entry.dob).toLocaleDateString()}</td>
-                            <td>{entry.age}</td>
-                            <td>{entry.state}</td>
-                        </tr>
-                    )) : (
-                        <tr>
-                            <td colSpan={7}>Loading...</td>
-                        </tr>
-                    )}
+                    {data ? <tr className={"hover:bg-base-300"}>
+                        <td>{data.email}</td>
+                        <td>
+                            {data.firstName}
+                        </td>
+                        <td>{data.lastName}</td>
+                        <td>{data.gender}</td>
+                        <td>{new Date(data.dob).toLocaleDateString()}</td>
+                        <td>{data.age}</td>
+                        <td>{data.state}</td>
+                    </tr> : <tr>
+                        <td colSpan={7}>Loading...</td>
+                    </tr>}
                     </tbody>
                 </table>
             </div>
             <div className={"flex justify-end"}>
-                <button className={"btn btn-primary m-4"} onClick={saveChanges}>Save Changes</button>
+                <button className={"btn btn-primary m-4"}>Save Changes</button>
             </div>
         </>
     )

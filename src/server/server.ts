@@ -93,11 +93,18 @@ async function main() {
     });
 
 
-
-    server.get('/api/table', async (req, res) => {
+    // send back user info based on email query parameter
+    server.get(`/api/my-info`, async (req, res) => {
+        const email = req.query.email as string
+        if (!email) {
+            return res.status(400).json({message: 'Missing email parameter'})
+        }
         try {
-            const entries = await Table.find().lean()
-            res.status(200).json(entries)
+            const entry = await Table.findOne({email})
+            if (!entry) {
+                return res.status(404).json({message: 'Entry not found'})
+            }
+            res.status(200).json(entry)
         } catch (e) {
             res.status(500).json({message: 'Failed to fetch data', error: e})
         }
