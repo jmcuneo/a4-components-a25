@@ -27,6 +27,7 @@ export default function PersonalInfo() {
             firstName,
             lastName,
             dob,
+            // todo: fix email to be fetched from auth0
             email,
             gender,
             state

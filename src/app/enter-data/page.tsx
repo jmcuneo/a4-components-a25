@@ -1,4 +1,10 @@
 import PersonalInfo from "@/components/personalinfo";
+import {Metadata} from "next";
+
+export const metadata: Metadata = {
+    title: 'Enter Data',
+    description: 'Enter your personal data to get started',
+}
 
 export default function Page() {
     return (

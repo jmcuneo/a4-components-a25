@@ -92,6 +92,22 @@ async function main() {
         }
     });
 
+    server.post('/api/delete', async (req, res) => {
+        const {email} = req.body
+        if (!email) {
+            return res.status(400).json({message: 'Missing email field'})
+        }
+        try {
+            const entry = await Table.findOneAndDelete({email})
+            if (!entry) {
+                return res.status(404).json({message: 'Entry not found'})
+            }
+            res.status(200).json({message: 'Data deleted successfully'})
+        } catch (e) {
+            res.status(500).json({message: 'Failed to delete data', error: e})
+        }
+    });
+
 
     // send back user info based on email query parameter
     server.get(`/api/my-info`, async (req, res) => {

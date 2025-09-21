@@ -1,6 +1,7 @@
 // todo: change from csr to ssr
 import axios from "axios";
 import {auth0} from "@/lib/auth0";
+import {Metadata} from "next";
 
 interface Data {
     firstName: string;
@@ -10,6 +11,11 @@ interface Data {
     email: string;
     gender: string;
     state: string;
+}
+
+export const metadata: Metadata = {
+    title: 'My Info',
+    description: 'View and update your personal information',
 }
 
 export default async function Home() {
@@ -29,6 +35,7 @@ export default async function Home() {
         const firstName = formData.get("firstName") as string;
         const lastName = formData.get("lastName") as string;
         try {
+            // todo: change localhost to env variable
             axios.post('http://localhost:4242/api/update', {
                 firstName,
                 lastName,
@@ -41,6 +48,7 @@ export default async function Home() {
                     console.log(error);
                 });
             // needed to prevent stale data after update
+            // todo: change localhost to env variable
             const res = await axios.get(`http://localhost:4242/api/my-info?email=${data?.email}`);
             data = res.data;
         } catch (error) {
@@ -51,6 +59,28 @@ export default async function Home() {
             }
         }
     }
+
+    const handleDelete = async () => {
+        "use server";
+        try {
+            axios.post('http://localhost:4242/api/delete', {
+            email: data?.email})
+                .then(function (response) {
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            data = undefined;
+        } catch (error) {
+            if (error) {
+                console.error("Error deleting data:", error);
+            } else {
+                console.error("Unknown error deleting data");
+            }
+        }
+    }
+
 
     return (
         <>
@@ -92,10 +122,14 @@ export default async function Home() {
                                 <td>{new Date(data.dob).toLocaleDateString()}</td>
                                 <td>{data.age}</td>
                                 <td>{data.state}</td>
+                                <td>
+                                    <button className={"btn btn-error"} onClick={handleDelete}>Delete</button>
+                                </td>
                             </tr> :
                             <tr>
                                 <td colSpan={7}>Please log in to see your data!</td>
                             </tr>}
+                        {/* todo: fix bug where user with no data is told to log in */}
                         </tbody>
                     </table>
                     <div className={"flex justify-end"}>
