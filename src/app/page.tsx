@@ -2,6 +2,8 @@
 import axios from "axios";
 import {auth0} from "@/lib/auth0";
 import {Metadata} from "next";
+import {states} from "@/lib/states";
+import {genders} from "@/lib/genders";
 
 interface Data {
     firstName: string;
@@ -21,8 +23,14 @@ export const metadata: Metadata = {
 export default async function Home() {
     // stores the authenticated user's data
     let data: Data | undefined = undefined;
+
     try {
         const session = await auth0.getSession();
+
+        if (!session?.user?.email) {
+            console.log("User not logged in. No email found in session.");
+            return;
+        }
         // todo: change localhost to env variable
         const res = await axios.get(`http://localhost:4242/api/my-info?email=${session?.user?.email}`);
         data = res.data;
@@ -64,7 +72,8 @@ export default async function Home() {
         "use server";
         try {
             axios.post('http://localhost:4242/api/delete', {
-            email: data?.email})
+                email: data?.email
+            })
                 .then(function (response) {
                     console.log(response);
                 })
@@ -81,11 +90,19 @@ export default async function Home() {
         }
     }
 
+    // format a given date to yyyy-mm-dd for browser to read
+    const formatDate = (date: Date) => {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
+
 
     return (
         <>
             <div className="overflow-x-auto">
-                <form action={handleSubmit} >
+                <form action={handleSubmit}>
                     <table className="table">
                         <thead>
                         <tr>
@@ -107,7 +124,7 @@ export default async function Home() {
                                         type="text"
                                         defaultValue={data.firstName}
                                         name={"firstName"}
-                                        className="input input-bordered w-full max-w-xs"
+                                        className="input input-ghost w-full max-w-xs"
                                     />
                                 </td>
                                 <td>
@@ -115,15 +132,32 @@ export default async function Home() {
                                         type="text"
                                         defaultValue={data.lastName}
                                         name={"lastName"}
-                                        className="input input-bordered w-full max-w-xs"
+                                        className="input input-ghost w-full max-w-xs"
                                     />
                                 </td>
-                                <td>{data.gender}</td>
-                                <td>{new Date(data.dob).toLocaleDateString()}</td>
-                                <td>{data.age}</td>
-                                <td>{data.state}</td>
                                 <td>
-                                    <button className={"btn btn-error"} onClick={handleDelete}>Delete</button>
+                                    <select defaultValue={data.gender} className={"select select-ghost"}
+                                            name={"gender"}>
+                                        {genders.map((gender) => (
+                                            <option key={gender} value={gender}>{gender}</option>
+                                        ))}
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="date" defaultValue={formatDate(new Date(data.dob))} className={"input input-ghost"}
+                                           name={"dob"}/>
+                                </td>
+                                <td>{data.age}</td>
+                                <td>
+                                    <select defaultValue={data.state} className={"select select-ghost"}
+                                            name={"state"}>
+                                        {states.map((state) => (
+                                            <option key={state} value={state}>{state}</option>
+                                        ))}
+                                    </select>
+                                </td>
+                                <td>
+                                    <button className={"btn btn-soft btn-error"} onClick={handleDelete}>Delete</button>
                                 </td>
                             </tr> :
                             <tr>

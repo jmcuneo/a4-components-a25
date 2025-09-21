@@ -1,16 +1,8 @@
 'use client'
 import {FormEvent, useState} from "react";
 import axios from "axios";
-
-const states = [
-    "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida",
-    "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine",
-    "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska",
-    "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota",
-    "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota",
-    "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin",
-    "Wyoming"
-];
+import {states} from "@/lib/states";
+import {genders} from "@/lib/genders";
 
 export default function PersonalInfo() {
     const [firstName, setFirstName] = useState("");
@@ -58,26 +50,12 @@ export default function PersonalInfo() {
                        onChange={(e) => setEmail(e.target.value)} required/>
                 <label className={"label"}>Preferred Gender</label>
                 <div className={"flex flex-col gap-2 mb-2"}>
-                    <div className={"flex w-full gap-2"}>
-                        <input type={"radio"} className={"radio"} name={"gender"} value="Male"
-                               onChange={(e) => setGender(e.target.value)} required/>
-                        <label className={"label"}>Male</label>
-                    </div>
-                    <div className={"flex w-full gap-2"}>
-                        <input type={"radio"} className={"radio"} name={"gender"} value="Female"
-                               onChange={(e) => setGender(e.target.value)}/>
-                        <label className={"label"}>Female</label>
-                    </div>
-                    <div className={"flex w-full gap-2"}>
-                        <input type={"radio"} className={"radio"} name={"gender"} value="Non-binary"
-                               onChange={(e) => setGender(e.target.value)}/>
-                        <label className={"label"}>Non-binary</label>
-                    </div>
-                    <div className={"flex w-full gap-2"}>
-                        <input type={"radio"} className={"radio"} name={"gender"} value="Prefer not to say/other}"
-                               onChange={(e) => setGender(e.target.value)}/>
-                        <label className={"label"}>Prefer not to say/Other</label>
-                    </div>
+                    {genders.map(gender => (
+                        <div className={"flex w-full gap-2"} key={gender}>
+                            <input type={"radio"} className={"radio"} name={"gender"} value={gender} onChange={(e) => setGender(e.target.value)} required/>
+                            <label className={"label"}>{gender}</label>
+                        </div>
+                    ))}
                 </div>
                 <label className={"label"}>State of Residence</label>
                 {/* todo: fix default value to be placeholder, right now default is Alabama but isn't recorded */}
