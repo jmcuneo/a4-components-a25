@@ -42,11 +42,17 @@ export default async function Home() {
         "use server";
         const firstName = formData.get("firstName") as string;
         const lastName = formData.get("lastName") as string;
+        const gender = formData.get("gender") as string;
+        const dob = formData.get("dob") as string;
+        const state = formData.get("state") as string;
         try {
             // todo: change localhost to env variable
             axios.post('http://localhost:4242/api/update', {
                 firstName,
                 lastName,
+                gender,
+                dob,
+                state,
                 email: data?.email
             })
                 .then(function (response) {
@@ -56,7 +62,7 @@ export default async function Home() {
                     console.log(error);
                 });
             // needed to prevent stale data after update
-            // todo: change localhost to env variable
+            // todo: change localhost to env variable, possible refactor
             const res = await axios.get(`http://localhost:4242/api/my-info?email=${data?.email}`);
             data = res.data;
         } catch (error) {
@@ -144,7 +150,7 @@ export default async function Home() {
                                     </select>
                                 </td>
                                 <td>
-                                    <input type="date" defaultValue={formatDate(new Date(data.dob))} className={"input input-ghost"}
+                                    <input type="date" defaultValue={data.dob?.slice(0, 10)} className={"input input-ghost"}
                                            name={"dob"}/>
                                 </td>
                                 <td>{data.age}</td>

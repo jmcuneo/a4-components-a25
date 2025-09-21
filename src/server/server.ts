@@ -72,11 +72,11 @@ async function main() {
 
     })
 
-    // todo: implement update endpoint
+
     server.post('/api/update', async (req, res) => {
-        const {firstName, lastName, email} = req.body
-        if (!firstName || !lastName || !email) {
-            return res.status(400).json({message: 'Missing required fields'})
+        const {firstName, lastName, gender, dob, state, email} = req.body
+        if (!firstName || !lastName || !gender || !state || !dob || !email) {
+            return res.status(400).json({message: 'At least one field is required to update'} )
         }
         try {
             const entry = await Table.findOne({email})
@@ -85,6 +85,10 @@ async function main() {
             }
             entry.firstName = firstName
             entry.lastName = lastName
+            entry.gender = gender
+            entry.dob = dob
+            entry.age = new Date().getFullYear() - new Date(dob).getFullYear()
+            entry.state = state
             await entry.save()
             res.status(200).json({message: 'Data updated successfully'})
         } catch (e) {
