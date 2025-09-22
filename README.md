@@ -77,6 +77,20 @@ I followed the w3 org accessibility tips for writing, designing, and developing.
 3. Associate a label with each form control: Each input has a corresponding label for the form on the /enter-data page. This should allow screen readers to properly associate the label with the input field.
 4. Code that adapts to the user's technology: I added mobile responsiveness to the application using Tailwind CSS's responsive design utilities. For example, the navbar hides the app name on small screens to save space, while the data table on the /my-info page becomes a series of cards on smaller screens to make it easily scrollable.
 
+### CRAP Principles
+**Contrast**
+  - Size: The font size varies between different elements on the page, with headings being larger than body text.
+  - Color: The website uses DaisyUI's built-in color schemes, which provide good contrast between text and background colors. This includes both light and dark modes.
+  - Font: I used a sans-serif font (Avenir) from Adobe Fonts for a clean and modern look. I chose this font because it is easy to read on both desktop and mobile devices.
+  - Shape: Buttons and input fields have distinct shapes that make them easily identifiable.
+  - Emphasis: Important elements such as buttons and headings are emphasized using larger font sizes and bright colors.
+**Repetition**
+  - Repeated elements: Some examples are the navbar, buttons, colors, and on mobile, the card layout for displaying user data.
+**Alignment**
+  - Most items are center aligned, with some exceptions such as buttons and input fields. These are usually right aligned to make them easier to find.
+**Proximity**
+  - Information is grouped together based on its relevance. I made sure to put some thought into the layout of the /enter-data page, such as the order of the input fields. 
+
 ## Additional Libraries/Frameworks Used
 Here is a list of additional libraries used (as seen in package.json):
 - `auth0/nextjs-auth0` for OAuth authentication

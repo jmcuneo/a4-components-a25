@@ -3,17 +3,20 @@ import {FormEvent, useState} from "react";
 import axios from "axios";
 import {states} from "@/lib/states";
 import {genders} from "@/lib/genders";
+import {useUser} from "@auth0/nextjs-auth0";
 
 export default function PersonalInfo() {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [dob, setDob] = useState("");
-    const [email, setEmail] = useState("");
+    const {user} = useUser();
     const [gender, setGender] = useState("");
     const [state, setState] = useState("");
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
+        // fetch email from auth0 rather then form
+        const email = user?.email || "";
         // todo: fix localhost to env variable
         axios.post('http://localhost:4242/api/submit', {
             firstName,
@@ -45,9 +48,6 @@ export default function PersonalInfo() {
                        required/>
                 <label className={"label"}>Date of Birth</label>
                 <input type="date" className="input" onChange={(e) => setDob(e.target.value)} required/>
-                <label className={"label"}>Email</label>
-                <input type={"email"} className={"input"} placeholder={"example@gmail.com"}
-                       onChange={(e) => setEmail(e.target.value)} required/>
                 <label className={"label"}>Preferred Gender</label>
                 <div className={"flex flex-col gap-2 mb-2"}>
                     {genders.map(gender => (
