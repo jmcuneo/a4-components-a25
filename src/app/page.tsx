@@ -3,6 +3,7 @@ import {auth0} from "@/lib/auth0";
 import {Metadata} from "next";
 import {states} from "@/lib/states";
 import {genders} from "@/lib/genders";
+import Warning from "@/components/warning";
 
 interface Data {
     firstName: string;
@@ -26,13 +27,14 @@ export default async function Home() {
     try {
         const session = await auth0.getSession();
 
-        if (!session?.user?.email) {
+        // only make the request if the user is logged in, avoid an axios error
+        if (session?.user?.email) {
+            // todo: change localhost to env variable
+            const res = await axios.get(`http://localhost:4242/api/my-info?email=${session?.user?.email}`);
+            data = res.data;
+        } else {
             console.log("User not logged in. No email found in session.");
-            return;
         }
-        // todo: change localhost to env variable
-        const res = await axios.get(`http://localhost:4242/api/my-info?email=${session?.user?.email}`);
-        data = res.data;
     } catch (error) {
         console.error("Error fetching data:", error);
     }
@@ -100,21 +102,20 @@ export default async function Home() {
         <>
             {/* todo: make table stretch entire page width */}
             <div className="hidden md:flex justify-center overflow-x-auto">
-                <form action={handleSubmit}>
-                    <table className="table">
-                        <thead>
-                        <tr>
-                            <th>Email</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Preferred Gender</th>
-                            <th>DOB</th>
-                            <th>Age</th>
-                            <th>State</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {data ?
+                {data ? <form action={handleSubmit}>
+                        <table className="table">
+                            <thead>
+                            <tr>
+                                <th>Email</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Preferred Gender</th>
+                                <th>DOB</th>
+                                <th>Age</th>
+                                <th>State</th>
+                            </tr>
+                            </thead>
+                            <tbody>
                             <tr className={"hover:bg-base-300"}>
                                 <td>{data.email}</td>
                                 <td>
@@ -158,92 +159,99 @@ export default async function Home() {
                                 <td>
                                     <button className={"btn btn-soft btn-error"} onClick={handleDelete}>Delete</button>
                                 </td>
-                            </tr> :
-                            <tr>
-                                <td colSpan={7}>Please log in to see your data!</td>
-                            </tr>}
-                        {/* todo: fix bug where user with no data is told to log in */}
-                        </tbody>
-                    </table>
-                    <div className={"flex justify-end"}>
-                        <button className={"btn btn-primary m-4"}>Save Changes</button>
+                            </tr>
+                            {/* todo: fix bug where user with no data is told to log in */}
+                            </tbody>
+                        </table>
+                        <div className={"flex justify-end"}>
+                            <button className={"btn btn-primary m-4"}>Save Changes</button>
+                        </div>
+                    </form> :
+                    <div className={"flex justify-center align-baseline gap-4 mt-10"}>
+                        <Warning message={"Please log in to see your data!"}/>
                     </div>
-                </form>
+                }
             </div>
             <div className="gap-4 md:hidden">
-                <form action={handleSubmit}>
-                    <div tabIndex={0} className="collapse collapse-open bg-base-100 border-base-300 border">
-                        <div className="collapse-title font-semibold">Email</div>
-                        <div className="collapse-content text-sm">
-                            {data ? data.email : "Please log in to see your data!"}
+                {data ? <form action={handleSubmit}>
+                        <div tabIndex={0} className="collapse collapse-open bg-base-100 border-base-300 border">
+                            <div className="collapse-title font-semibold">Email</div>
+                            <div className="collapse-content text-sm">
+                                {data ? data.email : "Please log in to see your data!"}
+                            </div>
                         </div>
-                    </div>
-                    <div tabIndex={1} className="collapse collapse-open bg-base-100 border-base-300 border">
-                        <div className="collapse-title font-semibold">First Name</div>
-                        <div className="collapse-content text-sm">
-                            <input
-                                type="text"
-                                defaultValue={data ? data.firstName : "Please log in to see your data!"}
-                                name={"firstName"}
-                                className="input input-ghost w-full max-w-xs"
-                            />
+                        <div tabIndex={1} className="collapse collapse-open bg-base-100 border-base-300 border">
+                            <div className="collapse-title font-semibold">First Name</div>
+                            <div className="collapse-content text-sm">
+                                <input
+                                    type="text"
+                                    defaultValue={data ? data.firstName : "Please log in to see your data!"}
+                                    name={"firstName"}
+                                    className="input input-ghost w-full max-w-xs"
+                                />
+                            </div>
                         </div>
-                    </div>
-                    <div tabIndex={2} className="collapse collapse-open bg-base-100 border-base-300 border">
-                        <div className="collapse-title font-semibold">Last Name</div>
-                        <div className="collapse-content text-sm">
-                            <input
-                                type="text"
-                                defaultValue={data ? data.lastName : "Please log in to see your data!"}
-                                name={"lastName"}
-                                className="input input-ghost w-full max-w-xs"
-                            />
+                        <div tabIndex={2} className="collapse collapse-open bg-base-100 border-base-300 border">
+                            <div className="collapse-title font-semibold">Last Name</div>
+                            <div className="collapse-content text-sm">
+                                <input
+                                    type="text"
+                                    defaultValue={data ? data.lastName : "Please log in to see your data!"}
+                                    name={"lastName"}
+                                    className="input input-ghost w-full max-w-xs"
+                                />
+                            </div>
                         </div>
-                    </div>
-                    <div tabIndex={3} className="collapse collapse-open bg-base-100 border-base-300 border">
-                        <div className="collapse-title font-semibold">Preferred Gender</div>
-                        <div className="collapse-content text-sm">
-                            <select defaultValue={data ? data.gender : "Please log in to see your data!"}
-                                    className={"select select-ghost"}
-                                    name={"gender"}>
-                                {genders.map((gender) => (
-                                    <option key={gender} value={gender}>{gender}</option>
-                                ))}
-                            </select>
+                        <div tabIndex={3} className="collapse collapse-open bg-base-100 border-base-300 border">
+                            <div className="collapse-title font-semibold">Preferred Gender</div>
+                            <div className="collapse-content text-sm">
+                                <select defaultValue={data ? data.gender : "Please log in to see your data!"}
+                                        className={"select select-ghost"}
+                                        name={"gender"}>
+                                    {genders.map((gender) => (
+                                        <option key={gender} value={gender}>{gender}</option>
+                                    ))}
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <div tabIndex={4} className="collapse collapse-open bg-base-100 border-base-300 border">
-                        <div className="collapse-title font-semibold">Date of Birth</div>
-                        <div className="collapse-content text-sm">
-                            <input type="date"
-                                   defaultValue={data ? data.dob?.slice(0, 10) : "Please log in to see your data!"}
-                                   className={"input input-ghost"}
-                                   name={"dob"}/>
+                        <div tabIndex={4} className="collapse collapse-open bg-base-100 border-base-300 border">
+                            <div className="collapse-title font-semibold">Date of Birth</div>
+                            <div className="collapse-content text-sm">
+                                <input type="date"
+                                       defaultValue={data ? data.dob?.slice(0, 10) : "Please log in to see your data!"}
+                                       className={"input input-ghost"}
+                                       name={"dob"}/>
+                            </div>
                         </div>
-                    </div>
-                    <div tabIndex={5} className="collapse collapse-open bg-base-100 border-base-300 border">
-                        <div className="collapse-title font-semibold">Age</div>
-                        <div className="collapse-content text-sm">
-                            {data ? data.age : "Please log in to see your data!"}
+                        <div tabIndex={5} className="collapse collapse-open bg-base-100 border-base-300 border">
+                            <div className="collapse-title font-semibold">Age</div>
+                            <div className="collapse-content text-sm">
+                                {data ? data.age : "Please log in to see your data!"}
+                            </div>
                         </div>
-                    </div>
-                    <div tabIndex={6} className="collapse collapse-open bg-base-100 border-base-300 border">
-                        <div className="collapse-title font-semibold">State of Residence</div>
-                        <div className="collapse-content text-sm">
-                            <select defaultValue={data ? data.state : "Please log in to see your data!"}
-                                    className={"select select-ghost"}
-                                    name={"state"}>
-                                {states.map((state) => (
-                                    <option key={state} value={state}>{state}</option>
-                                ))}
-                            </select>
+                        <div tabIndex={6} className="collapse collapse-open bg-base-100 border-base-300 border">
+                            <div className="collapse-title font-semibold">State of Residence</div>
+                            <div className="collapse-content text-sm">
+                                <select defaultValue={data ? data.state : "Please log in to see your data!"}
+                                        className={"select select-ghost"}
+                                        name={"state"}>
+                                    {states.map((state) => (
+                                        <option key={state} value={state}>{state}</option>
+                                    ))}
+                                </select>
+                            </div>
                         </div>
+                        <div className={"flex justify-between"}>
+                            <button className={"btn btn-primary m-4"} type={"submit"}>Save Changes</button>
+                            <button className={"btn btn-soft btn-error m-4"} type={"button"}
+                                    onClick={handleDelete}>Delete
+                            </button>
+                        </div>
+                    </form> :
+                    <div className={"flex justify-center align-baseline gap-4 mt-10"}>
+                        <Warning message={"Please log in to see your data!"}/>
                     </div>
-                    <div className={"flex justify-between"}>
-                        <button className={"btn btn-primary m-4"} type={"submit"}>Save Changes</button>
-                        <button className={"btn btn-soft btn-error m-4"} type={"button"} onClick={handleDelete}>Delete</button>
-                    </div>
-                </form>
+                }
             </div>
         </>
     )

@@ -53,6 +53,9 @@ GitHub link: https://github.com/Akaash-Walker/a3-persistence-a25
 - Username: `example@gmail.com`
 - Password: `Password123`
 
+- I used Next.js's file-based routing system alongside Express routing. Next.js handles the frontend routing, while Express handles the backend API routes. This proved to be challenging when trying to deploy to vercel, as the backend had to be serverless. The easiest solution was to use Next.js API routes for the backend, but this assignment requires the use of Express. 
+- I implemented (some) server-side rendering (SSR) using Next.js. This was a new to me, as I have only ever used client-side rendering (CSR) with React in the past. Not being able to use React hooks made it a bit challenging, but I was able to figure it out with some research. Many of the examples I saw online brought the db connection logic into the component file, but I instead used the "use server" directive to make get and post requests using axios. 
+
 - TODO: Alternative hosting service achievement (if applicable)
 - TODO: 100% Lighthouse achievement (if applicable)
 
@@ -89,7 +92,7 @@ I followed the w3 org accessibility tips for writing, designing, and developing.
 **Alignment**
   - Most items are center aligned, with some exceptions such as buttons and input fields. These are usually right aligned to make them easier to find.
 **Proximity**
-  - Information is grouped together based on its relevance. I made sure to put some thought into the layout of the /enter-data page, such as the order of the input fields. 
+  - Information is grouped together based on its relevance. I made sure to put some thought into the layout of the /enter-data page, such as the order of the input fields. For example, the first and last name fields are next to each other since they are closely related. The date of birth field is below these two fields, as it is also personal information but not as closely related. Next I have preferred gender, since it is also personal information. Finally, I have the state field, which is less personal information and more location-based.
 
 ## Additional Libraries/Frameworks Used
 Here is a list of additional libraries used (as seen in package.json):
