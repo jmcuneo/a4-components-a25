@@ -98,7 +98,8 @@ export default async function Home() {
 
     return (
         <>
-            <div className="overflow-x-auto">
+            {/* todo: make table stretch entire page width */}
+            <div className="hidden md:flex justify-center overflow-x-auto">
                 <form action={handleSubmit}>
                     <table className="table">
                         <thead>
@@ -141,7 +142,8 @@ export default async function Home() {
                                     </select>
                                 </td>
                                 <td>
-                                    <input type="date" defaultValue={data.dob?.slice(0, 10)} className={"input input-ghost"}
+                                    <input type="date" defaultValue={data.dob?.slice(0, 10)}
+                                           className={"input input-ghost"}
                                            name={"dob"}/>
                                 </td>
                                 <td>{data.age}</td>
@@ -165,6 +167,81 @@ export default async function Home() {
                     </table>
                     <div className={"flex justify-end"}>
                         <button className={"btn btn-primary m-4"}>Save Changes</button>
+                    </div>
+                </form>
+            </div>
+            <div className="gap-4 md:hidden">
+                <form action={handleSubmit}>
+                    <div tabIndex={0} className="collapse collapse-open bg-base-100 border-base-300 border">
+                        <div className="collapse-title font-semibold">Email</div>
+                        <div className="collapse-content text-sm">
+                            {data ? data.email : "Please log in to see your data!"}
+                        </div>
+                    </div>
+                    <div tabIndex={1} className="collapse collapse-open bg-base-100 border-base-300 border">
+                        <div className="collapse-title font-semibold">First Name</div>
+                        <div className="collapse-content text-sm">
+                            <input
+                                type="text"
+                                defaultValue={data ? data.firstName : "Please log in to see your data!"}
+                                name={"firstName"}
+                                className="input input-ghost w-full max-w-xs"
+                            />
+                        </div>
+                    </div>
+                    <div tabIndex={2} className="collapse collapse-open bg-base-100 border-base-300 border">
+                        <div className="collapse-title font-semibold">Last Name</div>
+                        <div className="collapse-content text-sm">
+                            <input
+                                type="text"
+                                defaultValue={data ? data.lastName : "Please log in to see your data!"}
+                                name={"lastName"}
+                                className="input input-ghost w-full max-w-xs"
+                            />
+                        </div>
+                    </div>
+                    <div tabIndex={3} className="collapse collapse-open bg-base-100 border-base-300 border">
+                        <div className="collapse-title font-semibold">Preferred Gender</div>
+                        <div className="collapse-content text-sm">
+                            <select defaultValue={data ? data.gender : "Please log in to see your data!"}
+                                    className={"select select-ghost"}
+                                    name={"gender"}>
+                                {genders.map((gender) => (
+                                    <option key={gender} value={gender}>{gender}</option>
+                                ))}
+                            </select>
+                        </div>
+                    </div>
+                    <div tabIndex={4} className="collapse collapse-open bg-base-100 border-base-300 border">
+                        <div className="collapse-title font-semibold">Date of Birth</div>
+                        <div className="collapse-content text-sm">
+                            <input type="date"
+                                   defaultValue={data ? data.dob?.slice(0, 10) : "Please log in to see your data!"}
+                                   className={"input input-ghost"}
+                                   name={"dob"}/>
+                        </div>
+                    </div>
+                    <div tabIndex={5} className="collapse collapse-open bg-base-100 border-base-300 border">
+                        <div className="collapse-title font-semibold">Age</div>
+                        <div className="collapse-content text-sm">
+                            {data ? data.age : "Please log in to see your data!"}
+                        </div>
+                    </div>
+                    <div tabIndex={6} className="collapse collapse-open bg-base-100 border-base-300 border">
+                        <div className="collapse-title font-semibold">State of Residence</div>
+                        <div className="collapse-content text-sm">
+                            <select defaultValue={data ? data.state : "Please log in to see your data!"}
+                                    className={"select select-ghost"}
+                                    name={"state"}>
+                                {states.map((state) => (
+                                    <option key={state} value={state}>{state}</option>
+                                ))}
+                            </select>
+                        </div>
+                    </div>
+                    <div className={"flex justify-between"}>
+                        <button className={"btn btn-primary m-4"} type={"submit"}>Save Changes</button>
+                        <button className={"btn btn-soft btn-error m-4"} type={"button"} onClick={handleDelete}>Delete</button>
                     </div>
                 </form>
             </div>

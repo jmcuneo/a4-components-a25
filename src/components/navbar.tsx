@@ -6,7 +6,7 @@ export default async function Navbar() {
 
     return (
         <nav className="navbar bg-base-300 px-4">
-            <div className="navbar-start">
+            <div className="hidden md:flex navbar-start">
                 <a className="label text-xl text-black dark:text-white font-bold">My CRUD App</a>
             </div>
             <div className={"navbar-center"}>

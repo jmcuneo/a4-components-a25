@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function Page() {
     return (
-        <div className={"flex justify-center align-baseline gap-4"}>
+        <div className={"flex justify-center align-baseline gap-4 mt-10"}>
             <PersonalInfo />
         </div>
     );

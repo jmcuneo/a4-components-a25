@@ -29,7 +29,7 @@ GitHub link: https://github.com/Akaash-Walker/a3-persistence-a25
 
 ### HTML
 - Used various input types including text fields, date pickers, radio buttons, and dropdowns to capture user information.
-- Displayed data is specific to the logged in user.
+- Displayed data is specific to the logged-in user.
 
 ### CSS
 - DaisyUI components make up the bulk of the styling, with some minor customizations using Tailwind CSS for things such as padding.
