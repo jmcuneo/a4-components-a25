@@ -74,8 +74,8 @@ I followed the w3 org accessibility tips for writing, designing, and developing.
 #### Developing
 1. Identify page language and language changes: layout.tsx has a `<html lang="en">` tag, which indicates that the page is in English. Since layout.tsx is the root component, this tag should be inherited by all other components.
 2. Code reflects reading order: Much of the code is structured to reflect the reading order of the page. For example, personalinfo.tsx is the component on /enter-data that allows users to input their personal information. The code is broken down into 3 main sections: hooks, helper function, and the HTML return. To make the code easier to read, the variable order is kept consistent within all three sections. For example, the hooks are in the order of first name, last name, date of birth, email, preferred gender, and state. This same order is kept when making the post request in the helper function `handleSubmit`, as well as in the HTML return where the input fields are rendered.
-3. another tip
-4. another tip
+3. Associate a label with each form control: Each input has a corresponding label for the form on the /enter-data page. This should allow screen readers to properly associate the label with the input field.
+4. Code that adapts to the user's technology: I added mobile responsiveness to the application using Tailwind CSS's responsive design utilities. For example, the navbar hides the app name on small screens to save space, while the data table on the /my-info page becomes a series of cards on smaller screens to make it easily scrollable.
 
 ## Additional Libraries/Frameworks Used
 Here is a list of additional libraries used (as seen in package.json):
