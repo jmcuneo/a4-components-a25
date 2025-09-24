@@ -17,12 +17,15 @@ export default function PersonalInfo() {
         e.preventDefault();
         // fetch email from auth0 rather then form
         const email = user?.email || "";
-        // todo: fix localhost to env variable
-        axios.post('http://localhost:4242/api/submit', {
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+        if (!backendUrl) {
+            console.error("Backend URL is not defined");
+            return;
+        }
+        axios.post(`${backendUrl}:4242/api/submit`, {
             firstName,
             lastName,
             dob,
-            // todo: fix email to be fetched from auth0
             email,
             gender,
             state

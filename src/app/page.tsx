@@ -35,7 +35,6 @@ export default async function Home() {
 
         // only make the request if the user is logged in, avoid an axios error
         if (session?.user?.email) {
-            // todo: change localhost to env variable
             const res = await axios.get(`${backendUrl}/api/my-info?email=${session?.user?.email}`);
             data = res.data;
         } else {
@@ -53,7 +52,6 @@ export default async function Home() {
         const dob = formData.get("dob") as string;
         const state = formData.get("state") as string;
         try {
-            // todo: change localhost to env variable
             axios.post(`${backendUrl}/api/update`, {
                 firstName,
                 lastName,
@@ -69,7 +67,6 @@ export default async function Home() {
                     console.log(error);
                 });
             // needed to prevent stale data after update
-            // todo: change localhost to env variable, possible refactor
             const res = await axios.get(`${backendUrl}/api/my-info?email=${data?.email}`);
             data = res.data;
         } catch (error) {
