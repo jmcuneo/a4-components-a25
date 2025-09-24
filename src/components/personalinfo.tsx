@@ -49,20 +49,20 @@ export default function PersonalInfo() {
                 <label className={"label"}>Last</label>
                 <input type="text" className="input" placeholder={"Doe"} onChange={(e) => setLastName(e.target.value)}
                        required/>
-                <label className={"label"}>Date of Birth</label>
-                <input type="date" className="input" onChange={(e) => setDob(e.target.value)} required/>
+                <label htmlFor={"dob"} className={"label"}>Date of Birth</label>
+                <input id={"dob"} type="date" className="input" onChange={(e) => setDob(e.target.value)} required/>
                 <label className={"label"}>Preferred Gender</label>
                 <div className={"flex flex-col gap-2 mb-2"}>
                     {genders.map(gender => (
                         <div className={"flex w-full gap-2"} key={gender}>
-                            <input type={"radio"} className={"radio"} name={"gender"} value={gender} onChange={(e) => setGender(e.target.value)} required/>
-                            <label className={"label"}>{gender}</label>
+                            <input id={"gender"} type={"radio"} className={"radio"} name={"gender"} value={gender} onChange={(e) => setGender(e.target.value)} required/>
+                            <label htmlFor={"gender"} className={"label"}>{gender}</label>
                         </div>
                     ))}
                 </div>
-                <label className={"label"}>State of Residence</label>
+                <label htmlFor={"state"} className={"label"}>State of Residence</label>
                 {/* todo: fix default value to be placeholder, right now default is Alabama but isn't recorded */}
-                <select defaultValue="Select an option" className="select" onChange={(e) => setState(e.target.value)}
+                <select id={"state"} defaultValue="Select an option" className="select" onChange={(e) => setState(e.target.value)}
                         required>
                     {states.map((state) => (
                         <option key={state} value={state}>{state}</option>

@@ -123,38 +123,49 @@ export default async function Home() {
                             <tr className={"hover:bg-base-300"}>
                                 <td>{data.email}</td>
                                 <td>
-                                    <input
-                                        type="text"
-                                        defaultValue={data.firstName}
-                                        name={"firstName"}
-                                        className="input input-ghost w-full max-w-xs"
-                                    />
+                                    <label htmlFor={"firstName"} className={"sr-only"}>First Name</label>
+                                        <input
+                                            type="text"
+                                            defaultValue={data.firstName}
+                                            name={"firstName"}
+                                            id={"firstName"}
+                                            className="input input-ghost w-full max-w-xs"
+                                        />
                                 </td>
                                 <td>
+                                    <label htmlFor={"lastName"} className={"sr-only"}>Last Name</label>
                                     <input
                                         type="text"
                                         defaultValue={data.lastName}
                                         name={"lastName"}
+                                        id={"lastName"}
                                         className="input input-ghost w-full max-w-xs"
                                     />
                                 </td>
                                 <td>
+                                    <label htmlFor={"gender"} className={"sr-only"}>Select preferred gender</label>
                                     <select defaultValue={data.gender} className={"select select-ghost"}
-                                            name={"gender"}>
+                                            name={"gender"} id={"gender"}>
                                         {genders.map((gender) => (
                                             <option key={gender} value={gender}>{gender}</option>
                                         ))}
                                     </select>
                                 </td>
                                 <td>
+                                    <label htmlFor={"dob"} className={"sr-only"}>Date of Birth</label>
                                     <input type="date" defaultValue={data.dob?.slice(0, 10)}
                                            className={"input input-ghost"}
-                                           name={"dob"}/>
+                                           name={"dob"}
+                                             id={"dob"}
+                                    />
                                 </td>
                                 <td>{data.age}</td>
                                 <td>
+                                    <label htmlFor={"state"} className={"sr-only"}>Select state of residence</label>
                                     <select defaultValue={data.state} className={"select select-ghost"}
-                                            name={"state"}>
+                                            name={"state"}
+                                            id={"state"}
+                                    >
                                         {states.map((state) => (
                                             <option key={state} value={state}>{state}</option>
                                         ))}
@@ -178,13 +189,15 @@ export default async function Home() {
             </div>
             <div className="gap-4 md:hidden">
                 {data ? <form action={handleSubmit}>
-                        <div tabIndex={0} className="collapse collapse-open bg-base-100 border-base-300 border rounded-none">
+                        <div tabIndex={0}
+                             className="collapse collapse-open bg-base-100 border-base-300 border rounded-none">
                             <div className="collapse-title font-semibold">Email</div>
                             <div className="collapse-content text-sm">
                                 {data ? data.email : "Please log in to see your data!"}
                             </div>
                         </div>
-                        <div tabIndex={1} className="collapse collapse-open bg-base-100 border-base-300 border rounded-none">
+                        <div tabIndex={1}
+                             className="collapse collapse-open bg-base-100 border-base-300 border rounded-none">
                             <div className="collapse-title font-semibold">First Name</div>
                             <div className="collapse-content text-sm">
                                 <input
@@ -195,7 +208,8 @@ export default async function Home() {
                                 />
                             </div>
                         </div>
-                        <div tabIndex={2} className="collapse collapse-open bg-base-100 border-base-300 border rounded-none">
+                        <div tabIndex={2}
+                             className="collapse collapse-open bg-base-100 border-base-300 border rounded-none">
                             <div className="collapse-title font-semibold">Last Name</div>
                             <div className="collapse-content text-sm">
                                 <input
@@ -206,7 +220,8 @@ export default async function Home() {
                                 />
                             </div>
                         </div>
-                        <div tabIndex={3} className="collapse collapse-open bg-base-100 border-base-300 border rounded-none">
+                        <div tabIndex={3}
+                             className="collapse collapse-open bg-base-100 border-base-300 border rounded-none">
                             <div className="collapse-title font-semibold">Preferred Gender</div>
                             <div className="collapse-content text-sm">
                                 <select defaultValue={data ? data.gender : "Please log in to see your data!"}
@@ -218,7 +233,8 @@ export default async function Home() {
                                 </select>
                             </div>
                         </div>
-                        <div tabIndex={4} className="collapse collapse-open bg-base-100 border-base-300 border rounded-none">
+                        <div tabIndex={4}
+                             className="collapse collapse-open bg-base-100 border-base-300 border rounded-none">
                             <div className="collapse-title font-semibold">Date of Birth</div>
                             <div className="collapse-content text-sm">
                                 <input type="date"
@@ -227,13 +243,15 @@ export default async function Home() {
                                        name={"dob"}/>
                             </div>
                         </div>
-                        <div tabIndex={5} className="collapse collapse-open bg-base-100 border-base-300 border rounded-none">
+                        <div tabIndex={5}
+                             className="collapse collapse-open bg-base-100 border-base-300 border rounded-none">
                             <div className="collapse-title font-semibold">Age</div>
                             <div className="collapse-content text-sm">
                                 {data ? data.age : "Please log in to see your data!"}
                             </div>
                         </div>
-                        <div tabIndex={6} className="collapse collapse-open bg-base-100 border-base-300 border rounded-none">
+                        <div tabIndex={6}
+                             className="collapse collapse-open bg-base-100 border-base-300 border rounded-none">
                             <div className="collapse-title font-semibold">State of Residence</div>
                             <div className="collapse-content text-sm">
                                 <select defaultValue={data ? data.state : "Please log in to see your data!"}
