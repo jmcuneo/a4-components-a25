@@ -32,10 +32,17 @@ export default function PersonalInfo() {
         })
             .then(function (response) {
                 console.log(response);
+                alert("Data submitted successfully!");
             })
             .catch(function (error) {
                 console.log(error);
+                if (error.response && error.response.status === 500) {
+                    alert("You have already submitted your information. Please update it instead using the 'My Info' page.");
+                } else {
+                    alert("Failed to submit data. Please try again.");
+                }
             });
+
     }
 
 
