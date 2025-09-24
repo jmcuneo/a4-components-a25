@@ -93,7 +93,7 @@ export default async function Home() {
                 {/* Makes React remount component after submission, prevents stale data */}
                 {data ? <form action={handleSubmit} key={JSON.stringify(data)}>
                     <label className={"label p-4"}>
-                        Click on a field to edit it. Press "Save Changes" to save.
+                        Click on a field to edit it. Press &quot;Save Changes&quot; to save.
                     </label>
                         <table className="table">
                             <thead>
