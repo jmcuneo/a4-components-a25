@@ -246,10 +246,10 @@ export default async function Home() {
                             </div>
                         </div>
                         <div className={"flex justify-between"}>
-                            <button className={"btn btn-primary m-4"} type={"submit"}>Save Changes</button>
                             <button className={"btn btn-soft btn-error m-4"} type={"button"}
                                     onClick={handleDelete}>Delete
                             </button>
+                            <button className={"btn btn-primary m-4"} type={"submit"}>Save Changes</button>
                         </div>
                     </form> :
                     <div className={"flex justify-center align-baseline gap-4 mt-10"}>
