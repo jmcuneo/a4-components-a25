@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="View all your tasks, priorities, and deadlines in one place with this task manager app.">
+    <title>All Tasks - Task Manager</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1 id="allTasksTitle" tabindex="0">All Tasks</h1>
+        <nav>
+            <a href="/" aria-label="Home page" tabindex="0">Home</a>
+            <a href="/results" aria-label="View all tasks" tabindex="0">View All Tasks</a>
+            <span id="userDisplay" style="margin-left:1rem;font-weight:bold;" aria-live="polite"></span>
+            <button id="logoutBtn" class="btn-primary" style="margin-left:1rem;display:none;" aria-label="Logout">Logout</button>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="results-section" aria-labelledby="taskListHeader">
+            <h2 id="taskListHeader" tabindex="0">Task List</h2>
+            <!-- Add hidden edit form for editing tasks -->
+            <form id="taskForm" style="display:none; margin-bottom:2rem;" aria-describedby="taskListHeader">
+                <div class="form-group">
+                    <label for="task">Task Description:</label>
+                    <input type="text" id="task" name="task" required aria-required="true" aria-label="Task Description">
+                </div>
+                <div class="form-group">
+                    <label for="priority">Priority:</label>
+                    <select id="priority" name="priority" required aria-required="true" aria-label="Priority">
+                        <option value="">Select Priority</option>
+                        <option value="high">High</option>
+                        <option value="medium">Medium</option>
+                        <option value="low">Low</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="creation_date">Creation Date:</label>
+                    <input type="date" id="creation_date" name="creation_date" required aria-required="true" aria-label="Creation Date">
+                </div>
+                <button type="submit" class="btn-primary" aria-label="Update Task">Update Task</button>
+                <button type="button" id="cancelEditBtn" class="btn-primary" style="background:#888;margin-left:1rem;" aria-label="Cancel Edit">Cancel</button>
+            </form>
+            <table id="tasksTable" aria-label="All tasks table">
+                <thead>
+                    <tr>
+                        <th scope="col">Task</th>
+                        <th scope="col">Priority</th>
+                        <th scope="col">Created</th>
+                        <th scope="col">Deadline</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="tasksTableBody">
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <script src="main.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+</body>
+</html>

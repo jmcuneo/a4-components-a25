@@ -1,0 +1,9 @@
+node_modules/
+server/config.env
+package-lock.json
+
+# Ignore build output
+public/bundle.js
+public/bundle.js.LICENSE.txt
+
+.babelrc
