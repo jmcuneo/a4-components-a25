@@ -24,13 +24,19 @@ export default async function Home() {
     // stores the authenticated user's data
     let data: Data | undefined = undefined;
 
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || undefined;
+
+    if (!backendUrl) {
+        throw new Error("BACKEND_URL environment variable is not set");
+    }
+
     try {
         const session = await auth0.getSession();
 
         // only make the request if the user is logged in, avoid an axios error
         if (session?.user?.email) {
             // todo: change localhost to env variable
-            const res = await axios.get(`http://localhost:4242/api/my-info?email=${session?.user?.email}`);
+            const res = await axios.get(`${backendUrl}/api/my-info?email=${session?.user?.email}`);
             data = res.data;
         } else {
             console.log("User not logged in. No email found in session.");
@@ -48,7 +54,7 @@ export default async function Home() {
         const state = formData.get("state") as string;
         try {
             // todo: change localhost to env variable
-            axios.post('http://localhost:4242/api/update', {
+            axios.post(`${backendUrl}/api/update`, {
                 firstName,
                 lastName,
                 gender,
@@ -64,7 +70,7 @@ export default async function Home() {
                 });
             // needed to prevent stale data after update
             // todo: change localhost to env variable, possible refactor
-            const res = await axios.get(`http://localhost:4242/api/my-info?email=${data?.email}`);
+            const res = await axios.get(`${backendUrl}/api/my-info?email=${data?.email}`);
             data = res.data;
         } catch (error) {
             if (error) {
@@ -78,7 +84,7 @@ export default async function Home() {
     const handleDelete = async () => {
         "use server";
         try {
-            axios.post('http://localhost:4242/api/delete', {
+            axios.post(`${backendUrl}/api/delete`, {
                 email: data?.email
             })
                 .then(function (response) {
