@@ -92,6 +92,9 @@ export default async function Home() {
             <div className="hidden md:flex justify-center overflow-x-auto">
                 {/* Makes React remount component after submission, prevents stale data */}
                 {data ? <form action={handleSubmit} key={JSON.stringify(data)}>
+                    <label className={"label p-4"}>
+                        Click on a field to edit it. Press "Save Changes" to save.
+                    </label>
                         <table className="table">
                             <thead>
                             <tr>
@@ -106,7 +109,7 @@ export default async function Home() {
                             </thead>
                             <tbody>
                             <tr className={"hover:bg-base-300"}>
-                                <td>{data.email}</td>
+                                <td className={"hover:cursor-not-allowed"}>{data.email}</td>
                                 <td>
                                     <label htmlFor={"firstName"} className={"sr-only"}>First Name</label>
                                     <input
@@ -144,7 +147,7 @@ export default async function Home() {
                                            id={"dob"}
                                     />
                                 </td>
-                                <td>{data.age}</td>
+                                <td className={"hover:cursor-not-allowed"}>{data.age}</td>
                                 <td>
                                     <label htmlFor={"state"} className={"sr-only"}>Select state of residence</label>
                                     <select defaultValue={data.state} className={"select select-ghost"}
