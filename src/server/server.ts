@@ -1,23 +1,20 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv';
-import path from 'path';
 import cors from 'cors';
 import serverless from 'serverless-http';
-import {fileURLToPath} from 'url';
 
 // create express server
 const server = express();
 
 // Load environment variables from .env file
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-dotenv.config({path: path.join(__dirname, ".env")});
-
+dotenv.config();
 // use cors to allow requests from any origin
 server.use(cors())
 
 // load mongo uri from environment variable
 const mongoUri = process.env.MONGODB_URI as string;
+console.log(mongoUri)
 if (!mongoUri) {
     console.error('MONGODB_URI is not defined in environment variables')
     process.exit(1)
