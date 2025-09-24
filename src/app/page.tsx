@@ -4,6 +4,7 @@ import {Metadata} from "next";
 import {states} from "@/lib/states";
 import {genders} from "@/lib/genders";
 import Warning from "@/components/warning";
+import {revalidatePath} from "next/cache";
 
 interface Data {
     firstName: string;
@@ -53,23 +54,14 @@ export default async function Home() {
         const dob = formData.get("dob") as string;
         const state = formData.get("state") as string;
         try {
-            axios.post(`${backendUrl}/api/update`, {
+            await axios.post(`${backendUrl}/api/update`, {
                 firstName,
                 lastName,
                 gender,
                 dob,
                 state,
                 email: data?.email
-            })
-                .then(function (response) {
-                    console.log(response);
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-            // needed to prevent stale data after update
-            const res = await axios.get(`${backendUrl}/api/my-info?email=${data?.email}`);
-            data = res.data;
+            });
         } catch (error) {
             if (error) {
                 console.error("Error updating data:", error);
@@ -82,16 +74,9 @@ export default async function Home() {
     const handleDelete = async () => {
         "use server";
         try {
-            axios.post(`${backendUrl}/api/delete`, {
+            await axios.post(`${backendUrl}/api/delete`, {
                 email: data?.email
-            })
-                .then(function (response) {
-                    console.log(response);
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-            data = undefined;
+            });
         } catch (error) {
             if (error) {
                 console.error("Error deleting data:", error);
@@ -106,7 +91,8 @@ export default async function Home() {
         <>
             {/* todo: make table stretch entire page width */}
             <div className="hidden md:flex justify-center overflow-x-auto">
-                {data ? <form action={handleSubmit}>
+                {/* Makes React remount component after submission, prevents stale data */}
+                {data ? <form action={handleSubmit} key={JSON.stringify(data)}>
                         <table className="table">
                             <thead>
                             <tr>
@@ -124,13 +110,13 @@ export default async function Home() {
                                 <td>{data.email}</td>
                                 <td>
                                     <label htmlFor={"firstName"} className={"sr-only"}>First Name</label>
-                                        <input
-                                            type="text"
-                                            defaultValue={data.firstName}
-                                            name={"firstName"}
-                                            id={"firstName"}
-                                            className="input input-ghost w-full max-w-xs"
-                                        />
+                                    <input
+                                        type="text"
+                                        defaultValue={data.firstName}
+                                        name={"firstName"}
+                                        id={"firstName"}
+                                        className="input input-ghost w-full max-w-xs"
+                                    />
                                 </td>
                                 <td>
                                     <label htmlFor={"lastName"} className={"sr-only"}>Last Name</label>
@@ -156,7 +142,7 @@ export default async function Home() {
                                     <input type="date" defaultValue={data.dob?.slice(0, 10)}
                                            className={"input input-ghost"}
                                            name={"dob"}
-                                             id={"dob"}
+                                           id={"dob"}
                                     />
                                 </td>
                                 <td>{data.age}</td>
@@ -165,6 +151,7 @@ export default async function Home() {
                                     <select defaultValue={data.state} className={"select select-ghost"}
                                             name={"state"}
                                             id={"state"}
+
                                     >
                                         {states.map((state) => (
                                             <option key={state} value={state}>{state}</option>
@@ -172,7 +159,8 @@ export default async function Home() {
                                     </select>
                                 </td>
                                 <td>
-                                    <button className={"btn btn-soft btn-error"} onClick={handleDelete}>Delete</button>
+                                    <button className={"btn btn-soft btn-error"} formAction={handleDelete}>Delete
+                                    </button>
                                 </td>
                             </tr>
                             {/* todo: fix bug where user with no data is told to log in */}
@@ -187,8 +175,10 @@ export default async function Home() {
                     </div>
                 }
             </div>
+            {/* Mobile view */}
             <div className="gap-4 md:hidden">
-                {data ? <form action={handleSubmit}>
+                {/* Makes React remount component after submission, prevents stale data */}
+                {data ? <form action={handleSubmit} key={JSON.stringify(data) + "-mobile"}>
                         <div tabIndex={0}
                              className="collapse collapse-open bg-base-100 border-base-300 border rounded-none">
                             <div className="collapse-title font-semibold">Email</div>
@@ -200,10 +190,12 @@ export default async function Home() {
                              className="collapse collapse-open bg-base-100 border-base-300 border rounded-none">
                             <div className="collapse-title font-semibold">First Name</div>
                             <div className="collapse-content text-sm">
+                                <label htmlFor={"firstNameMobile"} className={"sr-only"}>First Name</label>
                                 <input
                                     type="text"
                                     defaultValue={data ? data.firstName : "Please log in to see your data!"}
                                     name={"firstName"}
+                                    id={"firstNameMobile"}
                                     className="input input-ghost w-full max-w-xs"
                                 />
                             </div>
@@ -212,10 +204,12 @@ export default async function Home() {
                              className="collapse collapse-open bg-base-100 border-base-300 border rounded-none">
                             <div className="collapse-title font-semibold">Last Name</div>
                             <div className="collapse-content text-sm">
+                                <label htmlFor={"lastNameMobile"} className={"sr-only"}>Last Name</label>
                                 <input
                                     type="text"
                                     defaultValue={data ? data.lastName : "Please log in to see your data!"}
                                     name={"lastName"}
+                                    id={"lastNameMobile"}
                                     className="input input-ghost w-full max-w-xs"
                                 />
                             </div>
@@ -224,8 +218,10 @@ export default async function Home() {
                              className="collapse collapse-open bg-base-100 border-base-300 border rounded-none">
                             <div className="collapse-title font-semibold">Preferred Gender</div>
                             <div className="collapse-content text-sm">
+                                <label htmlFor={"genderMobile"} className={"sr-only"}>Preferred Gender</label>
                                 <select defaultValue={data ? data.gender : "Please log in to see your data!"}
                                         className={"select select-ghost"}
+                                        id={"genderMobile"}
                                         name={"gender"}>
                                     {genders.map((gender) => (
                                         <option key={gender} value={gender}>{gender}</option>
@@ -237,9 +233,11 @@ export default async function Home() {
                              className="collapse collapse-open bg-base-100 border-base-300 border rounded-none">
                             <div className="collapse-title font-semibold">Date of Birth</div>
                             <div className="collapse-content text-sm">
+                                <label htmlFor={"dobMobile"} className={"sr-only"}>Date of Birth</label>
                                 <input type="date"
                                        defaultValue={data ? data.dob?.slice(0, 10) : "Please log in to see your data!"}
                                        className={"input input-ghost"}
+                                       id={"dobMobile"}
                                        name={"dob"}/>
                             </div>
                         </div>
@@ -254,8 +252,10 @@ export default async function Home() {
                              className="collapse collapse-open bg-base-100 border-base-300 border rounded-none">
                             <div className="collapse-title font-semibold">State of Residence</div>
                             <div className="collapse-content text-sm">
+                                <label htmlFor={"stateMobile"} className={"sr-only"}>State of Residence</label>
                                 <select defaultValue={data ? data.state : "Please log in to see your data!"}
                                         className={"select select-ghost"}
+                                        id={"stateMobile"}
                                         name={"state"}>
                                     {states.map((state) => (
                                         <option key={state} value={state}>{state}</option>
@@ -264,8 +264,8 @@ export default async function Home() {
                             </div>
                         </div>
                         <div className={"flex justify-between"}>
-                            <button className={"btn btn-soft btn-error m-4"} type={"button"}
-                                    onClick={handleDelete}>Delete
+                            <button className={"btn btn-soft btn-error m-4"}
+                                    formAction={handleDelete}>Delete
                             </button>
                             <button className={"btn btn-primary m-4"} type={"submit"}>Save Changes</button>
                         </div>
