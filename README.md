@@ -66,7 +66,13 @@ Password: `Password123`
 
 
 #### Achievement 3: Alternative deployment on Vercel (5 points)
-- I deployed the application on Vercel. This proved to be a massive headache because Vercel is serverless. I wanted to use Vercel because it's supposed to have a really easy deployment with Next.js, but due to the Express requirement, it made things much more difficult. I used a 2 pronged approach, where I hosted the frontend on Vercel and the backend on Render. This worked, but it was not ideal. I had to use CORS middleware to handle cross-origin requests between the frontend and backend, which added complexity. It also means I had to write custom deployment scripts so that each platform would have the correct code. Overall, it was a good learning experience, but I understand why it's just recommended to use the Next.js API routes. Not sure if I can count this as a technical achievement, but if so it should be worth at least 5 points. 
+- I deployed the application on Vercel. This proved to be a massive headache because Vercel is serverless. I wanted to use Vercel because it's supposed to have a really easy deployment with Next.js, but due to the Express requirement, it made things much more difficult. I used a 2 pronged approach, where I hosted the frontend on Vercel and the backend on Render. This worked, but it was not ideal. I had to use CORS middleware to handle cross-origin requests between the frontend and backend, which added complexity. It also means I had to write custom deployment scripts so that each platform would have the correct code. Overall, it was a good learning experience, but I understand why it's just recommended to use the Next.js API routes. Not sure if I can count this as a technical achievement, but if so it should be worth at least 5 points.
+
+#### Achievement 4: 100% Lighthouse Scores (5 points)
+- I achieved 100% in all four Lighthouse categories (Performance, Best Practices, Accessibility, and SEO) for both pages of my application. This proved challenging since Adobe fonts cannot be hosted locally for faster load times. I was able to achieve this by preloading the font in the head of my document.
+
+![enter-data](public/lighthouse1.png)
+![my-info](public/lighthouse2.png)
 
 ### Design/Evaluation Achievements
 (10 points) I followed the w3 org accessibility tips for writing, designing, and developing. Here are a list of 12 specific tips I followed:
