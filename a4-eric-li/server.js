@@ -5,15 +5,14 @@ import passport from 'passport';
 import { Strategy as GitHubStrategy } from 'passport-github2';
 import { connectDB, getCollection } from './database.js';
 import { ObjectId } from 'mongodb';
+import ViteExpress from 'vite-express';
 
 dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Serve static files
-app.use(express.static('public'));
-// app.use(express.static('views'));
+// ViteExpress will handle static file serving
 app.use(express.json());
 
 // ----- Session Startup -----
@@ -54,7 +53,7 @@ async function startServer() {
         tasksCollection = getCollection("tasks-collection");
         usersCollection = getCollection("users-collection");
 
-        app.listen(port, () => {
+        ViteExpress.listen(app, port, () => {
             console.log(`Server running at port:${port}`);
         });
     } catch (err) {
@@ -80,7 +79,9 @@ function requireLogin(req, res, next) {
 passport.use(new GitHubStrategy({
     clientID: process.env.GITHUB_CLIENT_ID,
     clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    callbackURL: "https://a3-ericli.onrender.com/auth/github/callback"
+    callbackURL: process.env.NODE_ENV === 'production'
+        ? "https://a4-eric-li.onrender.com/auth/github/callback"
+        : "http://localhost:3000/auth/github/callback"
 }, async (accessToken, refreshToken, profile, done) => {
 
     console.log('\n=== GITHUB STRATEGY ===');
