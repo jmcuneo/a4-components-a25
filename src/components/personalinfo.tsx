@@ -22,7 +22,7 @@ export default function PersonalInfo() {
             console.error("Backend URL is not defined");
             return;
         }
-        axios.post(`${backendUrl}:4242/api/submit`, {
+        axios.post(`${backendUrl}/api/submit`, {
             firstName,
             lastName,
             dob,
