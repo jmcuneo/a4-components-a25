@@ -35,6 +35,7 @@ export default async function Home() {
 
         // only make the request if the user is logged in, avoid an axios error
         if (session?.user?.email) {
+            // todo: lol not secure anyone can call this endpoint if they know an email
             const res = await axios.get(`${backendUrl}/api/my-info?email=${session?.user?.email}`);
             data = res.data;
         } else {
