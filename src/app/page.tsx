@@ -181,6 +181,9 @@ export default async function Home() {
             <div className="gap-4 md:hidden">
                 {/* Makes React remount component after submission, prevents stale data */}
                 {data ? <form action={handleSubmit} key={JSON.stringify(data) + "-mobile"}>
+                        <label className={"label p-4 text-wrap"}>
+                            Tap on a field to edit it. Press &quot;Save Changes&quot; to save.
+                        </label>
                         <div tabIndex={0}
                              className="collapse collapse-open bg-base-100 border-base-300 border rounded-none">
                             <div className="collapse-title font-semibold">Email</div>
