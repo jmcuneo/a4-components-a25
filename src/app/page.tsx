@@ -170,7 +170,7 @@ export default async function Home() {
                         </div>
                     </form> :
                     <div className={"flex justify-center align-baseline gap-4 mt-10"}>
-                        <Warning message={"Please log in to see your data!"}/>
+                        <Warning message={"No data found. If you are logged in, please enter data."}/>
                     </div>
                 }
             </div>
@@ -270,7 +270,7 @@ export default async function Home() {
                         </div>
                     </form> :
                     <div className={"flex justify-center align-baseline gap-4 mt-10"}>
-                        <Warning message={"Please log in to see your data!"}/>
+                        <Warning message={"No data found. If you are logged in, please enter data."}/>
                     </div>
                 }
             </div>
