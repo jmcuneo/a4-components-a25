@@ -53,8 +53,15 @@ async function startServer() {
         tasksCollection = getCollection("tasks-collection");
         usersCollection = getCollection("users-collection");
 
+        // Configure ViteExpress for production
+        if (process.env.NODE_ENV === 'production') {
+            // In production, serve built files
+            ViteExpress.config({ mode: 'production' });
+        }
+
         ViteExpress.listen(app, port, () => {
             console.log(`Server running at port:${port}`);
+            console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
         });
     } catch (err) {
         console.error("Failed to start server:", err);
