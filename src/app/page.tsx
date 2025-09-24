@@ -4,7 +4,6 @@ import {Metadata} from "next";
 import {states} from "@/lib/states";
 import {genders} from "@/lib/genders";
 import Warning from "@/components/warning";
-import {revalidatePath} from "next/cache";
 
 interface Data {
     firstName: string;
