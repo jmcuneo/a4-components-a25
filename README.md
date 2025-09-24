@@ -3,16 +3,19 @@
 ### Important Info
 Username: `example@gmail.com`\
 Password: `Password123`\
-Website link: (website link here)\
-GitHub link: https://github.com/Akaash-Walker/a3-persistence-a25
+Website link: https://a3-persistence-a25.vercel.app/ \
+GitHub link: https://github.com/Akaash-Walker/a3-persistence-a25 \
+**Note:** I used pnpm as the package manager for this project. From the testing that I've done, npm _should_ work. Just thought I'd mention it in case there are any issues.
 
 ### Summary
 * the goal of the application is to allow users to store and modify their personal information such as their name, date of birth, preferred gender, and state of residence.
 * Some of the challenges I faced:
   * Implementing OAuth authentication with the NextJS
-  * Deploying the application on Vercel (Vercel is a serverless platform, which made it challenging to manage sessions and persistent data storage)
+  * Deploying the application on Vercel (Vercel is a serverless platform, which made it challenging to use with express, read more in the Achievements section)
   * Managing routing using NextJS's file-based routing system alongside Express routing
   * Rendering dynamic content while also using SSR (I've only used CSR in the past)
+* Authentication method used: OAuth with Auth0
+  * I chose to use Auth0 because I've used it in the past and also provided some bonus points for doing so. I also figured that the implementation would be fairly straightforward since I'm using NextJS. More about my experience with Auth0 in the Achievements section.
 * CSS framework used: Tailwind CSS with DaisyUI components
   * I chose to use Tailwind since it allows me to quickly add styling, while DaisyUI provides pre-built components that are easy to customize.
 * Express middleware used:
@@ -21,14 +24,14 @@ GitHub link: https://github.com/Akaash-Walker/a3-persistence-a25
   * CORS middleware to handle cross-origin requests between NextJS frontend and Express backend
 
 ## Baseline Requirements
-- **Server**: Implemented using Express, handling routes for user authentication and CRUD operations.
-- **Results Functionality**: Displays all data associated with the logged-in user, excluding sensitive information like passwords (Auth0 handles this).
-- **Form/Entry Functionality**: Users can add, modify, and delete their personal information through a form interface. Some fields cannot be modified after initial entry (email since it is used with Auth0).
-- **Persistent Data Storage**: Utilized MongoDB Atlas for cloud-based database storage, with Mongoose for schema definition and data interaction.
-- **CSS Framework**: Used Tailwind CSS with DaisyUI components for styling, ensuring a modern and responsive design.
+- **Server**: (15 points) Implemented using Express, handling routes for user authentication and CRUD operations.
+- **Results Functionality**: (10 points) Displays all data associated with the logged-in user, excluding sensitive information like passwords (Auth0 handles this).
+- **Form/Entry Functionality**: (15 points) Users can add, modify, and delete their personal information through a form interface. Some fields cannot be modified after initial entry (email since it is used with Auth0).
+- **Persistent Data Storage**: (15 points) Utilized MongoDB Atlas for cloud-based database storage, with Mongoose for schema definition and data interaction.
+- **CSS Framework**: (10 points) Used Tailwind CSS with DaisyUI components for styling, ensuring a modern and responsive design.
 
 ### HTML
-- Used various input types including text fields, date pickers, radio buttons, and dropdowns to capture user information.
+- (5 points) Used various input types including text fields, date pickers, radio buttons, and dropdowns to capture user information.
 - Displayed data is specific to the logged-in user.
 
 ### CSS
@@ -42,25 +45,29 @@ GitHub link: https://github.com/Akaash-Walker/a3-persistence-a25
 - Express server handles api routes and connects to MongoDB for data persistence.
 
 ### General
-- Achieved  ninety percent or higher in all four Lighthouse categories for each page(Performance, Best Practices, Accessibility, and SEO).
+- (10 points) Achieved  ninety percent or higher in all four Lighthouse categories for each page(Performance, Best Practices, Accessibility, and SEO).
 - **!!! Add Screenshots !!!**
 
 ## Achievements
 
 ### Technical Achievements
-- I implemented Auth0 authentication using the `@auth0/nextjs-auth0` library. This was challenging because the [Auth0 quickstart](https://auth0.com/docs/quickstart/webapp/nextjs/01-login) integration wasn't entirely descriptive, whereas the [GitHub](https://github.com/auth0/nextjs-auth0) page had a lot more detail. Once I found this GitHub page, it made the implementation much easier.
-- **Dummy Account Info**
-- Username: `example@gmail.com`
-- Password: `Password123`
 
-- I used Next.js's file-based routing system alongside Express routing. Next.js handles the frontend routing, while Express handles the backend API routes. This proved to be challenging when trying to deploy to vercel, as the backend had to be serverless. The easiest solution was to use Next.js API routes for the backend, but this assignment requires the use of Express. 
+#### Achievement 1: OAuth Authentication with Auth0 (10 points)
+**Dummy Account Info** \
+Username: `example@gmail.com` \
+Password: `Password123`
+- I implemented Auth0 authentication using the `@auth0/nextjs-auth0` library. This was challenging because the [Auth0 quickstart](https://auth0.com/docs/quickstart/webapp/nextjs/01-login) integration wasn't entirely descriptive, whereas the [GitHub](https://github.com/auth0/nextjs-auth0) page had a lot more detail. Once I found this GitHub page, it made the implementation much easier.
+
+#### Achievement 2: Next.js with Express (Asking 5 points)
+- I used Next.js's file-based routing system alongside Express routing. Next.js handles the frontend routing, while Express handles the backend API routes. This proved to be challenging when trying to deploy to vercel, as express is a long-running process. The preferable solution would have been to just use the Next.js API routes, but this assignment required the use of Express. Personally I have nothing wrong with Express, and I do actually like it, but I definitely would not have chosen to use NextJS if I had known that it would not play nice with Express. 
 - I implemented (some) server-side rendering (SSR) using Next.js. This was a new to me, as I have only ever used client-side rendering (CSR) with React in the past. Not being able to use React hooks made it a bit challenging, but I was able to figure it out with some research. Many of the examples I saw online brought the db connection logic into the component file, but I instead used the "use server" directive to make get and post requests using axios. 
 
-- TODO: Alternative hosting service achievement (if applicable)
-- TODO: 100% Lighthouse achievement (if applicable)
+
+#### Achievement 3: Alternative deployment on Vercel (5 points)
+- I deployed the application on Vercel. This proved to be a massive headache because Vercel is serverless. I wanted to use Vercel because it's supposed to have a really easy deployment with Next.js, but due to the Express requirement, it made things much more difficult. I used a 2 pronged approach, where I hosted the frontend on Vercel and the backend on Render. This worked, but it was not ideal. I had to use CORS middleware to handle cross-origin requests between the frontend and backend, which added complexity. It also means I had to write custom deployment scripts so that each platform would have the correct code. Overall, it was a good learning experience, but I understand why it's just recommended to use the Next.js API routes. Not sure if I can count this as a technical achievement, but if so it should be worth at least 5 points. 
 
 ### Design/Evaluation Achievements
-I followed the w3 org accessibility tips for writing, designing, and developing. Here are a list of 12 specific tips I followed:
+(10 points) I followed the w3 org accessibility tips for writing, designing, and developing. Here are a list of 12 specific tips I followed:
 
 #### Writing
 1. Provide clear instructions: The form the user inputs data into has clear instructions on what information is required. The "Enter data" page has examples of valid inputs for each field. It also indicates errors when the user inputs invalid data (i.e if the user puts in a non-valid email address).
@@ -81,18 +88,26 @@ I followed the w3 org accessibility tips for writing, designing, and developing.
 4. Code that adapts to the user's technology: I added mobile responsiveness to the application using Tailwind CSS's responsive design utilities. For example, the navbar hides the app name on small screens to save space, while the data table on the /my-info page becomes a series of cards on smaller screens to make it easily scrollable.
 
 ### CRAP Principles
+
+(5 points) I wrote some info about how I implemented the CRAP principles in my application.
+
 **Contrast**
-  - Size: The font size varies between different elements on the page, with headings being larger than body text.
-  - Color: The website uses DaisyUI's built-in color schemes, which provide good contrast between text and background colors. This includes both light and dark modes.
-  - Font: I used a sans-serif font (Avenir) from Adobe Fonts for a clean and modern look. I chose this font because it is easy to read on both desktop and mobile devices.
-  - Shape: Buttons and input fields have distinct shapes that make them easily identifiable.
-  - Emphasis: Important elements such as buttons and headings are emphasized using larger font sizes and bright colors.
+
+To give my application the best contrast, I used a variety of design patterns to make the content stand out. For example, the font size varies between different elements on the page, with headings being larger than body text. The website uses DaisyUI's built-in color schemes, which provide good contrast between text and background colors. This includes both light and dark modes. I used a sans-serif font (Avenir) from Adobe Fonts for a clean and modern look. I chose this font because it is easy to read on both desktop and mobile devices. Buttons and input fields have distinct shapes that make them easily identifiable.
+Important elements such as buttons and headings are emphasized using larger font sizes and bright colors. Using all of these techniques allowed me to deliver a professional looking application without the hassle of developing a lot of things from scratch.
+
 **Repetition**
-  - Repeated elements: Some examples are the navbar, buttons, colors, and on mobile, the card layout for displaying user data.
+
+Using repeated elements can help bring a sense of uniformity and familiarity to the user when using your application. Some examples of repeated components are the navbar, buttons, colors, and on mobile, the card layout for displaying user data. This was important to me as component design is a large part of React, especially with how much time and work it saves you. Being able to create a reusable, modifiable component allowed me to have a consistent and uniform feel throughout my application, even when things needed design tweaks. Along with this, DaisyUI’s color palate did a lot of the heavy lifting for me, as all of the pre-built components had the same theme and colors. With the power of a CSS framework and React, I was able to easily bring repeatable elements throughout my application.
+
+
 **Alignment**
-  - Most items are center aligned, with some exceptions such as buttons and input fields. These are usually right aligned to make them easier to find.
+
+Alignment was something I put a lot of consideration into, especially since I made the website mobile responsive. Because of this, most elements are center aligned. This makes it much easier to fit a lot of information in, such as with tables and forms. I did make sure though that some elements remained right aligned, such as buttons. This provided a clear and understandable flow of content, as information was displayed on the left with available actions (such as delete in the “my-info” page) on the right. Center aligning things also gave me a lot of negative space, which helps to make the application feel less cluttered and easier to navigate. This can be seen in the navbar, where the tabs are center aligned to make it easy to see what available pages there are (even though there are only 2).
+
 **Proximity**
-  - Information is grouped together based on its relevance. I made sure to put some thought into the layout of the /enter-data page, such as the order of the input fields. For example, the first and last name fields are next to each other since they are closely related. The date of birth field is below these two fields, as it is also personal information but not as closely related. Next I have preferred gender, since it is also personal information. Finally, I have the state field, which is less personal information and more location-based.
+
+Information is grouped together based on its relevance. I made sure to put some thought into the layout of the /enter-data page, such as the order of the input fields. For example, the first and last name fields are next to each other since they are closely related. The date of birth field is below these two fields, as it is also personal information but not as closely related. Next, I have preferred gender since it is also personal information. Finally, I have the state field, which is less personal information and more location based. Not only is this seen on the input forms, but this is also seen on the “my-info” page where information is grouped just as it was on the “enter-data” page, albeit with some additional fields.
 
 ## Additional Libraries/Frameworks Used
 Here is a list of additional libraries used (as seen in package.json):
