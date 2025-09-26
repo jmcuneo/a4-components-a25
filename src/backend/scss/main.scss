@@ -1,0 +1,50 @@
+/* Font Defs */
+$family-primary: "Roboto Mono", monospace;
+$family-title: "Asimovian", sans-serif;
+
+/* Bulma */
+@use "../../node_modules/bulma/sass/utilities" with (
+  $family-primary: $family-primary,
+);
+@use "../../node_modules/bulma/sass/base";
+@use "../../node_modules/bulma/sass/elements/block";
+@use "../../node_modules/bulma/sass/elements/button";
+@use "../../node_modules/bulma/sass/elements/notification";
+@use "../../node_modules/bulma/sass/elements/table";
+@use "../../node_modules/bulma/sass/elements/title";
+@use "../../node_modules/bulma/sass/form";
+@use "../../node_modules/bulma/sass/grid";
+@use "../../node_modules/bulma/sass/helpers";
+@use "../../node_modules/bulma/sass/themes";
+
+/* Font Awesome */
+@use '../../node_modules/@fortawesome/fontawesome-free/scss/variables' as fa-v with (
+  $font-display: swap
+);
+
+@use '../../node_modules/@fortawesome/fontawesome-free/scss/fontawesome';
+@use '../../node_modules/@fortawesome/fontawesome-free/scss/fa' as fa;
+@use '../../node_modules/@fortawesome/fontawesome-free/scss/solid' as fa-solid;
+@use '../../node_modules/@fortawesome/fontawesome-free/scss/brands' as fa-brands;
+
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Asimovian&display=swap');
+
+:root {
+  /* Colors */
+  --bulma-scheme-h: 0;
+
+  --bulma-primary-h: 8deg;
+  --bulma-primary-s: 66%;
+  --bulma-primary-l: 58%;
+}
+
+.title {
+  font-family: $family-title !important;
+
+  a {
+    color: inherit;
+  }
+}
+
