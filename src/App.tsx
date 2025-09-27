@@ -44,9 +44,9 @@ function App() {
         const initialTask = {
             id: Date.now(),
             task: "Complete assignment 4",
-            priority: "Medium",
+            priority: "Urgent",
             createDate: createDate,
-            suggestedDeadline: calculateDeadline(createDate, "Medium"),
+            suggestedDeadline: calculateDeadline(createDate, "Urgent"),
             isComplete: false,
         };
         return [initialTask];
