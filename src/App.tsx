@@ -33,7 +33,7 @@ function App() {
         if (savedTodos !== null) {
             const parsedTodos = JSON.parse(savedTodos)
 
-            return parsedTodos.map(todo => ({
+            return parsedTodos.map((todo: Todo) => ({
                 ...todo,
                 createDate: new Date(todo.createDate),
                 suggestedDeadline: new Date(todo.suggestedDeadline),
