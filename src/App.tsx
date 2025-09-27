@@ -58,7 +58,7 @@ function App() {
     }, [todoList]);
 
 
-    const addTask = (e) => {
+    const addTask = (e: React.FormEvent) => {
         e.preventDefault()
         const freshTask: Todo = {
             id: Date.now(),
@@ -74,7 +74,7 @@ function App() {
     }
 
     const handlePriorityChange = (id: number, newPriority: string) => {
-        const updatedList = todoList.map(todo => {
+        const updatedList = todoList.map((todo: Todo) => {
             if (todo.id === id) {
                 return {
                     ...todo,
@@ -89,7 +89,7 @@ function App() {
     };
 
     const deleteTask = (id: number) => {
-        const updatedList = todoList.filter(todo => todo.id !== id);
+        const updatedList = todoList.filter((todo: Todo) => todo.id !== id);
 
         setTodoList(updatedList);
     };
@@ -135,7 +135,7 @@ function App() {
                 </tr>
                 </thead>
                 <tbody id="taskTableBody">
-                {todoList.map(todo => (
+                {todoList.map((todo: Todo) => (
                     <tr key={todo.id}>
                         <td>{todo.task}</td>
                         <td>
