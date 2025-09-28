@@ -14,7 +14,7 @@ const __dirname = path.dirname(__filename);
 app.use(express.static(path.join(__dirname, 'my-react-app/dist')));
 app.use(express.json());
 dotenv.config();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 
 const logger = (req, res, next) => {
