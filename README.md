@@ -1,35 +1,59 @@
-Assignment 4 - Components
-===
+This website is designed to help you prioritize what assignments you should
+complete first by ordering them by "stress score." This website supports
+account creation, logging in, logging out, and user associated persistent data.
 
-For this assignment you will re-implement the client side portion of *either* A2 or A3 using either React or Svelte components. If you choose A3 you only need to use components for the data display / updating; you can leave your login UI as is.
+This website has been converted to utilize react technologies instead of ejs as in the previous project.
+This is a total conversion as now every aspect of this website uses react including the login and registration page.
+This was a lot more involved than I previously thought, but it wasnt too surprising given that my previous model
+was server based. This had a lot of implications for how I was doing other things like login. This ultimately exposed
+a lot of weaknesses in my previous project and gave me an opportunity to improve them.
 
-[Svelte Tutorial](https://github.com/jmcuneo/cs4241-guides/blob/master/using.svelte.md)  
-[React Tutorial](https://github.com/jmcuneo/cs4241-guides/blob/master/using.react.md)  
+This new technology while a little difficult at first for me did not hurt the development experience now that I know it. I feel as if 
+I can make much more powerful websites now with dynamic content. I think as I started doing it more it became much easier.
 
-You may also want to check out [this video of Prof. Roberts working through both of the above tutorials](https://echo360.org/media/75af2567-2f06-4851-baeb-1cfe8ea5cb48/public). 
+AI notice: I utilized chatgpt, gemini to give me examples for various things such as getting started with a react app, displaying dynamic data 
+and how/why it works with react. I asked for some help with debugging, it pointed out some common pitfalls I 
+was making with react when I first started out. I think it was very helpful at one point because I 
+had many typos/syntax errors in my html when trying to do some dynamic content for the first time that was 
+driving me nuts trying to find.
 
-This project can be implemented on any hosting service (Render, DigitalOcean, Heroku, etc.). However, you must include all files in your GitHub repo so that the course staff can view them.
+WARNING: accounts are not locally stored in the server files but in the mongodb database so you MUST have a mongodb database connected or the server
+will not work. 
+Moreover, You must build the my-react-app folder as it has its own package.json folder!
 
-Deliverables
----
+To login, please create an account using the registration page or use some of my premade account for my database:
+{user: test1, password: 123}
+{user: test2, password: 123}
+{user: test3, password: 123}
 
-Do the following to complete this assignment:
+If you would like access to my database, please email me at egray1@wpi.edu and I will send you my mongodb .env details.
 
-1. Implement your project with the above requirements.
-1. Test your project to make sure that when someone goes to your main page on Render, etc., it displays correctly.
-1. Ensure that your project has the proper naming scheme `a4-firstname-lastname` so we can find it.
-1. Fork this repository and modify the README to the specifications below. Be sure to add *all* project files.
-1. Create and submit a Pull Request to the original repo. Name the pull request using the following template: `a4-firstname-lastname`.
+MongoDB setup instructions:
+After you make an account on mongoDB, go to the Mongoose section and create a cluster.
+After creating a cluster, 
+go to database --> clusters --> click connect --> drivers at the top --> driver --> Mongoose
+--> scroll down slightly and some Node.js code will be generated with a URI for you to use.
 
-Grading
----
-Unlike previous assignments, this assignment will be solely graded on whether or not you successfully complete it. Partial credit will be generously given.
+Look toward the top and you will see the line:
+const uri = "mongodb+srv://MONGO_USER:<db_password>@MONGO_HOST/MONGO_OPTIONS";
 
-Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
----
+Take components of this URL and use them in my .env file.
 
-## Your Web Application Title
+The password will be the associated cluster's password. If you forget your password, head to Security --> databse access and select your cluster.
+You can change the password there.
 
-your hosting link e.g. http://a4-charlieroberts.glitch.me
+No quotes needed.
+.env file format:
 
-Include a very brief summary of your project here and what you changed / added to assignment #3. Briefly (3–4 sentences) answer the following question: did the new technology improve or hinder the development experience?
+MONGO_USER=
+MONGO_PASS=
+MONGO_HOST=
+MONGO_OPTIONS=?
+
+You must build the my-react-app folder as it has its own package.json folder.
+
+
+
+
+
+
