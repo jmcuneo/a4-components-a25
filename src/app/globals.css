@@ -1,0 +1,6 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+body {
+    font-family:"avenir-lt-pro", sans-serif;
+}
