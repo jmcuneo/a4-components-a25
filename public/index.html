@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>CS4241 Assignment Three</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Page where users can post a new review.">
+    <script src="js/main.js"></script>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://unpkg.com/nes.css/css/nes.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> 
+  </head>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="index.html">Create Review</a></li>
+        <li><a href="reviews.html">Your Reviews</a></li>
+        <li><a href="#" id="log-link">Logout</a></li>
+      </ul>
+    </nav>
+    <h1>Game Review Site</h1>
+  </header>
+  <body>
+    <div class="create-review">
+      <h2>Create Review:</h2>
+      <form id="review-form">
+        <label for="title">Title: </label>
+        <input type="text" class="nes-input" id="title">
+        <br>
+        <label for="year">Release Year: </label>
+        <input type="number" class="nes-input" id="year">
+        <br>
+        <label for="blurb">Blurb: </label>
+        <input type="text" id="blurb" class="nes-input" placeholder="Your Review">
+        <br>
+        <label for="gameplayRating">Gameplay Rating: </label>
+        <input type="number" id="gameplayRating" class="nes-input" placeholder="1-10">
+        <br>
+        <label for="storyRating">Story Rating: </label>
+        <input type="number" id="storyRating" class="nes-input" placeholder="1-10">
+        <br>
+        <label for="visualsRating">Visuals Rating: </label>
+        <input type="number" id="visualsRating" class="nes-input" placeholder="1-10">
+        <br>
+        <label for="musicRating">Music Rating: </label>
+        <input type="number" id="musicRating" class="nes-input" placeholder="1-10">
+        <br>
+        <br>
+        <button type="submit" id="submit-button" class="nes-btn">Post</button>
+      </form>
+    </div>
+  </body>
+</html>

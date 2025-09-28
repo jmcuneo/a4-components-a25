@@ -1,0 +1,23 @@
+document.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    // console.log("Hello");
+
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    const response = await fetch("/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password })
+    });
+
+    const data = await response.json();
+
+    if (data.success){
+        document.getElementById("authorisation-error-message").textContent = "";
+        window.location.href = "reviews.html";
+    } else {
+        document.getElementById("authorisation-error-message").textContent = data.error;
+    }
+})

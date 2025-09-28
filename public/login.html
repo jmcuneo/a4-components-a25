@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Login Page</title>
+    <meta charset="utf-8">
+    <script src="js/login.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Page where users can login to a preexisting account.">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://unpkg.com/nes.css/css/nes.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  </head>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="index.html">Create Review</a></li>
+        <li><a href="reviews.html">Your Reviews</a></li>
+      </ul>
+    </nav>
+    <h1>Game Review Site</h1>
+  </header>
+  <body>
+    <div class="create-review">
+      <h2>Login:</h2>
+      <form id="login-form">
+        <label for="username">Username:</label>
+        <input type="text" id="username" required>
+        <br>
+        <label for="password">Password:</label>
+        <input type="text" id="password" required>
+        <div id="authorisation-error-message" class="nes-text is-error"></div>
+        <br>
+        <button type="submit" class="nes-btn">Login</button>
+        <a href="register.html" class="darker-link">Don't Have An Account? Register Here</a>
+      </form>
+    </div>
+  </body>
+</html>
