@@ -2,23 +2,26 @@ This website is designed to help you prioritize what assignments you should
 complete first by ordering them by "stress score." This website supports
 account creation, logging in, logging out, and user associated persistent data.
 
+Link to website: https://a4-elijahgray-a25.onrender.com/
+
 This website has been converted to utilize react technologies instead of ejs as in the previous project.
 This is a total conversion as now every aspect of this website uses react including the login and registration page.
 This was a lot more involved than I previously thought, but it wasnt too surprising given that my previous model
 was server based. This had a lot of implications for how I was doing other things like login. This ultimately exposed
 a lot of weaknesses in my previous project and gave me an opportunity to improve them.
 
-This new technology while a little difficult at first for me did not hurt the development experience now that I know it. I feel as if 
-I can make much more powerful websites now with dynamic content. I think as I started doing it more it became much easier.
+React was little difficult at first to learn. I was struggling to get started which took me alot of reading.
+After some experimentation and seeing some examples from videos, AI, and other ones I found on github I got a better feel to use it.
+For me, it did not hurt the development experience. I feel that I can make much more powerful websites now with dynamic content.
 
-AI notice: I utilized chatgpt, gemini to give me examples for various things such as getting started with a react app, displaying dynamic data 
-and how/why it works with react. I asked for some help with debugging, it pointed out some common pitfalls I 
-was making with react when I first started out. I think it was very helpful at one point because I 
-had many typos/syntax errors in my html when trying to do some dynamic content for the first time that was 
+AI notice: I utilized chatgpt, gemini to give me examples for various things such as getting started with a react app, displaying dynamic data
+and how/why it works with react. I asked for some help with debugging, it pointed out some common pitfalls I
+was making with react when I first started out. I think it was very helpful at one point because I
+had many typos/syntax errors in my html when trying to do some dynamic content for the first time that was
 driving me nuts trying to find.
 
 WARNING: accounts are not locally stored in the server files but in the mongodb database so you MUST have a mongodb database connected or the server
-will not work. 
+will not work.
 Moreover, You must build the my-react-app folder as it has its own package.json folder!
 
 To login, please create an account using the registration page or use some of my premade account for my database:
@@ -30,7 +33,7 @@ If you would like access to my database, please email me at egray1@wpi.edu and I
 
 MongoDB setup instructions:
 After you make an account on mongoDB, go to the Mongoose section and create a cluster.
-After creating a cluster, 
+After creating a cluster,
 go to database --> clusters --> click connect --> drivers at the top --> driver --> Mongoose
 --> scroll down slightly and some Node.js code will be generated with a URI for you to use.
 
