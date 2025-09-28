@@ -221,7 +221,7 @@ export default function User_content() {
                             <h2 className="h3 mb-3">Add / Update Assignment</h2>
                             <form id="submit-form" onSubmit={submit_homework}>
 
-                                <div className="mb-3 fw-bold">
+                                <div className="mb-3 fw-bold text-start">
 
                                     <label htmlFor="ID" className="form-label"> ID</label>
                                     <input type="number" className="form-control" id="ID" placeholder="homework ID # (e.g 3)" required
@@ -230,7 +230,7 @@ export default function User_content() {
 
                                 </div>
 
-                                <div className="mb-3 fw-bold">
+                                <div className="mb-3 fw-bold text-start">
 
                                     <label htmlFor="subject" className="form-label"> Assignment name </label>
                                     <input type="text" className="form-control" id="subject" placeholder="e.g a3-ElijahGray-a25" required
@@ -239,7 +239,7 @@ export default function User_content() {
 
                                 </div>
 
-                                <div className="mb-3 fw-bold">
+                                <div className="mb-3 fw-bold text-start">
 
                                     <label htmlFor="expectedtime" className="form-label"> Hours Expected </label>
                                     <input type="number" className="form-control" id="expectedtime" placeholder="hours expected to complete" required
@@ -248,7 +248,7 @@ export default function User_content() {
 
                                 </div>
 
-                                <div className="mb-3 fw-bold">
+                                <div className="mb-3 fw-bold text-start">
                                     <label htmlFor="date" className="form-label">Due Date</label>
                                     <input type="date" className="form-control" id="date" required
                                            value = {date} onChange={(event) => setDate(event.target.value)}
