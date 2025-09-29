@@ -1,35 +1,29 @@
-Assignment 4 - Components
-===
+# Coffee Shop Ordering App (React Components)
 
-For this assignment you will re-implement the client side portion of *either* A2 or A3 using either React or Svelte components. If you choose A3 you only need to use components for the data display / updating; you can leave your login UI as is.
+**Render link:** [a4-components-a25-kyra.onrender.com](https://a4-components-a25-kyra.onrender.com/)  
 
-[Svelte Tutorial](https://github.com/jmcuneo/cs4241-guides/blob/master/using.svelte.md)  
-[React Tutorial](https://github.com/jmcuneo/cs4241-guides/blob/master/using.react.md)  
-
-You may also want to check out [this video of Prof. Roberts working through both of the above tutorials](https://echo360.org/media/75af2567-2f06-4851-baeb-1cfe8ea5cb48/public). 
-
-This project can be implemented on any hosting service (Render, DigitalOcean, Heroku, etc.). However, you must include all files in your GitHub repo so that the course staff can view them.
-
-Deliverables
 ---
 
-Do the following to complete this assignment:
+## Summary
 
-1. Implement your project with the above requirements.
-1. Test your project to make sure that when someone goes to your main page on Render, etc., it displays correctly.
-1. Ensure that your project has the proper naming scheme `a4-firstname-lastname` so we can find it.
-1. Fork this repository and modify the README to the specifications below. Be sure to add *all* project files.
-1. Create and submit a Pull Request to the original repo. Name the pull request using the following template: `a4-firstname-lastname`.
+This project re-implements my Assignment 3 coffee shop ordering system using **React components**. The application allows users to create accounts, log in, and place coffee and food orders. Orders are displayed in a dynamic table where users can **edit** or **delete** their submissions. All data is stored and retrieved from the backend through API calls.  
 
-Grading
----
-Unlike previous assignments, this assignment will be solely graded on whether or not you successfully complete it. Partial credit will be generously given.
+The main changes from Assignment 3 include splitting the UI into reusable React components and managing state with React hooks. Features such as editing an order now are split up into start edit and save edit, or an order open inline input fields, and form elements are controlled components that track user input live.
 
-Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
 ---
 
-## Your Web Application Title
+## Development Reflection
 
-your hosting link e.g. http://a4-charlieroberts.glitch.me
+Using React significantly improved the development experience compared to plain HTML + vanilla JS in Assignment 3. With React’s state management and declarative rendering:  
 
-Include a very brief summary of your project here and what you changed / added to assignment #3. Briefly (3–4 sentences) answer the following question: did the new technology improve or hinder the development experience?
+- I no longer had to manually manipulate the DOM when editing or updating rows—React re-renders automatically when state changes.  
+- Code became more organized by splitting functionality into smaller components (e.g., `LoginForm`, `OrderForm`, `OrdersTable`).  
+- The ability to use hooks like `useState` and `useEffect` made handling authentication and API data fetching much clearer since everything was stored in the react state and componenets just 'react' to one another to allow for logical flow and easy state handling.
+
+While the learning curve of JSX and React’s component model required some adjustment, overall React streamlined the process and reduced boilerplate code.
+
+I still kept a lot of the orignal components of my A3.  For example, I continued to use Tailwind using the CDN. I just had to change a few formatting things to .jsx.  I kept the same UI elements and styling, and the same baseline post and get request calls, I just changed them to work with react, and created an api() helper function to help handle the fetches.
+---
+
+## How to Run Locally
+`npm run dev`
