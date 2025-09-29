@@ -6,8 +6,7 @@ Goal of app: The goal of this project is a task manager, in which a user can set
 
 ### React Implementation
 
-For this assignment, I refactored the application to use React components, improving modularity and maintainability. Instead of using Vite as recommended, I implemented a custom setup with Webpack and Babel to bundle and transpile the React code.
-
+For this assignment, I refactored the application to use React components, improving modularity and maintainability. Instead of using Vite as recommended, I implemented a custom setup with Webpack and Babel to bundle and transpile the React code. Overall, I found the new technology to improve the developer experience. I can see how if I were to scale up this project to be more complex with more components, react would definetly be the way to go.
 #### Custom React Setup
 - Used Webpack for bundling and build process
 - Configured Babel for JSX and ES6+ transpilation
