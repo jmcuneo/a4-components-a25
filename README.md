@@ -1,8 +1,6 @@
 Assignment 4 - Components
 ===
 
-Forked the wrong repo but set upstream to point towards a4-components-a25
-
 ## The Best Todo App
 
 Deployed: https://a4-eric-li.onrender.com
