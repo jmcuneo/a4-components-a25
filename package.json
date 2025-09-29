@@ -11,6 +11,7 @@
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.3",
     "@tailwindcss/vite": "^4.1.13",
+    "axios": "^1.12.2",
     "bulma": "^1.0.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -27,6 +28,7 @@
     "passport-local-mongoose": "^8.0.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-router": "^7.9.3",
     "tailwind-merge": "^3.3.1",
     "tailwindcss": "^4.1.13",
     "tsx": "^4.19.3",

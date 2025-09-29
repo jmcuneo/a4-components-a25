@@ -107,50 +107,20 @@ passport.use(new GitHubStrategy({
   }
 ));
 
-// Handle forms instead of JSON
-app.use(express.urlencoded({ extended: true }))
 
-// Static file middleware 
-function enforce_files(req: Request, res: Response, next: NextFunction) {
-  const logged_out = [
-    '/login.html',
-    '/register.html',
-    '/',
-    '/index.html'
-  ]
-  const logged_in = [
-    '/portal.html',
-  ]
+// app.use(express.urlencoded({ extended: true })) // Handle forms
+app.use(express.json()); // Handle JSON
 
-  // console.log(req)
-  const file_url_path = url.parse(req.url, true).pathname!
-  if (logged_out.includes(file_url_path)) {
-    return enforce_logged_out(req, res, next)
-  } else if (logged_in.includes(file_url_path)) {
-    return enforce_logged_in(req, res, next)
-  } else return next()
-}
 
 function enforce_logged_out(req: Request, res: Response, next: NextFunction) {
-  if (req.isAuthenticated()) res.redirect(302, '/portal.html')
+  if (req.isAuthenticated()) res.redirect(302, '/portal')
   else next()
 }
 
 function enforce_logged_in(req: Request, res: Response, next: NextFunction) {
-  if (!req.isAuthenticated()) res.redirect(302, '/');
+  if (!req.isAuthenticated()) res.status(401).send("User is not authenticated.");
   else next()
 }
-
-// Serve static files in public/
-let static_file_folder = path.resolve(import.meta.dirname, '..', 'public')
-
-// Serve index.html as root (for some reason vercel is not respecting this with express.static)
-// app.get('/', enforce_logged_out, (req, res) => {
-//   console.log(static_file_folder + '/index.html')
-//   res.sendFile(static_file_folder + '/index.html')
-// })
-
-app.use(enforce_files, express.static(static_file_folder));
 
 app.use('/api', enforce_logged_in, dataRouter)
 app.use('/api', enforce_logged_in, userRouter)
