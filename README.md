@@ -23,6 +23,7 @@ Using React significantly improved the development experience compared to plain 
 While the learning curve of JSX and React’s component model required some adjustment, overall React streamlined the process and reduced boilerplate code.
 
 I still kept a lot of the orignal components of my A3.  For example, I continued to use Tailwind using the CDN. I just had to change a few formatting things to .jsx.  I kept the same UI elements and styling, and the same baseline post and get request calls, I just changed them to work with react, and created an api() helper function to help handle the fetches.
+
 ---
 
 ## How to Run Locally
