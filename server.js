@@ -109,10 +109,6 @@ app.put('/api/patient/:id', (req, res) => {
     res.status(200).json(patient); // Use 200 for successful update
 });
 
-app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
-});
-
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
 });
