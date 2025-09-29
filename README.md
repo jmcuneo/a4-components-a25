@@ -13,6 +13,9 @@ The main changes from Assignment 3 include splitting the UI into reusable React 
 ---
 
 ## Development Reflection
+- Did the new technology improve or hinder the development experience?
+
+I've used React before and overall I think using React immproved the development expereince.
 
 Using React significantly improved the development experience compared to plain HTML + vanilla JS in Assignment 3. With React’s state management and declarative rendering:  
 
@@ -22,7 +25,9 @@ Using React significantly improved the development experience compared to plain 
 
 While the learning curve of JSX and React’s component model required some adjustment, overall React streamlined the process and reduced boilerplate code.
 
-I still kept a lot of the orignal components of my A3.  For example, I continued to use Tailwind using the CDN. I just had to change a few formatting things to .jsx.  I kept the same UI elements and styling, and the same baseline post and get request calls, I just changed them to work with react, and created an api() helper function to help handle the fetches.
+I still kept a lot of the orignal components of my A3.  For example, I continued to use Tailwind using the CDN. I just had to change a few formatting things to .jsx.  I kept the same UI elements and styling, and the same baseline post and get request calls, I just changed them to work with React, and created an api() helper function to help handle the fetches.
+
+It was not too difficult to implement, and seems more intuitive when working with it.
 
 ---
 
