@@ -1,17 +1,17 @@
 import express from 'express'
+import path from 'path';
+import { fileURLToPath } from 'url';
+
 const app = express();
-const port = 3001; // Using a different port than the Vite dev server
+const port = process.env.PORT || 3001; // Use Render's port or 3001 for local
 
 // Middleware to parse JSON bodies
 app.use(express.json());
-import path from 'path';
-import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Have Node serve the files for our built React app
-app.use(express.static(path.resolve(__dirname, '../dist')));
+app.use(express.static(path.resolve(__dirname, 'dist')));
 
 // In-memory data store (replace with a database in a real application)
 let appdata = [
@@ -107,6 +107,10 @@ app.put('/api/patient/:id', (req, res) => {
 
     appdata[patientIndex] = patient; // Update the patient in the array
     res.status(200).json(patient); // Use 200 for successful update
+});
+
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
 });
 
 app.listen(port, () => {
