@@ -69,7 +69,7 @@ ViteExpress.config({ mode: "development" });
 let callbackURL = "http://localhost:3000"
 if (process.env.RUN_ENV != "development") {
   ViteExpress.config({ mode: "production" });
-  callbackURL = "https://a4-brendanleu.vercel.com"
+  callbackURL = "https://a4-brendanleu.brleu.com"
 }
 
 // Github Strategy
