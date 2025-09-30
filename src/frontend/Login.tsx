@@ -1,20 +1,100 @@
-import { Button } from "@/components/ui/button"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { toast } from "sonner"
+import { z } from "zod"
 
-function App() {
+import { GitHubLogoIcon } from "@radix-ui/react-icons"
+import { Button } from "@/components/ui/button"
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+
+import { login } from '@/services/authService'
+
+import { UserContext } from "@/contexts/UserContext"
+import { useContext } from 'react';
+import { Link } from "react-router"
+
+const LoginSchema = z.object({
+  email: z.string().min(1),
+  password: z.string().min(1),
+})
+
+export default function LoginPage() {
+  let userContext = useContext(UserContext)
+
+  const form = useForm<z.infer<typeof LoginSchema>>({
+    resolver: zodResolver(LoginSchema),
+    defaultValues: {
+      email: "",
+      password: ""
+    },
+  })
+
+  function onSubmit(data: z.infer<typeof LoginSchema>) {
+    login(data.email, data.password, userContext);
+
+    toast("You submitted the following values", {
+      description: (
+        <pre className="mt-2 w-[320px] rounded-md bg-neutral-950 p-4">
+          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+        </pre>
+      ),
+    })
+  }
+
   return (
     <>
-      <h1>Login</h1>
-      <Button asChild>
-        <a href="/login">Login</a>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input placeholder="example@email.com" type="email" {...field} />
+                </FormControl>
+                <FormDescription>
+                  This is your email address.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Password</FormLabel>
+                <FormControl>
+                  <Input placeholder="password" type="password" {...field} />
+                </FormControl>
+                <FormDescription>
+                  This is your password.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button type="submit">Log In</Button>
+        </form>
+      </Form>
+      <Button asChild className="focus-visible:ring-ring bg-secondary text-secondary-foreground hover:bg-secondary/80">
+        <Link to="/register">Sign Up</Link>
       </Button>
-      <Button asChild>
-        <a href="/register">Sign Up</a>
-      </Button>
-      <Button asChild>
-        <a href="/auth/github">Log In with Github</a>
+      <Button asChild className="focus-visible:ring-ring bg-secondary text-secondary-foreground hover:bg-secondary/80">
+        <a href="/auth/github"><GitHubLogoIcon /> Sign Up with Github</a>
       </Button>
     </>
-  );
+  )
 }
-
-export default App;

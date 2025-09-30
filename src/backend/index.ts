@@ -65,9 +65,11 @@ passport.deserializeUser(User.deserializeUser());
 app.use(passport.initialize());
 app.use(passport.session());
 
+ViteExpress.config({ mode: "development" });
 let callbackURL = "http://localhost:3000"
 if (process.env.RUN_ENV != "development") {
-  callbackURL = "https://a3-brendanleu.brleu.com"
+  ViteExpress.config({ mode: "production" });
+  callbackURL = "https://a4-brendanleu.vercel.com"
 }
 
 // Github Strategy

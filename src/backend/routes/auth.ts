@@ -10,42 +10,36 @@ import { UserModel as User } from "../models/user.js";
 router.get('/logout', (req, res, next) => {
   req.logout((err) => {
     if (err) { return next(err); }
-    res.redirect(303, '/login.html?status=out');
+    res.redirect(303, '/login?status=out');
   });
 });
 
 // local (username/password)
-router.post(
-  '/login',
-  passport.authenticate('local', {
-    failureRedirect: '/login.html?status=fail',
-    failureMessage: true,
-    successRedirect: '/'
-  }
-  // , (err: string | undefined, user: typeof User, info: any, status: any) => {
-  //   console.log(err)
-  //   console.log(user)
-  //   console.log(info)
-  //   console.log(status)
-  // }
-  ),
-  (err: string | undefined, req: Request, res: Response, next: NextFunction) => {
-    if (err) { return next(err); }
-  }
-)
+router.post('/login', (req, res, next) => {
+    passport.authenticate('local', function (err: any, user: any, info: any) {      
+      if (err) {
+        return res.status(401).json(err);
+      }
+      if (user) {
+        return res.status(200).json(user);
+      } else {
+        res.status(401).json(info);
+      }
+    })(req, res, next);
+})
 
 router.post('/register', (req, res) => {
   // Password confirmation
   if (req.body.password !== req.body.password_conf) {
     const err = "passwords must match"
-    res.redirect(303, `/register.html?status=fail&err=${encodeURIComponent(err)}`);
+    return res.status(401).json(err);
   }
 
   // Email validation
   const email_format = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
   if (!req.body.email.match(email_format)) {
     const err = "email must be valid"
-    res.redirect(303, `/register.html?status=fail&err=${encodeURIComponent(err)}`);
+    return res.status(401).json(err);
   }
 
   User.register(
@@ -55,9 +49,9 @@ router.post('/register', (req, res) => {
     }), req.body.password, (err, msg) => {
       if (err) {
         console.error(err);
-        res.redirect(303, `/register.html?status=fail&err=${encodeURIComponent(err)}`);
+        return res.status(401).json(err);
       } else {
-        res.redirect(303, '/login.html?status=success');
+        return res.status(200).json(msg);
       }
     }
   )
@@ -71,7 +65,7 @@ router.get(
 
 router.get(
   '/github/callback', 
-  passport.authenticate('github', { failureRedirect: '/login.html?status=fail&err=github' }),
+  passport.authenticate('github', { failureRedirect: '/login?status=fail&err=github' }),
   (req, res) => {
     // Successful authentication, redirect home.
     res.redirect('/');

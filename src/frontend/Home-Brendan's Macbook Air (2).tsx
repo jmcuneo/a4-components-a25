@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button"
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { Link } from "react-router";
 
-export default function HomePage() {
+function HomePage() {
   return (
     <>
       <h1>Home</h1>
@@ -18,3 +18,5 @@ export default function HomePage() {
     </>
   );
 }
+
+export default HomePage;

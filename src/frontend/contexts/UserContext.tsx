@@ -2,7 +2,7 @@ import { createContext, useEffect, useState } from 'react';
 
 import { getUser } from '@/services/userService'
 
-interface UserContextType {
+export interface UserContextType {
   user: any;
   setUser: (user: any) => void;
 }
