@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Car Entries — App</title>
+  <meta name="description" content="Add, update and delete your car entries; view results for your account.">
+  <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@2.0.6/css/pico.min.css">
+  <style>
+    .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+    .skip-link:focus{left:1rem;top:1rem;width:auto;height:auto;background:#111;color:#fff;padding:.5rem .75rem;border-radius:.4rem}
+    :focus-visible{outline:2px solid currentColor;outline-offset:2px}
+  </style>
+</head>
+
+
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+  <main id="main" tabindex="-1">
+
+  <h1>Car Entries</h1>
+
+  <h2>Add Entry</h2>
+  <form id="add-form">
+    <label for="add-model">Model</label>
+    <input id="add-model" type="text"   name="model" required autocomplete="off">
+
+    <label for="add-year">Year</label>
+    <input id="add-year"  type="number" name="year"  required min="1886" step="1" inputmode="numeric">
+
+    <label for="add-mpg">MPG</label>
+    <input id="add-mpg"   type="number" name="mpg"   required min="1"    step="1" inputmode="numeric">
+
+    <button type="submit">Add</button>
+  </form>
+
+  <h2>Update Entry</h2>
+  <form id="update-form">
+    <label for="upd-id">ID</label>
+    <input id="upd-id" type="text" name="id" required>
+
+    <label for="upd-model">Model</label>
+    <input id="upd-model" type="text" name="model">
+
+    <label for="upd-year">Year</label>
+    <input id="upd-year" type="number" name="year" min="1886" step="1" inputmode="numeric">
+
+    <label for="upd-mpg">MPG</label>
+    <input id="upd-mpg" type="number" name="mpg" min="1" step="1" inputmode="numeric">
+
+    <button type="submit">Update</button>
+    <p><small>Note: leave a field blank to keep its current value.</small></p>
+  </form>
+
+  <h2>Delete Entry</h2>
+  <form id="delete-form">
+    <label for="del-id">ID</label>
+    <input id="del-id" type="text" name="id" required>
+    <button type="submit">Delete</button>
+  </form>
+
+  <p><a href="/results.html">View Results</a></p>
+</main>
+
+
+  <script>
+    // ----ADD ----
+    const addForm = document.getElementById('add-form');
+    if (addForm) addForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const fd = new FormData(addForm);
+      const payload = {
+        model: fd.get('model'),
+        year:  Number(fd.get('year')),
+        mpg:   Number(fd.get('mpg'))
+      };
+      const res = await fetch('/api/entries', {
+        method: 'POST',
+        headers: { 'Content-Type':'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      // if (!res.ok) { 
+      //   alert('Add failed'); return; 
+      // }
+      addForm.reset();
+      //alert('Added!');
+    });
+
+    // ------UPDATE---
+    const updateForm = document.getElementById('update-form');
+    if (updateForm) updateForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const fd = new FormData(updateForm);
+      const id    = (fd.get('id') || '').trim();
+      const model = fd.get('model') || null;
+      const year  = fd.get('year')  ? Number(fd.get('year')) : null;
+      const mpg   = fd.get('mpg')   ? Number(fd.get('mpg'))  : null;
+
+      const body = {};
+      if (model !== null) body.model = model;
+      if (year  !== null) body.year  = year;
+      if (mpg   !== null) body.mpg   = mpg;
+
+      const res = await fetch(`/api/entries/${encodeURIComponent(id)}`, {
+        method: 'PUT',
+        headers: { 'Content-Type':'application/json' },
+        body: JSON.stringify(body)
+      });
+
+      // if (!res.ok) {
+      // const msg = await res.text();
+      // alert(`Update failed (${res.status}): ${msg}`);
+      // return;
+      // }
+    updateForm.reset();
+    //alert('Updated!');
+  });
+
+    // ---- DELETE ---
+    const delForm = document.getElementById('delete-form');
+    if (delForm) delForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const id = (new FormData(delForm).get('id') || '').trim();
+      const res = await fetch(`/api/entries/${encodeURIComponent(id)}`, { method: 'DELETE' });
+
+      // if (!res.ok) { 
+      //   alert('Delete failed'); return; 
+      // }
+      delForm.reset();
+      //alert('Deleted!');
+    });
+
+    // ---- LOGOUT ------
+    const lf = document.getElementById('logout-form');
+    if (lf) lf.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      await fetch('/logout', { method: 'POST' });
+      location.href = '/';
+    });
+  </script>
+</body>
+</html>
