@@ -1,5 +1,3 @@
-import './App.css'
-import 'beercss'
 function NewButton() {
     return (
         <>

@@ -41,7 +41,8 @@ function App() {
                     <span>
                         {
                             user.avatar_url !== ""
-                                ? <img src={user.avatar_url} className={"circle tiny small-margin right-margin"} alt={"avatar image"}/>
+                                ?
+                                <img src={user.avatar_url} className={"circle tiny small-margin right-margin"} alt={"avatar image"}/>
                                 : <i className={"circle extra small-margin right-margin"}>account_circle</i>
                         }
 
@@ -82,22 +83,25 @@ function App() {
                         {passwords.map((entry, index) =>
                             (
                                 (<tr>
-                                <td>
-                                    {entry.website}
-                                </td>
-                                <td>
-                                    {entry.username}
-                                </td>
-                                <td>
-                                    {entry.password}
-                                </td>
-                                <td>
-                                    {entry.strength}
-                                </td>
+                                    <td>
+                                        {entry.website}
+                                    </td>
+                                    <td>
+                                        {entry.username}
+                                    </td>
+                                    <td>
+                                        {entry.password}
+                                    </td>
+                                    <td>
+                                        {entry.strength}
+                                    </td>
                                     {
-                                        true ? (<td><button className={"edit-save-button transparent circle"}><i>save</i></button></td>) : (<td>bye</td>)
+                                        true ? (<td>
+                                            <button className={"edit-save-button transparent circle"}><i>save</i>
+                                            </button>
+                                        </td>) : (<td>bye</td>)
                                     }
-                            </tr>)
+                                </tr>)
                             )
                         )}
                         </tbody>
