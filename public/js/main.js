@@ -2,11 +2,6 @@
 
 import { createRoot } from 'react-dom/client';
 
-document.body.innerHTML = "<div id='app'></div>";
-
-const root = createRoot(document.getElementById('app'))
-root.render(<h1>Hello, world</h1>);
-
 let i = 0;
 let hidden = true;
 
@@ -125,6 +120,11 @@ const displayGames = async function () {
 }
 
 window.onload = function () {
+    document.body.innerHTML = "<div id='app'></div>";
+
+    const root = createRoot(document.getElementById('app'))
+    root.render(<h1>Hello, world</h1>);
+
     initialize();
 
     const submitButton = document.getElementById("submit");
