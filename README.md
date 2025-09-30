@@ -1,35 +1,69 @@
 Assignment 4 - Components
 ===
 
-For this assignment you will re-implement the client side portion of *either* A2 or A3 using either React or Svelte components. If you choose A3 you only need to use components for the data display / updating; you can leave your login UI as is.
+Aditya Patel
+live link : https://a4-adityapatel.onrender.com
 
-[Svelte Tutorial](https://github.com/jmcuneo/cs4241-guides/blob/master/using.svelte.md)  
-[React Tutorial](https://github.com/jmcuneo/cs4241-guides/blob/master/using.react.md)  
+Bucket Buddy (React Edition)
 
-You may also want to check out [this video of Prof. Roberts working through both of the above tutorials](https://echo360.org/media/75af2567-2f06-4851-baeb-1cfe8ea5cb48/public). 
+This is my updated web app called Bucket Buddy, re-implemented with React components. It lets users log in with GitHub, create bucket list items, view them, mark them completed, or delete them.
 
-This project can be implemented on any hosting service (Render, DigitalOcean, Heroku, etc.). However, you must include all files in your GitHub repo so that the course staff can view them.
+Compared to A3, I refactored the frontend into React. Instead of static HTML tables, the app now uses components to manage state and render updates dynamically. The backend still uses Express for the server and MongoDB Atlas for persistence. Styling is provided by Bootstrap.
 
-Deliverables
----
+**Technical Achievements**
 
-Do the following to complete this assignment:
+**Tech Achievement 1**: React components
 
-1. Implement your project with the above requirements.
-1. Test your project to make sure that when someone goes to your main page on Render, etc., it displays correctly.
-1. Ensure that your project has the proper naming scheme `a4-firstname-lastname` so we can find it.
-1. Fork this repository and modify the README to the specifications below. Be sure to add *all* project files.
-1. Create and submit a Pull Request to the original repo. Name the pull request using the following template: `a4-firstname-lastname`.
+Added BucketForm, BucketList, and CompletedList under client/src/components/.
 
-Grading
----
-Unlike previous assignments, this assignment will be solely graded on whether or not you successfully complete it. Partial credit will be generously given.
+State is managed in App.jsx and passed as props to child components.
 
-Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
----
+Items update live when added, completed, or deleted.
 
-## Your Web Application Title
+**Tech Achievement 2**: Express server with CRUD + sessions
 
-your hosting link e.g. http://a4-charlieroberts.glitch.me
+Create, Read, Update, Delete routes built in Express (/results).
 
-Include a very brief summary of your project here and what you changed / added to assignment #3. Briefly (3–4 sentences) answer the following question: did the new technology improve or hinder the development experience?
+All routes protected by GitHub login (passport-github2).
+
+Sessions stored in MongoDB using express-session + connect-mongo.
+
+**Tech Achievement 3**: GitHub OAuth login
+
+Handled via Passport.js.
+
+Login/logout flow updates the frontend dynamically.
+
+Design / Evaluation Achievements
+
+**Design Achievement 1**: Bootstrap Styling
+
+Used Bootstrap 5 for forms, tables, and buttons.
+
+Navbar dynamically shows “Login” or “Logout.”
+
+**Design Achievement 2**: Accessibility
+
+Proper labels for all form inputs.
+
+Semantic headings (h1, h2).
+
+Meta viewport + description included.
+
+**Design Achievement 3**: CRAP Principles
+
+Contrast: Buttons use Bootstrap contextual colors.
+
+Repetition: Consistent navbar, spacing, and fonts.
+
+Alignment: Grid system aligns forms and tables.
+
+Proximity: Inputs grouped with labels.
+
+**Live Link**
+https://a4-adityapatel.onrender.com
+
+**Instructions**
+
+Visit the site → redirected to login.html., Click “Sign in with GitHub.”
+Use the form (React) to add a new bucket item. See active items under BucketList.Mark items completed or delete them. Completed items move into CompletedList. Logout via the navbar.
