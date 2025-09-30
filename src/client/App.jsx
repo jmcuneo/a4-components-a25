@@ -224,9 +224,12 @@ async function deleteOrder(id) {
            <section id="order" className="rounded-2xl border-4 border-dotted border-cream p-5 bg-coffee-900/30 shadow-cozy" aria-labelledby="order-heading">
             <h3 id="order-heading" className="font-pacifico text-xl mb-3">Order here</h3>
             <form onSubmit={submitOrder} className="grid gap-3">
-              <input id="yourname" value={yourname} onChange={e => setYourname(e.target.value)} />
-              <input id="yourdrink" value={yourdrink} onChange={e => setYourdrink(e.target.value)} />
-              <input id="yourfood"  value={yourfood}  onChange={e => setYourfood(e.target.value)} />
+              <input id="yourname" value={yourname} onChange={e => setYourname(e.target.value)} placeholder="Ceci"
+      className="w-full rounded-2xl bg-white text-coffee-900 px-4 py-2 shadow-sm outline-none ring-2 ring-transparent focus:ring-cream"/>
+              <input id="yourdrink" value={yourdrink} onChange={e => setYourdrink(e.target.value)} placeholder="Latte"
+      className="w-full rounded-2xl bg-white text-coffee-900 px-4 py-2 shadow-sm outline-none ring-2 ring-transparent focus:ring-cream"/>
+              <input id="yourfood"  value={yourfood}  onChange={e => setYourfood(e.target.value)} placeholder="Pastry"
+      className="w-full rounded-2xl bg-white text-coffee-900 px-4 py-2 shadow-sm outline-none ring-2 ring-transparent focus:ring-cream"/>
               <button id="submit-btn" type="submit" className="rounded-2xl bg-cream text-coffee-900 px-4 py-2">Submit order</button>
             </form>
 
