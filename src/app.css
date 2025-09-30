@@ -1,0 +1,102 @@
+:root {
+    --text-color: #02020A; /* Black */
+    --background-color: #D9E5D6; /* Honeydew */
+    --primary-color: #F7A072; /* Atomic tangerine */
+    --secondary-color: #FBB874; /* Fawn */
+    --accent-color: #7180AC; /* Glaucous */
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+#app {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    display: flex;
+
+    font-family: "League Spartan", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+
+    height: 100vh;
+    width: 100vw;
+
+    line-height: 1.5;
+}
+
+/* Main container */
+.card {
+    background-color: white;
+    border-radius: 1rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    margin: 2rem 5rem;
+    padding: 2rem 2.5rem 1rem 2.5rem;
+
+    width: 100%;
+}
+
+/* Message styles */
+#messages {
+    overflow-y: auto;
+}
+
+#messages div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 0.5rem;
+}
+
+#messages p {
+    margin: 0;
+    word-break: break-all;
+}
+
+#messages div span {
+    color: var(--accent-color);
+    font-family: monospace;
+    font-size: 0.8em;
+
+    min-width: max-content;
+
+    padding-left: 1rem;
+}
+
+/* Form styles */
+form {
+    display: grid;
+    grid-template-columns: 2fr 4fr 1fr;
+    grid-gap: 0.5rem;
+
+    padding-top: 1rem;
+}
+
+input {
+    border: none;
+    border-bottom: 1px solid var(--accent-color);
+
+    font-size: 1em;
+    font-family: inherit;
+
+    padding: 0.25em 0.5em;
+}
+
+button {
+    background-color: var(--primary-color);
+    border: none;
+
+    font-size: 0.8em;
+    padding: 0.5rem 1rem;
+}
+
+button:hover {
+    background-color: var(--secondary-color);
+    cursor: pointer;
+}
