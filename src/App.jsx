@@ -6,6 +6,7 @@ import './App.css'
 
 function App() {
     const [passwords, setPasswords] = useState([{
+        id: "Loading...",
         website: "Loading",
         username: "Loading",
         password: "Loading",
@@ -15,6 +16,7 @@ function App() {
         avatar_url: "",
         username: "User"
     })
+    const [activeEditRow, setActiveEditRow] = useState(-1)
     const getPasswords = async () => {
         const response = await fetch("/passwords", {
             method: "GET"
@@ -28,6 +30,13 @@ function App() {
         const userString = await response.text()
         setUser(JSON.parse(userString))
     }
+    const [passwordFormData, setPasswordFormData] = useState({
+        id: "None",
+        website: "None",
+        username: "None",
+        password: "None"
+    })
+    const wrap = (node) => (activeEditRow > -1 ? <form>{node}</form> : node);
     useEffect(async () => {
         await getPasswords()
         await getUsername()
@@ -62,50 +71,72 @@ function App() {
                     </h2>
                 </div>
                 <div id={"passwordTableContainer"}>
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>
-                                Website
-                            </th>
-                            <th>
-                                Username
-                            </th>
-                            <th>
-                                Password
-                            </th>
-                            <th>
-                                Strength
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {passwords.map((entry, index) =>
-                            (
-                                (<tr>
-                                    <td>
-                                        {entry.website}
-                                    </td>
-                                    <td>
-                                        {entry.username}
-                                    </td>
-                                    <td>
-                                        {entry.password}
-                                    </td>
-                                    <td>
-                                        {entry.strength}
-                                    </td>
-                                    {
-                                        true ? (<td>
-                                            <button className={"edit-save-button transparent circle"}><i>save</i>
-                                            </button>
-                                        </td>) : (<td>bye</td>)
-                                    }
-                                </tr>)
-                            )
-                        )}
-                        </tbody>
-                    </table>
+                    {wrap(
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>
+                                    Website
+                                </th>
+                                <th>
+                                    Username
+                                </th>
+                                <th>
+                                    Password
+                                </th>
+                                <th>
+                                    Strength
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {passwords.map((entry, index) =>
+                                (
+                                    (<tr>
+                                        <td>
+                                            {
+                                                activeEditRow === index ?
+                                                    (<div className={"field border"}>
+                                                        <input type={"url"} value={passwordFormData.website} onChange={(e) => {
+                                                            setPasswordFormData({
+                                                                ...passwordFormData,
+                                                                website: e.target.value
+                                                            })
+                                                        }}/>
+                                                    </div>)
+                                                    : entry.website
+                                            }
+                                        </td>
+                                        <td>
+                                            {entry.username}
+                                        </td>
+                                        <td>
+                                            {entry.password}
+                                        </td>
+                                        <td className={"strengthCell"}>
+                                            {entry.strength}
+                                        </td>
+                                        {
+                                            activeEditRow !== index ? (<td>
+                                                <button onClick={() => {
+                                                    setPasswordFormData({
+                                                        id: entry.id,
+                                                        website: entry.website,
+                                                        username: entry.username,
+                                                        password: entry.password
+                                                    })
+                                                    setActiveEditRow(index)}
+                                                } className={"edit-save-button transparent circle"}>
+                                                    <i>edit</i>
+                                                </button>
+                                            </td>) : (<td>bye</td>)
+                                        }
+                                    </tr>)
+                                )
+                            )}
+                            </tbody>
+                        </table>
+                    )}
 
 
                 </div>
