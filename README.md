@@ -31,5 +31,12 @@ It was not too difficult to implement, and seems more intuitive when working wit
 
 ---
 
+## AI Usage
+For this assignment I used AI to help me understand the baseline componenets of React and how to go from my express server to using it with react componenets.  ChatGPT was also very helpful with debugging if something wasn't converted correctly, specfically in my return statement in my App.jsx for front end since it is a little different from my index.html file from A3.
+
+Also used W3 Schools for reference:  https://www.w3schools.com/react/react_getstarted.asp
+
+---
+
 ## How to Run Locally
 `npm run dev`

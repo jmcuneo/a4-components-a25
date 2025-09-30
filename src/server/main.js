@@ -15,8 +15,7 @@ let Users;
 let Orders;
 
 // middleware
-app.use(express.static('public'));
-app.use(express.static('views')); // only if you intentionally want to serve raw files in views/
+app.use(express.static('../../dist'));
 app.use(express.json());
 
 app.use(
