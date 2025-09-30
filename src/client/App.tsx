@@ -24,13 +24,16 @@ const App: React.FC = () => {
     // Fetch user info
     useEffect(() => {
         const fetchUser = async () => {
+            console.log("Fetching user...");
             try {
-                const res = await fetch("/api/me", { credentials: "include" });
+                const res = await fetch("http://localhost:3000/api/me", { credentials: "include" });
                 if (!res.ok) throw new Error("Not logged in");
                 const data = await res.json();
                 setUser({ id: data.user.sub, name: data.user.name || data.user.nickname });
+                console.log("Fetching user worked!");
             } catch {
                 window.location.href = "/login";
+                console.log("Fetching user failed");
             }
         };
         fetchUser();
@@ -38,10 +41,13 @@ const App: React.FC = () => {
 
     // Fetch checklists
     useEffect(() => {
+        console.log("Fetching checklists...");
         if (!user) return;
+
         const fetchChecklists = async () => {
             try {
-                const res = await fetch("/api/checklists", { credentials: "include" });
+                console.log("Fetching checklists try");
+                const res = await fetch("http://localhost:3000/api/checklists", { credentials: "include" });
                 const data = await res.json();
                 const userChecklists: { [name: string]: Task[] } = {};
                 data.forEach((c: any) => {
@@ -51,8 +57,10 @@ const App: React.FC = () => {
                 if (!currentChecklist && Object.keys(userChecklists).length > 0) {
                     setCurrentChecklist(Object.keys(userChecklists)[0]);
                 }
+                console.log("Fetching checklists success");
             } catch (err) {
                 console.error("Failed to fetch checklists", err);
+                console.log("Failed fetching checklists...");
             }
         };
         fetchChecklists();
@@ -60,20 +68,24 @@ const App: React.FC = () => {
 
     // ---------- Checklist CRUD ----------
     const addChecklist = async () => {
+        console.log("Adding checklist...");
         const name = prompt("Enter checklist name:");
         if (!name) return;
         if (checklists[name]) return alert("Checklist already exists");
-
         try {
-            const res = await fetch("/api/checklists", {
+            console.log("Trying add checklist");
+            const res = await fetch(`http://localhost:3000/api/checklists/${currentChecklist}/tasks`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ name }),
+                credentials: "include",
+                body: JSON.stringify({ text: taskInput.trim() }),
             });
             const data = await res.json();
             setChecklists(prev => ({ ...prev, [data.name]: data.tasks }));
             setCurrentChecklist(data.name);
+            console.log("Success add checklist");
         } catch (err) {
+            console.log("Failed to add checklist", err);
             console.error("Failed to add checklist", err);
         }
     };
@@ -83,7 +95,7 @@ const App: React.FC = () => {
         if (!newName) return;
 
         try {
-            const res = await fetch(`/api/checklists/${oldName}`, {
+            const res = await fetch(`http://localhost:3000/api/checklists/${oldName}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ newName }),
@@ -104,7 +116,7 @@ const App: React.FC = () => {
     const deleteChecklist = async (name: string) => {
         if (!confirm(`Delete checklist "${name}"?`)) return;
         try {
-            await fetch(`/api/checklists/${name}`, { method: "DELETE" });
+            await fetch(`http://localhost:3000/api/checklists/${name}`, { method: "DELETE" });
             setChecklists(prev => {
                 const updated = { ...prev };
                 delete updated[name];
@@ -122,11 +134,16 @@ const App: React.FC = () => {
         if (!currentChecklist || !taskInput.trim()) return;
 
         try {
-            const res = await fetch(`/api/checklists/${currentChecklist}/tasks`, {
+            console.log("Trying to create")
+            console.log("Trying to create task...");
+            const res = await fetch(`http://localhost:3000/api/checklists/${currentChecklist}/tasks`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
+                credentials: "include", // important!
                 body: JSON.stringify({ text: taskInput.trim() }),
             });
+
+            if (!res.ok) throw new Error(`Server error: ${res.status}`);
             const data = await res.json();
             setChecklists(prev => ({ ...prev, [data.name]: data.tasks }));
             setTaskInput("");
@@ -137,12 +154,16 @@ const App: React.FC = () => {
 
     const toggleTask = async (index: number) => {
         if (!currentChecklist) return;
+
         try {
-            const res = await fetch(`/api/checklists/${currentChecklist}/tasks/${index}`, {
+            const res = await fetch(`http://localhost:3000/api/checklists/${currentChecklist}/tasks/${index}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
+                credentials: "include",
                 body: JSON.stringify({}),
             });
+
+            if (!res.ok) throw new Error(`Server error: ${res.status}`);
             const data = await res.json();
             setChecklists(prev => ({ ...prev, [data.name]: data.tasks }));
         } catch (err) {
@@ -151,14 +172,19 @@ const App: React.FC = () => {
     };
 
     const editTask = async (index: number, oldText: string) => {
+        if (!currentChecklist) return;
         const newText = prompt("Edit task:", oldText);
-        if (!newText || !currentChecklist) return;
+        if (!newText) return;
+
         try {
-            const res = await fetch(`/api/checklists/${currentChecklist}/tasks/${index}/edit`, {
+            const res = await fetch(`http://localhost:3000/api/checklists/${currentChecklist}/tasks/${index}/edit`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
+                credentials: "include",
                 body: JSON.stringify({ text: newText }),
             });
+
+            if (!res.ok) throw new Error(`Server error: ${res.status}`);
             const data = await res.json();
             setChecklists(prev => ({ ...prev, [data.name]: data.tasks }));
         } catch (err) {
@@ -168,14 +194,21 @@ const App: React.FC = () => {
 
     const deleteTask = async (index: number) => {
         if (!currentChecklist || !confirm("Delete this task?")) return;
+
         try {
-            const res = await fetch(`/api/checklists/${currentChecklist}/tasks/${index}`, { method: "DELETE" });
+            const res = await fetch(`http://localhost:3000/api/checklists/${currentChecklist}/tasks/${index}`, {
+                method: "DELETE",
+                credentials: "include",
+            });
+
+            if (!res.ok) throw new Error(`Server error: ${res.status}`);
             const data = await res.json();
             setChecklists(prev => ({ ...prev, [data.name]: data.tasks }));
         } catch (err) {
             console.error("Failed to delete task", err);
         }
     };
+
 
     if (!user) return <div className="p-4">Loading user info...</div>;
 
