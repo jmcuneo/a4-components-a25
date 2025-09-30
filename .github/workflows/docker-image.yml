@@ -9,7 +9,7 @@ on:
   pull_request:
 
 env:
-  IMAGE_NAME: a3-brendan-leu
+  IMAGE_NAME: a4-brendan-leu
 
 jobs:
   push:
