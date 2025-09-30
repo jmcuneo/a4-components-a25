@@ -37,16 +37,27 @@ router.get("/data/:battle_id", async (req, res) => {
 router.post("/data", async (req, res) => {
   try {
     const dataObj = req.body;
-    
-    const start = new Date(dataObj.start_year, dataObj.start_month, dataObj.start_day, dataObj.start_hour, dataObj.start_minute);
-    const end = new Date(dataObj.end_year, dataObj.end_month, dataObj.end_day, dataObj.end_hour, dataObj.end_minute);
+  
+    const start_year = parseInt(dataObj.start_year) | 0;
+    const start_month = parseInt(dataObj.start_month) | 0;
+    const start_day = parseInt(dataObj.start_day) | 0;
+    const start_hour = parseInt(dataObj.start_hour) | 0;
+    const start_minute = parseInt(dataObj.start_minute) | 0;
+    const end_year = parseInt(dataObj.end_year) | 0;
+    const end_month = parseInt(dataObj.end_month) | 0;
+    const end_day = parseInt(dataObj.end_day) | 0;
+    const end_hour = parseInt(dataObj.end_hour) | 0;
+    const end_minute = parseInt(dataObj.end_minute) | 0;
+
+    const start = new Date(start_year, start_month, start_day, start_hour, start_minute);
+    const end = new Date(end_year, end_month, end_day, end_hour, end_minute);
     
     if (dataObj.battle_id == "" || !dataObj.battle_id) {
       dataObj.battle_id = Math.floor(Math.random() * 9999)
     }
 
     // Insert a document
-    await Log.findOneAndUpdate(
+    const entry = await Log.findOneAndUpdate(
       {user: req.user, battle_id: dataObj.battle_id},
       {
         user: req.user,
@@ -67,7 +78,7 @@ router.post("/data", async (req, res) => {
       }
     )
 
-    res.redirect(303, '/');
+    res.json(entry);
   } catch (e) {
     res.status(400).send(e);
   }

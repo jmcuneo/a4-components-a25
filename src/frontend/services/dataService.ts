@@ -21,7 +21,24 @@ export const getBattles = async () => {
   try {
     const response = await axios.get('/api/data')
     .then(response => {
-        console.log(response.data);
+      return response;
+    })
+    .catch(error => {
+        console.error('Error:', error); // Handle errors
+    });
+
+    return response;
+  } catch (error) {
+    console.warn('Error logging in', error);
+    return null;
+  }
+};
+
+export const deleteBattle = async (battleId: String) => {
+  try {
+    const response = await axios.delete(`/api/data/${battleId}`)
+    .then(response => {
+      return response;
     })
     .catch(error => {
         console.error('Error:', error); // Handle errors
@@ -35,6 +52,8 @@ export const getBattles = async () => {
 };
 
 export const sendLog = async (data: any) => {
+  console.log(data);
+
   try {
     const response = await axios.post('/api/data', data)
     .then(response => {
