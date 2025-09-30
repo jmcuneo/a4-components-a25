@@ -16,6 +16,9 @@ RUN npm ci
 # Copy the rest of the application code
 COPY . .
 
+# Build the code
+RUN npm run build
+
 # Expose the port your Express app listens on (default is often 3000)
 EXPOSE ${PORT}
 
