@@ -1,6 +1,6 @@
 ## a4-johndiamond
 
-your hosting link: <add your Render URL here>
+https://a4-johndiamond.onrender.com
 
 Summary of changes vs. starter code (A2):
 - Replaced the Node server with Express and kept the same API routes.
