@@ -1,0 +1,12 @@
+{
+  "name": "number-guessing-game",
+  "version": "1.0.0",
+  "description": "A simple number guessing game.",
+  "author": "Charles Anton Sibal",
+  "scripts": {
+    "start": "node server.improved.js"
+  },
+  "dependencies": {
+    "mime": "^2.6.0"
+  }
+}
