@@ -11,21 +11,24 @@ require("dotenv").config();
 const app = express();
 const port = process.env.PORT || 3000;
 
-// parse json
 app.use(express.json());
+app.use(express.static(path.join(__dirname, "public")));
 
-// connect mongo
 let db, collection;
+
+// connect to mongo
 const client = new MongoClient(process.env.MONGO_URI);
 client.connect()
   .then(() => {
     db = client.db("bucketbuddy");
     collection = db.collection("items");
-    console.log("✅ mongo connected");
+    console.log("✅ mongo ok");
   })
-  .catch(err => console.error("❌ mongo fail:", err));
+  .catch(err => {
+    console.error("❌ mongo fail:", err);
+  });
 
-// sessions (who is logged in)
+// session stuff (keep track of who’s logged in)
 app.use(
   session({
     secret: process.env.SESSION_SECRET || "change-me",
@@ -36,7 +39,11 @@ app.use(
       dbName: "bucketbuddy",
       collectionName: "sessions",
     }),
-    cookie: { httpOnly: true, sameSite: "lax", maxAge: 1000 * 60 * 60 * 24 * 7 }
+    cookie: {
+      httpOnly: true,
+      sameSite: "lax",
+      maxAge: 1000 * 60 * 60 * 24 * 7, // week
+    },
   })
 );
 
@@ -49,32 +56,40 @@ passport.use(
       callbackURL: "/auth/github/callback",
     },
     (accessToken, refreshToken, profile, done) => {
+      // just save tiny bit of user info
       const user = { id: profile.id, username: profile.username };
       return done(null, user);
     }
   )
 );
+
 passport.serializeUser((user, done) => done(null, user));
 passport.deserializeUser((user, done) => done(null, user));
+
 app.use(passport.initialize());
 app.use(passport.session());
 
-// root redirect (login or app)
+// when u go to root, if logged in → results, else → login
 app.get("/", (req, res) => {
   if (req.isAuthenticated && req.isAuthenticated()) {
-    res.redirect("/"); // React handles routes now
+    res.redirect("/results.html");
   } else {
-    res.redirect("/login.html"); // static login page (can switch to React later)
+    res.redirect("/login.html");
   }
 });
 
-// auth routes
+// routes for github login
 app.get("/auth/github", passport.authenticate("github", { scope: ["user:email"] }));
+
 app.get(
   "/auth/github/callback",
   passport.authenticate("github", { failureRedirect: "/login.html" }),
-  (req, res) => res.redirect("/")
+  (req, res) => {
+    res.redirect("/results.html");
+  }
 );
+
+// logout route
 app.post("/logout", (req, res, next) => {
   req.logout(err => {
     if (err) return next(err);
@@ -85,17 +100,21 @@ app.post("/logout", (req, res, next) => {
   });
 });
 
-// helper to lock routes
+// check who u are (debug)
+app.get("/me", (req, res) => {
+  res.json({ user: req.user || null });
+});
+
+// only let ppl in if logged in
 function ensureLoggedIn(req, res, next) {
   if (req.isAuthenticated && req.isAuthenticated()) return next();
-  res.status(401).send("login first");
+  res.status(401).send("login first bro");
 }
 
-// debug route
-app.get("/me", (req, res) => res.json({ user: req.user || null }));
+// quick test route
 app.get("/ping", (req, res) => res.send("pong"));
 
-// ===== CRUD =====
+// get all items for that user
 app.get("/results", ensureLoggedIn, async (req, res) => {
   try {
     const items = await collection.find({ userId: req.user.id }).toArray();
@@ -105,11 +124,12 @@ app.get("/results", ensureLoggedIn, async (req, res) => {
   }
 });
 
+// add new item
 app.post("/results", ensureLoggedIn, async (req, res) => {
   try {
     const { title, category, priority, targetDate } = req.body;
     if (!title || !category || !priority) {
-      return res.status(400).send("missing fields");
+      return res.status(400).send("missing stuff");
     }
     const newItem = {
       userId: req.user.id,
@@ -123,10 +143,11 @@ app.post("/results", ensureLoggedIn, async (req, res) => {
     const result = await collection.insertOne(newItem);
     res.json({ ...newItem, _id: result.insertedId });
   } catch (err) {
-    res.status(500).send("cant add: " + err);
+    res.status(500).send("cant add item: " + err);
   }
 });
 
+// mark done
 app.put("/results/:id", ensureLoggedIn, async (req, res) => {
   try {
     const { id } = req.params;
@@ -134,30 +155,30 @@ app.put("/results/:id", ensureLoggedIn, async (req, res) => {
       { _id: new ObjectId(id), userId: req.user.id },
       { $set: { completed: true } }
     );
-    if (result.modifiedCount === 0) return res.status(404).send("not found");
-    res.send("done");
+    if (result.modifiedCount === 0) {
+      return res.status(404).send("not found");
+    }
+    res.send("done!");
   } catch (err) {
     res.status(500).send("cant update: " + err);
   }
 });
 
+// delete
 app.delete("/results/:id", ensureLoggedIn, async (req, res) => {
   try {
     const { id } = req.params;
     const result = await collection.deleteOne({ _id: new ObjectId(id), userId: req.user.id });
-    if (result.deletedCount === 0) return res.status(404).send("not found");
+    if (result.deletedCount === 0) {
+      return res.status(404).send("not found");
+    }
     res.send("deleted");
   } catch (err) {
     res.status(500).send("cant delete: " + err);
   }
 });
 
-// ===== React build =====
-const reactBuildPath = path.join(__dirname, "client", "dist");
-app.use(express.static(reactBuildPath));
-app.get("*", (req, res) => {
-  res.sendFile(path.join(reactBuildPath, "index.html"));
+// start it up
+app.listen(port, () => {
+  console.log(`🚀 server @ http://localhost:${port}`);
 });
-
-// start server
-app.listen(port, () => console.log(`🚀 server @ http://localhost:${port}`));
