@@ -1,35 +1,18 @@
-Assignment 4 - Components
-===
-
-For this assignment you will re-implement the client side portion of *either* A2 or A3 using either React or Svelte components. If you choose A3 you only need to use components for the data display / updating; you can leave your login UI as is.
-
-[Svelte Tutorial](https://github.com/jmcuneo/cs4241-guides/blob/master/using.svelte.md)  
-[React Tutorial](https://github.com/jmcuneo/cs4241-guides/blob/master/using.react.md)  
-
-You may also want to check out [this video of Prof. Roberts working through both of the above tutorials](https://echo360.org/media/75af2567-2f06-4851-baeb-1cfe8ea5cb48/public). 
-
-This project can be implemented on any hosting service (Render, DigitalOcean, Heroku, etc.). However, you must include all files in your GitHub repo so that the course staff can view them.
-
-Deliverables
+README
 ---
 
-Do the following to complete this assignment:
+## BMI Simulator: https://a4-kensebastian.onrender.com/
+Allows users to input their height and weight, and automatically calculates their BMI, and whether it's at a healthy level.
 
-1. Implement your project with the above requirements.
-1. Test your project to make sure that when someone goes to your main page on Render, etc., it displays correctly.
-1. Ensure that your project has the proper naming scheme `a4-firstname-lastname` so we can find it.
-1. Fork this repository and modify the README to the specifications below. Be sure to add *all* project files.
-1. Create and submit a Pull Request to the original repo. Name the pull request using the following template: `a4-firstname-lastname`.
+This was a copy of my a2 assignment, but I implemented the grid using a React AG-Grid component
 
-Grading
----
-Unlike previous assignments, this assignment will be solely graded on whether or not you successfully complete it. Partial credit will be generously given.
+The technology was tough to adapt to at first, since my entire project was set up without Vite and React. I spent hours trying to convert it, then just decided to start from scratch with a new Vite + React Project, then redid most of the functionality from A2.
+I would say that using React components is more intuitive than what I had originally done for A2, so it improved the developer experience.
 
-Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
----
-
-## Your Web Application Title
-
-your hosting link e.g. http://a4-charlieroberts.glitch.me
-
-Include a very brief summary of your project here and what you changed / added to assignment #3. Briefly (3–4 sentences) answer the following question: did the new technology improve or hinder the development experience?
+### AI usage for this project
+- Models:
+    - GitHub Copilot
+    - Google Gemini
+- Uses:
+    - Debugging assistant
+    - Styling suggestions (colors, on-hover styles, etc)
