@@ -31,7 +31,7 @@ app.use(cors({origin: "http://localhost:5173", credentials: true}));
 const authConfig = {
     authRequired: false,
     auth0Logout: true,
-    secret: process.env.SECRET || "replace-with-your-secret",
+    secret: process.env.SECRET,
     baseURL: process.env.BASE_URL || "http://localhost:3000",
     clientID: process.env.AUTH0_CLIENT_ID,
     issuerBaseURL: process.env.AUTH0_DOMAIN,
@@ -72,6 +72,10 @@ app.get("/", (req, res) => {
 app.get("/api/me", (req, res) => {
     if (!req.oidc.isAuthenticated()) return res.status(401).json({error: "Not logged in"});
     res.json({user: req.oidc.user});
+});
+
+app.get("/logout", (req, res) => {
+  res.oidc.logout({ returnTo: "http://localhost:5137" }); // frontend URL
 });
 
 // --- Checklists CRUD ---
