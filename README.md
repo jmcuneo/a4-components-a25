@@ -1,41 +1,13 @@
 README
 ---
 
-## BMI Simulator: https://a2-kensebastian.onrender.com/
+## BMI Simulator: https://a4-kensebastian.onrender.com/
 Allows users to input their height and weight, and automatically calculates their BMI, and whether it's at a healthy level.
 
-### Technical Achievements
-- **Client/server communication:**
-    - When a user adds an entry via the form, the server gets updated with the new data, and the client-side grid also reflects the update
-    - Challenges
-        - POST request implementation
-        - Client-side grid update
+This was a copy of my a2 assignment, but I implemented the grid using a React AG-Grid component
 
-- **Data modification:**
-    - Allows a user to edit the name, weight, or height fields, and updates the calculated fields accordingly
-    - Challenges
-        - Separate classes and handling for editable cells
-        - PUT request implementation
-
-### Design/Evaluation Achievements
-- **User Feedback (Olson):**
-    -  Problems
-        - Editing only works after pressing enter, (clicking out of the cell doesn't update the data)
-    - Comments
-        - Unclear initially that weight can be entered in lbs.
-    - What he would change
-        - Entering feet in decimal form is unintuitive, allowing feet + inches would be better for the user
-        - The weight/height increment/decrement buttons are unnecessary
-- **User Feedback (Sebastian):**
-    -  Problems
-        - None, completed the tasks easily
-    - Comments
-        - Dislikes that after entering units in lbs, it's converted to kg in the table
-    - What he would change
-        - Entering feet in decimal form is unintuitive, allowing feet + inches would be better for the user
-
-
-
+The technology was tough to adapt to at first, since my entire project was set up without Vite and React. I spent hours trying to convert it, then just decided to start from scratch with a new Vite + React Project, then redid most of the functionality from A2.
+I would say that using React components is more intuitive than what I had originally done for A2, so it improved the developer experience.
 
 ### AI usage for this project
 - Models:
