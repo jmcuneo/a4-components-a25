@@ -1,5 +1,5 @@
 /* auto-generated colors to override main accent color */
-.dark {
+.dark, body.dark {
     --primary: #8dcdff;
     --on-primary: #00344f;
     --primary-container: #004b70;
