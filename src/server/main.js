@@ -15,7 +15,7 @@ let Users;
 let Orders;
 
 // middleware
-app.use(express.static('../../dist'));
+app.use(express.static(path.join(__dirname, '..', '..', 'dist')));
 app.use(express.json());
 
 app.use(
