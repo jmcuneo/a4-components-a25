@@ -11,21 +11,21 @@ require("dotenv").config();
 const app = express();
 const port = process.env.PORT || 3000;
 
-// parse json
 app.use(express.json());
 
-// connect mongo
 let db, collection;
+
+// ----- MongoDB -----
 const client = new MongoClient(process.env.MONGO_URI);
 client.connect()
   .then(() => {
     db = client.db("bucketbuddy");
     collection = db.collection("items");
-    console.log("✅ mongo connected");
+    console.log("✅ Connected to MongoDB");
   })
-  .catch(err => console.error("❌ mongo fail:", err));
+  .catch(err => console.error("❌ MongoDB connection failed:", err));
 
-// sessions (who is logged in)
+// ----- Sessions -----
 app.use(
   session({
     secret: process.env.SESSION_SECRET || "change-me",
@@ -36,11 +36,15 @@ app.use(
       dbName: "bucketbuddy",
       collectionName: "sessions",
     }),
-    cookie: { httpOnly: true, sameSite: "lax", maxAge: 1000 * 60 * 60 * 24 * 7 }
+    cookie: {
+      httpOnly: true,
+      sameSite: "lax",
+      maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
+    },
   })
 );
 
-// github login setup
+// ----- Passport (GitHub OAuth) -----
 passport.use(
   new GitHubStrategy(
     {
@@ -54,27 +58,24 @@ passport.use(
     }
   )
 );
+
 passport.serializeUser((user, done) => done(null, user));
 passport.deserializeUser((user, done) => done(null, user));
+
 app.use(passport.initialize());
 app.use(passport.session());
 
-// root redirect (login or app)
-app.get("/", (req, res) => {
-  if (req.isAuthenticated && req.isAuthenticated()) {
-    res.redirect("/"); // React handles routes now
-  } else {
-    res.redirect("/login.html"); // static login page (can switch to React later)
-  }
-});
-
-// auth routes
+// ----- Auth Routes -----
 app.get("/auth/github", passport.authenticate("github", { scope: ["user:email"] }));
+
 app.get(
   "/auth/github/callback",
   passport.authenticate("github", { failureRedirect: "/login.html" }),
-  (req, res) => res.redirect("/")
+  (req, res) => {
+    res.redirect("/"); // after login → React app
+  }
 );
+
 app.post("/logout", (req, res, next) => {
   req.logout(err => {
     if (err) return next(err);
@@ -85,31 +86,27 @@ app.post("/logout", (req, res, next) => {
   });
 });
 
-// helper to lock routes
+// ----- Middleware -----
 function ensureLoggedIn(req, res, next) {
   if (req.isAuthenticated && req.isAuthenticated()) return next();
-  res.status(401).send("login first");
+  res.status(401).send("Not authorized. Please log in at /login.html");
 }
 
-// debug route
-app.get("/me", (req, res) => res.json({ user: req.user || null }));
-app.get("/ping", (req, res) => res.send("pong"));
-
-// ===== CRUD =====
-app.get("/results", ensureLoggedIn, async (req, res) => {
+// ----- API Routes -----
+app.get("/api/results", ensureLoggedIn, async (req, res) => {
   try {
     const items = await collection.find({ userId: req.user.id }).toArray();
     res.json(items);
   } catch (err) {
-    res.status(500).send("cant get items: " + err);
+    res.status(500).send("Error fetching items: " + err);
   }
 });
 
-app.post("/results", ensureLoggedIn, async (req, res) => {
+app.post("/api/results", ensureLoggedIn, async (req, res) => {
   try {
     const { title, category, priority, targetDate } = req.body;
     if (!title || !category || !priority) {
-      return res.status(400).send("missing fields");
+      return res.status(400).send("Missing fields");
     }
     const newItem = {
       userId: req.user.id,
@@ -123,42 +120,50 @@ app.post("/results", ensureLoggedIn, async (req, res) => {
     const result = await collection.insertOne(newItem);
     res.json({ ...newItem, _id: result.insertedId });
   } catch (err) {
-    res.status(500).send("cant add: " + err);
+    res.status(500).send("Error adding item: " + err);
   }
 });
 
-app.put("/results/:id", ensureLoggedIn, async (req, res) => {
+app.put("/api/results/:id", ensureLoggedIn, async (req, res) => {
   try {
     const { id } = req.params;
     const result = await collection.updateOne(
       { _id: new ObjectId(id), userId: req.user.id },
       { $set: { completed: true } }
     );
-    if (result.modifiedCount === 0) return res.status(404).send("not found");
-    res.send("done");
+    if (result.modifiedCount === 0) return res.status(404).send("Item not found");
+    res.send("Item marked complete");
   } catch (err) {
-    res.status(500).send("cant update: " + err);
+    res.status(500).send("Error updating item: " + err);
   }
 });
 
-app.delete("/results/:id", ensureLoggedIn, async (req, res) => {
+app.delete("/api/results/:id", ensureLoggedIn, async (req, res) => {
   try {
     const { id } = req.params;
     const result = await collection.deleteOne({ _id: new ObjectId(id), userId: req.user.id });
-    if (result.deletedCount === 0) return res.status(404).send("not found");
-    res.send("deleted");
+    if (result.deletedCount === 0) return res.status(404).send("Item not found");
+    res.send("Item deleted");
   } catch (err) {
-    res.status(500).send("cant delete: " + err);
+    res.status(500).send("Error deleting item: " + err);
   }
 });
 
-// ===== React build =====
+// ----- Serve React Frontend -----
 const reactBuildPath = path.join(__dirname, "client", "dist");
 app.use(express.static(reactBuildPath));
+
+// keep login.html separate
+app.get("/login.html", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "login.html"));
+});
+
+// fallback → React index.html
 app.get("*", (req, res) => {
   res.sendFile(path.join(reactBuildPath, "index.html"));
 });
 
-// start server
-app.listen(port, () => console.log(`🚀 server @ http://localhost:${port}`));
-// ====== end server.js ======
+// ----- Start -----
+app.listen(port, () => {
+  console.log(`🚀 Server running at http://localhost:${port}`);
+});
