@@ -18,7 +18,11 @@ interface Checklist {
 const app = express();
 const port = Number(process.env.PORT) || 3000;
 
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(cors({
+    origin: process.env.BASE_URL || "http://localhost:5173", // frontend URL in production
+    credentials: true
+}));
+
 app.use(express.json());
 
 const client = new MongoClient(process.env.MONGO_URI!);
@@ -33,7 +37,6 @@ async function connectDB() {
 
 connectDB().catch(err => console.error("MongoDB connection failed:", err));
 
-// --- Routes ---
 
 // Fetch all checklists for a user
 app.get("/api/checklists", async (req, res) => {

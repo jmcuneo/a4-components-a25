@@ -21,12 +21,11 @@ const App: React.FC = () => {
     const [checklists, setChecklists] = useState<{ [name: string]: Task[] }>({});
     const [currentChecklist, setCurrentChecklist] = useState<string | null>(null);
 
-    // Fetch checklists when username changes
     useEffect(() => {
         if (!username) return;
         const fetchChecklists = async () => {
             try {
-                const res = await fetch(`http://localhost:3000/api/checklists?user=${username}`);
+                const res = await fetch(`${import.meta.env.VITE_API_URL}/api/checklists?user=${username}`);
                 const data: Checklist[] = await res.json();
                 const userChecklists: { [name: string]: Task[] } = {};
                 data.forEach(c => (userChecklists[c.name] = c.tasks));
@@ -43,7 +42,6 @@ const App: React.FC = () => {
 
     const currentTasks = currentChecklist ? checklists[currentChecklist] || [] : [];
 
-    // Protect routes
     const ProtectedRoute = ({ children }: { children: JSX.Element }) =>
         username ? children : <Navigate to="/login" replace />;
 
@@ -96,11 +94,10 @@ const App: React.FC = () => {
         </Router>
     );
 
-    // Functions for tasks
     async function toggleTask(index: number) {
         if (!currentChecklist || !username) return;
         try {
-            const res = await fetch(`http://localhost:3000/api/checklists/${currentChecklist}/tasks/${index}`, {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/checklists/${currentChecklist}/tasks/${index}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ user: username }),
@@ -122,7 +119,7 @@ const App: React.FC = () => {
         if (!newText) return;
         try {
             const res = await fetch(
-                `http://localhost:3000/api/checklists/${currentChecklist}/tasks/${index}/edit`,
+                `${import.meta.env.VITE_API_URL}/api/checklists/${currentChecklist}/tasks/${index}/edit`,
                 {
                     method: "PUT",
                     headers: { "Content-Type": "application/json" },
@@ -145,7 +142,7 @@ const App: React.FC = () => {
         if (!confirm("Delete this task?")) return;
         try {
             const res = await fetch(
-                `http://localhost:3000/api/checklists/${currentChecklist}/tasks/${index}`,
+                `${import.meta.env.VITE_API_URL}/api/checklists/${currentChecklist}/tasks/${index}`,
                 {
                     method: "DELETE",
                     headers: { "Content-Type": "application/json" },

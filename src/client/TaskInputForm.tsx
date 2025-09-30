@@ -34,7 +34,7 @@ const TaskInputForm: React.FC<TaskInputFormProps> = ({
 
         try {
             const res = await fetch(
-                `http://localhost:3000/api/checklists/${currentChecklist}/tasks`,
+                `${import.meta.env.VITE_API_URL}/api/checklists/${currentChecklist}/tasks`,
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
