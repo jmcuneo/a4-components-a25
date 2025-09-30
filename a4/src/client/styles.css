@@ -1,0 +1,54 @@
+body {
+    background-color: aquamarine;
+    font-family: "Dosis", sans-serif;
+}
+
+form {
+    text-align: center;
+    margin: 0 auto;
+    width: 250px;
+}
+
+h1, h2{
+    text-align: center;
+}
+
+#message{
+    text-align: center;
+}
+
+table{
+    background-color: white;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#addForm{
+    background-color: azure;
+    display: inline-block;
+    margin: 5px;
+    padding: 10px;
+}
+
+#updateForm{
+    background-color: yellow;
+    display: inline-block;
+    margin: 5px;
+    padding: 10px;
+}
+
+#removeForm {
+    background-color: darkseagreen;
+    display: inline-block;
+    margin: 5px;
+    padding: 10px;
+
+}
+
+#allForms{
+  max-width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  align-items: flex-start;    
+}
