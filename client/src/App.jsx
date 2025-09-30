@@ -1,35 +1,61 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from "react";
+import BucketForm from "./components/BucketForm";
+import BucketList from "./components/BucketList";
+import CompletedList from "./components/CompletedList";
+import "./index.css";
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    fetch("/results")
+      .then(res => res.json())
+      .then(data => setItems(data))
+      .catch(() => setItems([]));
+  }, []);
+
+  const addItem = async (newItem) => {
+    try {
+      const res = await fetch("/results", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newItem),
+      });
+      const saved = await res.json();
+      setItems([...items, saved]);
+    } catch {
+      console.error("Add failed");
+    }
+  };
+
+  const completeItem = async (id) => {
+    try {
+      await fetch(`/results/${id}`, { method: "PUT" });
+      setItems(items.map(i => i._id === id ? { ...i, completed: true } : i));
+    } catch {
+      console.error("Complete failed");
+    }
+  };
+
+  const deleteItem = async (id) => {
+    try {
+      await fetch(`/results/${id}`, { method: "DELETE" });
+      setItems(items.filter(i => i._id !== id));
+    } catch {
+      console.error("Delete failed");
+    }
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="container">
+      <h1>🌟 Bucket Buddy</h1>
+      <BucketForm onAdd={addItem} />
+      <div className="section">
+        <BucketList items={items} onComplete={completeItem} onDelete={deleteItem} />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+      <div className="section">
+        <CompletedList items={items} />
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
 }
-
-export default App
