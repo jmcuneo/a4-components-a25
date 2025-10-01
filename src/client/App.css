@@ -1,0 +1,74 @@
+body {
+  background: rgba(231, 89, 28, 0.658);
+  color: #000000;
+  background-image: 
+    repeating-conic-gradient(
+      rgba(255, 255, 255, 0.05) 0% 10%,
+      transparent 10% 20%
+    ),
+    radial-gradient(rgba(255, 255, 255, 0.5), transparent 1px);
+  background-size: 50px 50px;
+  font-family: "Georgia", serif;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;          
+  justify-content: flex-start;
+  min-height: 100vh;
+  padding: 30px 20px 50px;
+}
+
+.content {
+  background: #ffffff;         
+  padding: 30px;
+  border-radius: 15px;         
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+  width: 85%;
+  max-width: 900px;            
+  margin-top: 20px;
+}
+
+h1, h2 {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 20px;
+  text-shadow: .5px .5px 2px rgba(63, 62, 62, 0.6);
+}
+
+
+form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.form-input {
+  font-size: 1.2em;
+  margin: 5px;
+}
+
+#expenseTable {
+  margin-top: 20px;
+  border-collapse: collapse;
+  width: 100%;
+  background: #a984c9;
+  border-radius: 10px;
+  overflow: hidden; 
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+#expenseTable th, #expenseTable td {
+  padding: 8px;
+  border: 1px solid #370663;
+}
+
+#expenseTable th {
+  background: #FF9A00;
+}
+
+form button {
+  font-size: 1.2em;
+  cursor: pointer;
+}
