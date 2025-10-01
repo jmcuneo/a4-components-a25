@@ -1,31 +1,13 @@
 Assignment 4 - Components
 ===
 
-For this assignment you will re-implement the client side portion of *either* A2 or A3 using either React or Svelte components. If you choose A3 you only need to use components for the data display / updating; you can leave your login UI as is.
-
-[Svelte Tutorial](https://github.com/jmcuneo/cs4241-guides/blob/master/using.svelte.md)  
-[React Tutorial](https://github.com/jmcuneo/cs4241-guides/blob/master/using.react.md)  
-
-This project can be implemented on any hosting service (Render, DigitalOcean, Heroku, etc.). However, you must include all files in your GitHub repo so that the course staff can view them.
-
-Deliverables
+Readme
 ---
 
-Do the following to complete this assignment:
+### Library Loan Tracker
 
-1. Implement your project with the above requirements.
-3. Test your project to make sure that when someone goes to your main page on Render, etc., it displays correctly.
-4. Ensure that your project has the proper naming scheme `a4-firstname-lastname` so we can find it.
-5. Fork this repository and modify the README to the specifications below. Be sure to add *all* project files.
-6. Create and submit a Pull Request to the original repo. Name the pull request using the following template: `a4-firstname-lastname`.
+Deployment: https://a4-kayliequach.onrender.com
 
-Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
----
+The Library Loan Tracker is an application that allows users to add, modify, and delete library loan items in order to track their details and loan and due dates. For A4, what I changed was turning the simple JS client-side code into a React front-end using Vite. The handling for the submit/add, modify, and delete buttons are now also handled by React. 
 
-## Your Web Application Title
-
-your hosting link e.g. http://a4-charlieroberts.glitch.me
-
-Include a very brief summary of your project here and what you changed / added to assignment #3. Briefly (3–4 sentences) answer the following question: did the new technology improve or hinder the development experience?
-
-Unlike previous assignments, this assignment will be solely graded on whether or not you successfully complete it. Partial credit will be generously given.
+I have worked with React before, and I think that React is really useful when handling the frontend for an extensive web applications with a large number of pages and more complex components. However, for a simple two-page application like mine here, using simple JS for client-side code vs. using React didn't have any benefits compared to each other. In this case, I think I would prefer using simple JS for all the component handling because it was difficult figuring out how to run the Express backend alongside the Vite-React frontend.
