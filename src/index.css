@@ -1,12 +1,8 @@
 body {
-    margin: 0;
     font-family: Arial, sans-serif;
     background: #f7f7f7;
-}
-
-.container {
-    max-width: 800px;
-    margin: 40px auto;
+    margin: 0;
+    padding: 20px;
     text-align: center;
 }
 
@@ -14,34 +10,25 @@ h1 {
     margin-bottom: 20px;
 }
 
-.card {
+.form-card {
     background: white;
     padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 20px;
+    margin: 20px auto;
+    border-radius: 6px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    max-width: 500px;
 }
 
-.card input {
+.form-card input, .form-card button {
     margin: 5px;
     padding: 8px;
 }
 
-.card button {
-    margin-left: 10px;
-    padding: 8px 12px;
-    background: #2d89ef;
-    border: none;
-    color: white;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
 table {
-    width: 100%;
+    margin: 20px auto;
     border-collapse: collapse;
+    width: 90%;
     background: white;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
 th, td {
