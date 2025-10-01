@@ -71,6 +71,19 @@ function App() {
         })
         setActiveEditRow(-1)
     }
+    const deletePassword = async (id) => {
+        const json = {id: id},
+            body = JSON.stringify(json)
+        const response = await fetch("/delete", {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body
+        })
+        await getPasswords()
+    }
     const wrap = (node) => (activeEditRow > -1 ? <form>{node}</form> : node);
     useEffect(async () => {
         await getPasswords()
@@ -187,12 +200,32 @@ function App() {
                                                 } className={"edit-save-button transparent circle"}>
                                                     <i>edit</i>
                                                 </button>
+                                                <button onClick={async (e) => {
+                                                    e.preventDefault()
+                                                    await deletePassword(entry.id)
+                                                }
+                                                } className={"delete-cancel-button transparent circle"}>
+                                                    <i>delete</i>
+                                                </button>
                                             </td>) : (<td>
                                                 <button onClick={async (e) => {
                                                     await savePassword(e)
                                                 }
                                                 } className={"edit-save-button transparent circle"}>
                                                     <i>save</i>
+                                                </button>
+                                                <button onClick={async (e) => {
+                                                    setPasswordFormData({
+                                                        id: "None",
+                                                        website: "None",
+                                                        username: "None",
+                                                        password: "None"
+                                                    })
+                                                    setActiveEditRow(-1)
+                                                    await getPasswords()
+                                                }
+                                                } className={"delete-cancel-button transparent circle"}>
+                                                    <i>cancel</i>
                                                 </button>
                                             </td>)
                                         }
