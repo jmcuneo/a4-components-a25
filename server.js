@@ -5,7 +5,7 @@
 // The design is meant to set up to have express server 
 // with sessions, as well as having a simple login/logout API.
 import dotenv from 'dotenv';
-dotenv.config({ path: './OAuth.env' }); // Absolute Path
+dotenv.config() // Absolute Path
 import express from "express";
 import helmet from "helmet";          // Security Headers
 import morgan from "morgan";          // Request Logging
@@ -16,13 +16,15 @@ import { fileURLToPath } from "url";
 // MongoDB driver
 import { MongoClient } from "mongodb";  
 
-// Auth deps
+// Auth usage 
 import passport from 'passport';
 import { Strategy as GitHubStrategy } from 'passport-github2';
 import MongoStore from 'connect-mongo';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const CLIENT_URL = process.env.CLIENT_URL || '/';
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -60,7 +62,6 @@ app.use(
 app.use(morgan("dev")); // Now we can have it where it logs requests to console
 app.use(express.urlencoded({ extended: false }));  
 app.use(express.json());                           
-app.use(express.static(path.join(__dirname, "public")));
 
 // To be able to have it to where secure cookies behave correctly 
 // behind Render’s proxy, I implemented a trust proxy
@@ -86,7 +87,7 @@ app.use(
   })
 );
 
-// Passport init
+// Passport initialization
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -113,7 +114,7 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
-        // Upsert a local "user" record for convenience (optional, good hygiene)
+        // Upsert a local "user" record for convenience
         const doc = {
           githubId: profile.id,
           username: profile.username ?? `github_${profile.id}`,
@@ -179,23 +180,24 @@ app.get(
 
 app.get(
   '/auth/github/callback',
-  passport.authenticate('github', { failureRedirect: '/' }),
+  passport.authenticate('github', { failureRedirect: CLIENT_URL }),
   (req, res) => {
-    // success → back to SPA
-    res.redirect('/');
+    // success to then bounce back to the client
+    res.redirect(CLIENT_URL);
   }
 );
 
-// Logout via Passport + clear session
+// Logout via Passport and clear session
 app.post('/logout', (req, res, next) => {
   req.logout(err => {
     if (err) return next(err);
     req.session.destroy(() => {
       if (wantsJSON(req)) return res.json({ ok: true });
-      return res.redirect('/');
+      return res.redirect(CLIENT_URL);
     });
   });
 });
+
 
 // Return session user info 
 app.get("/api/me", (req, res) => {
@@ -395,15 +397,35 @@ app.post("/api/delete", ensureAuth, async (req, res) => {
   }
 });
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
+// Now we serve built React application
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, 'client', 'dist')));
 
-// SPA fallback for any non-API route
-app.use((req, res, next) => {
-  if (req.path.startsWith("/api") || req.path === "/status") return next();
-  res.sendFile(path.join(__dirname, "public", "index.html"));
-});
+  app.get('*', (req, res, next) => {
+    if (
+      req.path.startsWith('/api') ||
+      req.path.startsWith('/auth') ||
+      req.path === '/status'
+    ) return next();
+
+    res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+  });
+}
+
+// Keep /public
+if (process.env.NODE_ENV !== 'production') {
+  app.use(express.static(path.join(__dirname, 'public')));
+
+  app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  });
+
+  // SPA fallback in dev (let API/status pass through)
+  app.use((req, res, next) => {
+    if (req.path.startsWith('/api') || req.path === '/status') return next();
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  });
+}
 
 // Move the final 404 ABOVE start() so it's always registered
 app.use((req, res) => {

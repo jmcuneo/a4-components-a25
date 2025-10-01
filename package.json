@@ -1,6 +1,10 @@
 {
   "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
+    "build": "npm --prefix client run build",
     "start": "node server.js"
   },
   "dependencies": {

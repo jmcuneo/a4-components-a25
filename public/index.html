@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Workout Log • Assignment 3</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Two-tier web app scaffold with login/session; workouts UI carries forward from A2.">
+
+    <!-- Keep LCP image preload -->
+    <link rel="preload" as="image" href="/img/WorkoutLog.svg" fetchpriority="high">
+
+    <!-- Pico.css -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" as="style" crossorigin>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+
+    <link rel="preload" href="css/main.css" as="style">
+    <link rel="stylesheet" href="css/main.css">
+
+    <!-- Defer app JS -->
+    <script src="js/main.js" defer></script>
+
+    <!-- Favicon (avoid 404) -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  </head>
+  <body>
+    <header>
+      <h1>Workout Log</h1>
+    </header>
+
+    <main>
+      <!-- Login  Perspective -->
+      <section id="login-view" aria-labelledby="login-title">
+        <h2 id="login-title">Sign in</h2>
+        <a href="/auth/github" role="button" class="contrast">
+          <img src="/img/github-mark.svg" 
+          alt="GitHub logo" 
+          width="18" height="18" 
+          style="margin-right:.4rem; vertical-align:middle;" 
+          decoding="async" 
+          loading="lazy">
+        Sign in with GitHub
+        </a>
+        <p class="muted"><br>You’ll be redirected to GitHub to authorize this app.</p>
+      </section>
+
+      <!--  App Perspective -->
+      <section id="app-view" aria-labelledby="app-title" hidden>
+        <div class="topbar" style="display:flex;align-items:center;gap:.75rem;justify-content:space-between;">
+            <h2 id="app-title" style="margin:0;">Dashboard</h2>
+            <div style="display:flex;align-items:center;gap:.75rem;">
+                <img
+                  id="avatar"
+                  alt=""
+                  referrerpolicy="no-referrer"
+                  width="28" height="28"
+                  decoding="async"
+                  style="width:28px;height:28px;border-radius:50%;object-fit:cover;"
+                  src="/img/WorkoutLog.svg"
+                />
+                <p id="greeting" class="greet" style="margin:0;"></p>
+                <form id="logout-form" action="/logout" method="POST">
+                    <button type="submit">Logout</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="flash" aria-live="polite" class="sr-only"></div>
+
+        <!-- Add a Workout -->
+        <section aria-labelledby="add-title">
+          <h2 id="add-title">Add a Workout</h2>
+          <form id="workout-form" novalidate>
+            <div>
+              <label for="exercise">Exercise</label>
+              <input type="text" id="exercise" name="exercise" required minlength="2"
+                     pattern=".*[A-Za-z].*" title="Include at Least One Letter (e.g., Bench Press)"
+                     placeholder="e.g., Bench Press"/>
+            </div>
+
+            <div>
+              <label for="sets">Sets</label>
+              <input type="number" id="sets" name="sets" required min="0" step="1"
+                     placeholder="e.g., 4 (Or 0 for Activities)" inputmode="numeric"/>
+            </div>
+
+            <div>
+              <label for="reps">Reps</label>
+              <input type="number" id="reps" name="reps" required min="0" step="1"
+                     placeholder="e.g., 10 (Or 0 for Activities)" inputmode="numeric"/>
+            </div>
+
+            <div>
+              <label for="weight">Weight (lbs)</label>
+              <input type="number" id="weight" name="weight" required min="0" step="1"
+                     placeholder="e.g., 135 (Or 0 for Bodyweight)" inputmode="numeric"/>
+            </div>
+
+            <!-- Workout type radios -->
+            <fieldset>
+              <legend>Type</legend>
+              <label>
+                <input type="radio" name="type" value="strength" checked>
+                Strength
+              </label>
+              <label>
+                <input type="radio" name="type" value="activity">
+                Activity
+              </label>
+            </fieldset>
+
+            <!-- Bodyweight checkbox -->
+            <label>
+              <input type="checkbox" id="bodyweight" name="bodyweight" value="true">
+              Bodyweight movement
+            </label>
+
+            <!-- Notes textarea -->
+            <div>
+              <label for="notes">Notes (optional)</label>
+              <textarea id="notes" name="notes" rows="3"
+                        placeholder="e.g., [If user choose a different type of workout] | e.g., I went on a 5 mile hike"></textarea>
+            </div>
+
+            <!-- Buttons -->
+            <button type="submit" id="submit-btn">Add Workout</button>
+            <button type="button" id="cancel-edit" hidden>Cancel Edit</button>
+          </form>
+        </section>
+
+        <!-- Results Table -->
+        <section aria-labelledby="results-title">
+          <h2 id="results-title">All Workouts</h2>
+          <table id="results">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Exercise</th>
+                <th>Type</th>
+                <th>BW</th>
+                <th>Sets</th>
+                <th>Reps</th>
+                <th>Weight</th>
+                <th>Volume</th>
+                <th>Notes</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr id="loading-row">
+                <td colspan="10" style="text-align:center;opacity:.6;">Loading workouts…</td>
+              </tr>
+              <!-- rows injected by main.js -->
+            </tbody>
+          </table>
+        </section>
+      </section>
+    </main>
+
+    <footer>
+      <p>Rohan Gladson | CS4241 Assignment 4 | WPI</p>
+    </footer>
+  </body>
+</html>

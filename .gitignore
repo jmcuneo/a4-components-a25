@@ -1,3 +1,18 @@
+# Dependencies
 node_modules/
-package-lock.json
-OAuth.env
+
+# Env (secrets)
+.env
+
+# Builds
+dist
+client/dist
+
+# Logs
+*.log
+
+# OS/Editor
+.DS_Store
+.vscode/*
+!.vscode/extensions.json
+.idea
