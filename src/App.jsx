@@ -32,10 +32,10 @@ function App() {
         setUser(JSON.parse(userString))
     }
     const [passwordFormData, setPasswordFormData] = useState({
-        id: "None",
-        website: "None",
-        username: "None",
-        password: "None"
+        id: -1,
+        website: "",
+        username: "",
+        password: ""
     })
     const savePassword = async (event) => {
         event.preventDefault()
@@ -65,12 +65,13 @@ function App() {
         })
         await getPasswords()
         setPasswordFormData({
-            id: "None",
-            website: "None",
-            username: "None",
-            password: "None"
+            id: -1,
+            website: "",
+            username: "",
+            password: ""
         })
         setActiveEditRow(-1)
+        setShowNewPasswordRow(false)
     }
     const deletePassword = async (id) => {
         const json = {id: id},
@@ -85,7 +86,7 @@ function App() {
         })
         await getPasswords()
     }
-    const wrap = (node) => (activeEditRow > -1 ? <form>{node}</form> : node);
+    const wrap = (node) => (activeEditRow > -1 || showNewPasswordRow ? <form>{node}</form> : node);
     useEffect(async () => {
         await getPasswords()
         await getUsername()
@@ -221,10 +222,10 @@ function App() {
                                                 </button>
                                                 <button onClick={async (e) => {
                                                     setPasswordFormData({
-                                                        id: "None",
-                                                        website: "None",
-                                                        username: "None",
-                                                        password: "None"
+                                                        id: -1,
+                                                        website: "",
+                                                        username: "",
+                                                        password: ""
                                                     })
                                                     setActiveEditRow(-1)
                                                     await getPasswords()
@@ -241,7 +242,58 @@ function App() {
                                 showNewPasswordRow && (
                                     <tr>
                                         <td>
-                                            hi
+                                            <div className={"field border"}>
+                                                <input type={"url"} className={"tiny-padding"} value={passwordFormData.website} onChange={(e) => {
+                                                    setPasswordFormData({
+                                                        ...passwordFormData,
+                                                        website: e.target.value
+                                                    })
+                                                }}/>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div className={"field border"}>
+                                                <input type={"text"} className={"tiny-padding"} value={passwordFormData.username} onChange={(e) => {
+                                                    setPasswordFormData({
+                                                        ...passwordFormData,
+                                                        username: e.target.value
+                                                    })
+                                                }}/>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div className={"field border"}>
+                                                <input type={"text"} className={"tiny-padding"} value={passwordFormData.password} onChange={(e) => {
+                                                    setPasswordFormData({
+                                                        ...passwordFormData,
+                                                        password: e.target.value
+                                                    })
+                                                }}/>
+                                            </div>
+                                        </td>
+                                        <td className={"strengthCell"}>
+                                            Make it strong!
+                                        </td>
+                                        <td>
+                                            <button onClick={async (e) => {
+                                                await savePassword(e)
+                                            }
+                                            } className={"edit-save-button transparent circle"}>
+                                                <i>save</i>
+                                            </button>
+                                            <button onClick={async (e) => {
+                                                setPasswordFormData({
+                                                    id: -1,
+                                                    website: "",
+                                                    username: "",
+                                                    password: ""
+                                                })
+                                                setShowNewPasswordRow(false)
+                                                await getPasswords()
+                                            }
+                                            } className={"delete-cancel-button transparent circle"}>
+                                                <i>cancel</i>
+                                            </button>
                                         </td>
                                     </tr>
                                 )
@@ -254,9 +306,12 @@ function App() {
                 </div>
 
             </div>
-            <NewButton onClick={() => {
-                setShowNewPasswordRow(true)
-            }}></NewButton>
+            {
+                (!showNewPasswordRow && activeEditRow === -1) && (<NewButton onClick={() => {
+                    setShowNewPasswordRow(true)
+                }}></NewButton>)
+            }
+
         </>
     )
 }
