@@ -1,5 +1,5 @@
 ## a4-Alexander-Kraemling
-your hosting link e.g. https://a4-alexanderkraemling-production.up.railway.app/login
+your hosting link e.g. https://a4-alexanderkraemling-production.up.railway.app
 
 My project allows you to create checklists and add tasks. Completed tasks move to the completed section and you can rename and delete them.
 
