@@ -15,7 +15,7 @@
 }
 
 .login-container {
-  display: flex;
+  display: flex; /* Overarching container organizes login elements in a column */
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -23,7 +23,7 @@
 }
 
 .login-form {
-  margin-top: 20px;
+  margin-top: 20px; /* Organizes login form elements */
   display: flex;
   justify-content: center;
   align-items: center;

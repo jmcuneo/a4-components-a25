@@ -1,35 +1,18 @@
-Assignment 4 - Components
+Assignment 4 - Components -- Ceci Herriman
 ===
 
-For this assignment you will re-implement the client side portion of *either* A2 or A3 using either React or Svelte components. If you choose A3 you only need to use components for the data display / updating; you can leave your login UI as is.
+## Movie Reviewer
 
-[Svelte Tutorial](https://github.com/jmcuneo/cs4241-guides/blob/master/using.svelte.md)  
-[React Tutorial](https://github.com/jmcuneo/cs4241-guides/blob/master/using.react.md)  
+My hosting link: https://a4-ceciherriman-components.onrender.com/ 
 
-You may also want to check out [this video of Prof. Roberts working through both of the above tutorials](https://echo360.org/media/75af2567-2f06-4851-baeb-1cfe8ea5cb48/public). 
+Premade user login and password: c, c
 
-This project can be implemented on any hosting service (Render, DigitalOcean, Heroku, etc.). However, you must include all files in your GitHub repo so that the course staff can view them.
+My project is a movie reviewer application which allows users to make, edit, delete, and view movie reviews they have made in the past. Users can log in or create an account and then view past reviews in a table and make more entries with an entry form. It mimics the functionality and design of my A3 assignment, with the majority of my work not affecting the frontend or underlying functionality of the application -- only how it operated and was structured. I used React, so I decided to switch my application to a one-page app, meaning that users cannot "go back" to the login screen after they have successfully logged in (you must refresh). Using React also means that the page updates in real time without needing to prompt the server. 
 
-Deliverables
----
+I changed my frontend to use React, meaning that I split my existing home page html into different components who each implemented different parts of my A3 frontend javascript. I also brought in my login page html to use within a "login" component. With React, I managed the state of the application with hooks such as useState() and useEffect(). Different components also passed functions and data to one another through props, as opposed to using shared functions. On the server, I did not have to change much. I needed to switch my method of importing, this time using "import" statements instead of "require". I also had to tweak the way my server started running. 
 
-Do the following to complete this assignment:
+Did the new technology improve or hinder the development experience? 
 
-1. Implement your project with the above requirements.
-1. Test your project to make sure that when someone goes to your main page on Render, etc., it displays correctly.
-1. Ensure that your project has the proper naming scheme `a4-firstname-lastname` so we can find it.
-1. Fork this repository and modify the README to the specifications below. Be sure to add *all* project files.
-1. Create and submit a Pull Request to the original repo. Name the pull request using the following template: `a4-firstname-lastname`.
+Using React mostly improved my development experience because it made it easier for me to handle changes gracefully and render a variable amount of entry objects for my table. For example, using just Javacript + HTML to fetch data from other elements required me to save element IDs and manually store values in temporary variables, while with React, I could instead make a component with props, making references to its data much more streamlined and standardized. Additionally, with React's useEffect() and depdency array, I could have my entry table refresh automatically when something changed with the entries. This was much simpler and more reliable than having to call a JavaScript function to update the table every time a relevant API call was made.
 
-Grading
----
-Unlike previous assignments, this assignment will be solely graded on whether or not you successfully complete it. Partial credit will be generously given.
-
-Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
----
-
-## Your Web Application Title
-
-your hosting link e.g. http://a4-charlieroberts.glitch.me
-
-Include a very brief summary of your project here and what you changed / added to assignment #3. Briefly (3–4 sentences) answer the following question: did the new technology improve or hinder the development experience?
+To develop my project, I used Professor Cuneo's GitHub resources for React development. I also used W3 schools to refresh myself on topics like props and events. To get help with debugging my code, I used ChatGPT. 
