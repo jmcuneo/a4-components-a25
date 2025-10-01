@@ -1,16 +1,9 @@
-# React + Vite
+# Game Hub
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Host Link: https://a4-tiennguyen.onrender.com
 
-Currently, two official plugins are available:
+This project is for hosting whatever game my team has right now and in the future
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+I do this project totally from scratch using React and Style Component. In the game section, users can click on the game they like and it will lead them to a new tab with that game. Currently, I have not plug in any game yet but this is also used for the final project where all my team put the actual game in. 
 
-## React Compiler
-
-The React Compiler is not enabled on this template. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+For me, the new technology really improve the coding experience and make everything more fun. For example, style-component in React let me code mixing html and javascript at once. 
