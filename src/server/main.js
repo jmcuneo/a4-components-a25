@@ -43,9 +43,9 @@ async function DB_connection() {
 }
 
 function startServer() {
-  ViteExpress.listen(app, PORT,() => {
-    console.log(`Server running at http://localhost:${PORT}`);
-  });
+  ViteExpress.listen(app, PORT, () => 
+    console.log(`Server running at http://localhost:${PORT}`),
+  );
 }
 
 function ensure_authenticated(req, res, next) {
@@ -54,6 +54,10 @@ function ensure_authenticated(req, res, next) {
   }
   res.status(401).json({ error: "Authentication required" });
 }
+
+app.get("/hello", (req, res) => {
+  res.send("Hello Vite + React!");
+});
 
 app.get('/test', (req, res) => {
   console.log('Test route hit!');
@@ -102,9 +106,10 @@ app.get('/login-failed', (req, res) => {
 });
 
 // Homepage
-app.get("/", (req, res) => {
-  res.sendFile("index.html", {root: path.join(__dirname, '../../')});
-});
+// app.get("/", (req, res) => {
+//   res.sendFile("index.html", {root: path.join(__dirname, '../../')});
+// });
+//Do not need to serve static homepage. Let Vite handle.
 
 app.get("/results", ensure_authenticated, async (req, res) => {
   try {
