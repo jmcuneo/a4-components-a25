@@ -1,11 +1,7 @@
 const http = require("http"),
     fs = require("fs"),
-    // IMPORTANT: you must run `npm install` in the directory for this assignment
-    // to install the mime library if you"re testing this on your local machine.
-    // However, Glitch will install it automatically by looking in your package.json
-    // file.
+    path = require("path"),
     mime = require("mime"),
-    dir = "public/",
     port = 3000
 
 let appdata = [];
@@ -32,16 +28,36 @@ const handleDelete = function (request, response) {
 }
 
 const handleGet = function (request, response) {
-    const filename = dir + request.url.slice(1)
-
-    if (request.url === "/") {
-        sendFile(response, "public/index.html")
-    } else if(request.url === "/stats") {
+    if(request.url === "/stats") {
         response.writeHead(200, "OK", {"Content-Type": "application/json"});
         response.end(JSON.stringify(appdata));
-    } else {
-        sendFile(response, filename)
+        return;
     }
+
+    let filePath = path.join(__dirname, 'dist', request.url === '/' ? 'index.html' : request.url);
+
+    fs.readFile(filePath, function (err, content) {
+        if (err) {
+            if (err.code === 'ENOENT') {
+                fs.readFile(path.join(__dirname, 'dist', 'index.html'), function(err, content) {
+                    if (err) {
+                        response.writeHead(500);
+                        response.end('Error loading application');
+                    } else {
+                        response.writeHead(200, {'Content-Type': 'text/html'});
+                        response.end(content);
+                    }
+                });
+            } else {
+                response.writeHead(500);
+                response.end('Server Error: ' + err.code);
+            }
+        } else {
+            const type = mime.getType(filePath);
+            response.writeHead(200, {'Content-Type': type});
+            response.end(content);
+        }
+    });
 }
 
 const handlePost = function (request, response) {
@@ -53,7 +69,6 @@ const handlePost = function (request, response) {
         })
 
         request.on("end", function () {
-
             let guess = JSON.parse(dataString);
             appdata[guess.gameId].guesses.push(guess.guess)
             appdata[guess.gameId].won = appdata[guess.gameId].answer === guess.guess;
@@ -67,39 +82,16 @@ const handlePost = function (request, response) {
         let dataString = ""
 
         request.on("data", function (data) {
-          dataString += data
+            dataString += data
         })
 
         request.on("end", function () {
-
             appdata.push(JSON.parse(dataString))
 
             response.writeHead(200, "OK", {"Content-Type": "application/json"})
             response.end("test")
         })
     }
-}
-
-const sendFile = function (response, filename) {
-    const type = mime.getType(filename)
-
-    fs.readFile(filename, function (err, content) {
-
-        // if the error = null, then we"ve loaded the file successfully
-        if (err === null) {
-
-            // status code: https://httpstatuses.com
-            response.writeHeader(200, {"Content-Type": type})
-            response.end(content)
-
-        } else {
-
-            // file not found, error code 404
-            response.writeHeader(404)
-            response.end("404 Error: File Not Found")
-
-        }
-    })
 }
 
 console.log("Server running at port " + port)
