@@ -2,6 +2,11 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import { MongoClient, Collection } from "mongodb";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 interface Task {
     text: string;
@@ -19,7 +24,7 @@ const app = express();
 const port = Number(process.env.PORT) || 3000;
 
 app.use(cors({
-    origin: process.env.BASE_URL || "http://localhost:5173", // frontend URL in production
+    origin: process.env.BASE_URL || "*", // frontend URL in production
     credentials: true
 }));
 
@@ -164,6 +169,13 @@ app.put("/api/checklists/:name/tasks/:index", async (req, res) => {
     } catch (err: any) {
         res.status(500).json({ error: err.message });
     }
+});
+
+const frontendPath = path.join(__dirname, "../../client/dist");
+app.use(express.static(frontendPath));
+
+app.get("*", (_, res) => {
+    res.sendFile(path.join(frontendPath, "index.html"));
 });
 
 app.listen(port, () => {
