@@ -16,7 +16,7 @@ function GameForm({ guess, setGuess, onSubmit, onNewGame, onToggleStats}) {
 
     return (
         <form className={"game-form"}>
-            <div className={"form-group"}>
+            <div className={"input-group"}>
                 <label htmlFor={"guess"}>Guess</label>
                 <input
                     type={"number"}
@@ -28,7 +28,7 @@ function GameForm({ guess, setGuess, onSubmit, onNewGame, onToggleStats}) {
                     />
             </div>
 
-            <div className={"form-group"}>
+            <div className={"button-group"}>
                 <button onClick={handleSubmit}>Submit</button>
                 <button onClick={handleNewGame}>New Game</button>
                 <button onClick={handleToggleStats}>View Statistics</button>
