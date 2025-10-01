@@ -1,0 +1,93 @@
+@import "https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css";
+
+#root {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.App {
+  display: flex; 
+  flex-direction: column; 
+  justify-content: center;
+  align-items: center;
+}
+
+.login-container {
+  display: flex; /* Overarching container organizes login elements in a column */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+
+.login-form {
+  margin-top: 20px; /* Organizes login form elements */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tracker-container {
+  display: flex; /* Overarching container organizes sub containers in rows */
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px; 
+
+  margin-top: 20px;
+  margin-bottom: 70px;
+}
+
+.left-boxes {
+  display: flex; /* Container for left sections organizes each child div in a column */
+  flex-direction: column;
+  gap: 20px;
+}
+
+.welcome-messages {
+  display: flex;  /* Overarching container organizes messages in rows */
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 20px; 
+  font-size: 20px; 
+  font-weight: bold;
+  margin-top: 10px; 
+}
+
+.card {
+  box-shadow: 0 8px 15px rgba(255, 255, 255, 0.6),
+              0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+table {
+  border-collapse: separate; /* Make each table cell have their own border so that we can apply spacing to them */
+  border-spacing: 20px 15px;
+}
+
+td {
+  word-wrap: break-word;     /* Break long strings and wrap for better spacing in cells with movie names*/
+  white-space: normal;
+  overflow-wrap: break-word;
+  max-width: 200px;
+
+  vertical-align: middle;
+}
+
+td.number-cell {
+  text-align: center;
+}
+
+th {
+  color:rgba(22, 109, 45, 0.79);
+}
+
+input {
+  display: table-cell; /* for better behavior in tables */
+  margin-bottom: 20px;
+}
+
+.number-input {
+  min-width: 100px;
+}
