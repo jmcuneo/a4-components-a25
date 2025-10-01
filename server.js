@@ -36,7 +36,7 @@ passport.deserializeUser(function (user, done) {
 });
 
 passport.use(new GitHubStrategy({
-    clientID: github_client, clientSecret: github_secret, callbackURL: "https://a3-christopher-yon.vercel.app/auth/github/callback"
+    clientID: github_client, clientSecret: github_secret, callbackURL: "https://a4-christopheryon.onrender.com/auth/github/callback"
 }, function (accessToken, refreshToken, profile, done) {
     process.nextTick(function () {
         // use GitHub profile ID as user ID
