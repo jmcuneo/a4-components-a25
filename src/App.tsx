@@ -132,7 +132,7 @@ function App() {
 
   return (
     <div className="min-h-screen flex flex-col items-center bg-orange-100 py-8">
-      <h1 className="text-4xl font-bold mb-4">Meal Tracker</h1>
+      <h1 className="text-4xl font-bold mb-4">Calorie Tracker</h1>
       <div className="mb-6">
         <label className="font-semibold mr-2">Show meals for date:</label>
         <input
