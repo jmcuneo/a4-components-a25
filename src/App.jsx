@@ -40,7 +40,7 @@ function App() {
     const submit = async () => {
         const json = {
             gameId: gameId,
-            guess: guess
+            guess: parseInt(guess)
         }
 
         const res = await fetch("/guess", {
