@@ -14,7 +14,7 @@ const TaskInputForm: React.FC<TaskInputFormProps> = ({
                                                          setChecklists,
                                                      }) => {
     const [taskInput, setTaskInput] = useState("");
-
+    
     const addTask = async (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -34,7 +34,7 @@ const TaskInputForm: React.FC<TaskInputFormProps> = ({
 
         try {
             const res = await fetch(
-                `${import.meta.env.VITE_API_URL}/api/checklists/${currentChecklist}/tasks`,
+                `/api/checklists/${currentChecklist}/tasks`,
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
