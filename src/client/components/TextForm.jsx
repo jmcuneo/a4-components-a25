@@ -51,7 +51,6 @@ function TextForm({children, onSubmitSuccess}) {
             if (response.ok) {
                 form.current.reset();
                 clear_canvas_content();
-                // Call callback to refresh posts without page reload
                 if (onSubmitSuccess) {
                     onSubmitSuccess();
                 }
