@@ -4,7 +4,7 @@ import ViteExpress from 'vite-express';
 
 const app = express()
 
-app.use( express.json() )
+app.use(express.json());
 
 type Meal = {
   id: string;
@@ -157,7 +157,7 @@ app.get('/meals', (req: Request, res: Response) => {
 
 
 app.post('/submit', (req: Request, res: Response) => {
-  const receivedData = req.body as Omit<Meal, 'id' | 'date'> & Partial<Pick<Meal, 'date'>>;
+  const receivedData = req.body;
 
   const id = Date.now() + Math.random().toString(36).slice(2);
   const date = new Date().toISOString().split('T')[0];
@@ -169,7 +169,7 @@ app.post('/submit', (req: Request, res: Response) => {
 
 
 app.post('/delete', (req: Request, res: Response) => {
-  const { id } = req.body as { id: string };
+  const { id } = req.body;
   meals = meals.filter((meal) => meal.id !== id);
 
   const grouped = groupMealsByDate();
@@ -178,10 +178,9 @@ app.post('/delete', (req: Request, res: Response) => {
 
 
 app.post('/update', (req: Request, res: Response) => {
-  const updated = req.body as Partial<Meal> & { id: string };
+  const updated = req.body;
   meals = meals.map((meal) => meal.id === updated.id ? { ...meal, ...updated } : meal);
 
-  // Respond with updated grouped data
   const grouped = groupMealsByDate();
   res.json(grouped);
 });
