@@ -2,20 +2,12 @@ import React, {useEffect, useState} from 'react'
 import NewButton from "./NewButton.jsx";
 import 'beercss'
 import './App.css'
+import AccountHeader from "./AccountHeader.jsx";
 
 
 function App() {
-    const [passwords, setPasswords] = useState([{
-        id: "Loading...",
-        website: "Loading",
-        username: "Loading",
-        password: "Loading",
-        strength: "Loading"
-    }])
-    const [user, setUser] = useState({
-        avatar_url: "",
-        username: "User"
-    })
+    const [passwords, setPasswords] = useState([])
+
     const [activeEditRow, setActiveEditRow] = useState(-1)
     const [showNewPasswordRow, setShowNewPasswordRow] = useState(false)
     const getPasswords = async () => {
@@ -24,13 +16,7 @@ function App() {
         })
         setPasswords(JSON.parse(await response.text()))
     }
-    const getUsername = async () => {
-        const response = await fetch("/user", {
-            method: "GET"
-        })
-        const userString = await response.text()
-        setUser(JSON.parse(userString))
-    }
+
     const [passwordFormData, setPasswordFormData] = useState({
         id: -1,
         website: "",
@@ -89,31 +75,11 @@ function App() {
     const wrap = (node) => (activeEditRow > -1 || showNewPasswordRow ? <form>{node}</form> : node);
     useEffect(async () => {
         await getPasswords()
-        await getUsername()
     }, []);
     return (
         <>
             <div className={"mainContainer"}>
-
-                <div className={"accountContainer bottom-margin"}>
-                    <span>
-                        {
-                            user.avatar_url !== ""
-                                ?
-                                <img src={user.avatar_url} className={"circle tiny small-margin right-margin"} alt={"avatar image"}/>
-                                : <i className={"circle extra small-margin right-margin"}>account_circle</i>
-                        }
-
-                        <span className={"large-text"}>{user.username}</span>
-                    </span>
-                    <button className={"small circle absolute right"} onClick={() => {
-                        window.location.href = "/logout"
-                    }}>
-                        <i>
-                            logout
-                        </i>
-                    </button>
-                </div>
+                <AccountHeader></AccountHeader>
                 <div id="header">
                     <h2>
                         My Passwords
