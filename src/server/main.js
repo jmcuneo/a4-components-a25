@@ -13,7 +13,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const PORT = process.env.PORT || 9621;
+const PORT = process.env.PORT || 9622;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -44,7 +44,7 @@ async function DB_connection() {
 
 function startServer() {
   ViteExpress.listen(app, PORT, () => 
-    console.log(`Server running at http://localhost:${PORT}`),
+    console.log(`Server running at http://a4-yihongjiang-a25.xvr6.dev`),
   );
 }
 
