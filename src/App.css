@@ -1,0 +1,5 @@
+/* get rid of default margin from browser */
+body {
+    margin: 0;
+}
+
