@@ -27,9 +27,7 @@ let appdata = [
 ]
 
 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client/dist/index.html"));
-});
+
 
 
 app.get("/data", (req, res) => {
@@ -69,6 +67,10 @@ app.post("/delete", (req, res) => {
   } catch (err) {
     res.status(500).send("delete fail" + err);
   }
+});
+
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client/dist/index.html"));
 });
 
 const calculateDerivedPrice = function(year, mpg) {
