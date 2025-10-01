@@ -1,6 +1,6 @@
 # Game Hub
 
-Host Link: https://a4-tiennguyen.onrender.com
+Host Link: a4-tiennguyen.vercel.app
 
 This project is for hosting whatever game my team has right now and in the future
 
