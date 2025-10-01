@@ -1,14 +1,13 @@
-import { useState } from "react"; 
-function ChangeForm(){
+import { useState } from "react";
+
+function ChangeForm({films, setFilms}){
     const [rating, setRating] = useState(0);
 
     const handleChange = async (event) => {
         event.preventDefault();
         
         const inputTitle = event.target.title.value;
-        alert(inputTitle)
-        const json = {changeTitle: inputTitle, changeRating: rating}
-        alert(rating)
+        const json = {changeTitle: inputTitle, changeRating: rating};
         const body = JSON.stringify(json);
 
         const response = await fetch("/change", {
@@ -21,10 +20,25 @@ function ChangeForm(){
         const data = await response.json();
         console.log("server response:", data);
 
-        alert(data.message)
+        if (data.success) {
+            setFilms(
+                films.map((film) =>
+                    film.title === inputTitle ? { ...film, rating } : film
+                )
+            );
+/*
+            const refreshed = await fetch("/data");
+            const updatedFilms = await refreshed.json();
+            setFilms(updatedFilms);*/
+        }
+        else{
+            alert("Movie not found.")
+        }
+
 
         event.target.reset();
-        setRating(0);
+        setRating(0);          
+                
     }
 
     

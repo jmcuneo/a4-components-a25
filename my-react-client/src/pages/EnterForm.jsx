@@ -6,7 +6,7 @@ function EnterForm() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        alert(rating);
+
         const inputTitle = event.target.title.value;
         const inputThoughts = event.target.thoughts.value;
         const inputDate = event.target.date.value;

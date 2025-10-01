@@ -112,10 +112,10 @@ app.patch('/change', async (req, res) =>{
         );
 
         if (result.matchedCount === 0){
-            res.json({message: "Could not find movie" + title});
+            res.json({message: "Could not find movie " + title, success: false});
         }
         else{
-            res.json({message: "Updated"});
+            res.json({message: "Updated " + rating, success: true});
         }
     }
     catch (err){

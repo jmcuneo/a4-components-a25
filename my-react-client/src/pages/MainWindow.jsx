@@ -1,9 +1,11 @@
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import EnterForm from './EnterForm.jsx'
 import './main.css'
 
 function MainWindow(){
     const navigate = useNavigate();
+    const [films, setFilms] = useState([]);
 
     return(
         <div className ="window">
@@ -17,6 +19,7 @@ function MainWindow(){
             <br></br>
             {/*Form to enter films:*/}
             <EnterForm />
+         
         </div>
     );
 }

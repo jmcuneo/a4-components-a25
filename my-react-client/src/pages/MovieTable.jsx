@@ -1,7 +1,7 @@
 import { useEffect, useState} from "react";
 
-function MovieTable (){
-    const[films, setFilms] = useState([]);
+function MovieTable ({films, setFilms}){
+    //const[films, setFilms] = useState([]);
 
     const deleteFilm = async (title) => {
         //event.preventDefault();

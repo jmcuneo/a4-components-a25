@@ -3,8 +3,9 @@ import MovieTable from './MovieTable.jsx'
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState} from "react";
 
-function LoggedFilms({onDelete}){
+function LoggedFilms(){
     const navigate = useNavigate();
+    const [films, setFilms] = useState([]);
 
     return(
         <div className = "window">
@@ -16,9 +17,10 @@ function LoggedFilms({onDelete}){
                 <h1 className = "title">Your Logged Films</h1>
             </div>
             <h4>& You Can Change the Rating of a Logged Film.</h4>
-            <ChangeForm />
+
+            <ChangeForm films={films} setFilms={setFilms} />
             <hr/>
-            <MovieTable />
+            <MovieTable films={films} setFilms={setFilms} />
         </div>
     )
 }
