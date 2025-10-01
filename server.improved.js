@@ -94,5 +94,8 @@ const handlePost = function (request, response) {
     }
 }
 
-console.log("Server running at port " + port)
-server.listen(process.env.PORT || port)
+const PORT = process.env.PORT || port;
+console.log(`Server starting on port ${PORT}`);
+server.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server successfully running on port ${PORT}`);
+});
