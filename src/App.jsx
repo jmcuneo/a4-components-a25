@@ -36,6 +36,41 @@ function App() {
         username: "None",
         password: "None"
     })
+    const savePassword = async (event) => {
+        event.preventDefault()
+        const body = JSON.stringify(passwordFormData)
+        if (passwordFormData.website.length === 0) {
+            alert("You must have a website!")
+            return -1;
+        } else if (!(passwordFormData.website.startsWith("http://") || passwordFormData.website.startsWith("https://"))) {
+            alert("Improper website format!")
+            return -1;
+        }
+        if (passwordFormData.username.length === 0) {
+            alert("You must have a username!")
+            return -1;
+        }
+        if (passwordFormData.password.length === 0) {
+            alert("You must have a password!")
+            return -1;
+        }
+        await fetch("/save", {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body
+        })
+        await getPasswords()
+        setPasswordFormData({
+            id: "None",
+            website: "None",
+            username: "None",
+            password: "None"
+        })
+        setActiveEditRow(-1)
+    }
     const wrap = (node) => (activeEditRow > -1 ? <form>{node}</form> : node);
     useEffect(async () => {
         await getPasswords()
@@ -43,7 +78,6 @@ function App() {
     }, []);
     return (
         <>
-            <body className={"dark"}>
             <div className={"mainContainer"}>
 
                 <div className={"accountContainer bottom-margin"}>
@@ -92,12 +126,12 @@ function App() {
                             <tbody>
                             {passwords.map((entry, index) =>
                                 (
-                                    (<tr>
-                                        <td>
+                                    (<tr key={entry.id}>
+                                        <td className={activeEditRow === index && "no-padding"}>
                                             {
                                                 activeEditRow === index ?
                                                     (<div className={"field border"}>
-                                                        <input type={"url"} value={passwordFormData.website} onChange={(e) => {
+                                                        <input type={"url"} className={"tiny-padding"} value={passwordFormData.website} onChange={(e) => {
                                                             setPasswordFormData({
                                                                 ...passwordFormData,
                                                                 website: e.target.value
@@ -107,29 +141,60 @@ function App() {
                                                     : entry.website
                                             }
                                         </td>
-                                        <td>
-                                            {entry.username}
+                                        <td className={activeEditRow === index && "no-padding"}>
+                                            {
+                                                activeEditRow === index ?
+                                                    (<div className={"field border"}>
+                                                        <input type={"text"} className={"tiny-padding"} value={passwordFormData.username} onChange={(e) => {
+                                                            setPasswordFormData({
+                                                                ...passwordFormData,
+                                                                username: e.target.value
+                                                            })
+                                                        }}/>
+                                                    </div>)
+                                                    : entry.username
+                                            }
                                         </td>
-                                        <td>
-                                            {entry.password}
+                                        <td className={activeEditRow === index && "no-padding"}>
+                                            {
+                                                activeEditRow === index ?
+                                                    (<div className={"field border"}>
+                                                        <input type={"text"} className={"tiny-padding"} value={passwordFormData.password} onChange={(e) => {
+                                                            setPasswordFormData({
+                                                                ...passwordFormData,
+                                                                password: e.target.value
+                                                            })
+                                                        }}/>
+                                                    </div>)
+                                                    : entry.password
+                                            }
                                         </td>
                                         <td className={"strengthCell"}>
                                             {entry.strength}
                                         </td>
                                         {
                                             activeEditRow !== index ? (<td>
-                                                <button onClick={() => {
+                                                <button onClick={(e) => {
+                                                    e.preventDefault()
                                                     setPasswordFormData({
                                                         id: entry.id,
                                                         website: entry.website,
                                                         username: entry.username,
                                                         password: entry.password
                                                     })
-                                                    setActiveEditRow(index)}
+                                                    setActiveEditRow(index)
+                                                }
                                                 } className={"edit-save-button transparent circle"}>
                                                     <i>edit</i>
                                                 </button>
-                                            </td>) : (<td>bye</td>)
+                                            </td>) : (<td>
+                                                <button onClick={async (e) => {
+                                                    await savePassword(e)
+                                                }
+                                                } className={"edit-save-button transparent circle"}>
+                                                    <i>save</i>
+                                                </button>
+                                            </td>)
                                         }
                                     </tr>)
                                 )
@@ -143,7 +208,6 @@ function App() {
 
             </div>
             <NewButton></NewButton>
-            </body>
         </>
     )
 }
