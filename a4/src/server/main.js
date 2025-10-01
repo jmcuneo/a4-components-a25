@@ -1,17 +1,21 @@
 import express from  'express'
 import ViteExpress from 'vite-express'
+import { engine } from 'express-handlebars'
+import path, { dirname } from 'path'
+import dotenv from 'dotenv'
+import { fileURLToPath } from "url";
+import { MongoClient, ServerApiVersion } from 'mongodb';
 
-const express = require( 'express' ),
-      app = express(),
-    { engine } = require('express-handlebars'),
-    path = require('path')
-    require('dotenv').config();   
+const app = express()
+
+dotenv.config()
 
 let username = ""
 let password = ""
 
-
-app.use( express.static( 'index.html' ) )
+const __filename = fileURLToPath(import.meta.url);
+const __tempDirc = path.dirname(__filename);
+const __dirname = path.join(path.join(__tempDirc, '..'), '..')
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true })); 
@@ -20,7 +24,6 @@ app.engine('handlebars', engine())
 app.set('view engine', 'handlebars')
 app.set('views', path.join(__dirname, '/src/views'))
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri = `mongodb+srv://${process.env.USERNM}:${process.env.PASS}@${process.env.HOST}/?retryWrites=true&w=majority&appName=WebwareA3`;
 
 
@@ -55,7 +58,7 @@ app.post('/login', async(req, res) => {
         password : req.body.password  
     })
     if (userAndPass){
-      res.redirect("/index.html")
+      res.redirect('/index');
       username = req.body.username
       password = req.body.password 
     }
@@ -67,6 +70,10 @@ app.post('/login', async(req, res) => {
     await collection.insertOne(document)
     res.render("login", {msg: "Account has been created, please login in again to access your account.", layout : false})
   }
+});
+
+app.get('/index', (req, res) => {
+  res.sendFile(path.join(__dirname, '/index.html'));
 });
 
 
@@ -91,7 +98,7 @@ app.get('/fields', async (req, res) =>{
   res.end(JSON.stringify(fields));
 })
 
-// GET / → login page
+
 app.get('/', (req, res) => {
   res.render('login', { msg: null, layout: false })
 })
@@ -142,7 +149,7 @@ app.post( '/update', async (req,res) => {
 async function startServer() {
   console.log(uri);
   await run();
-  app.listen(process.env.PORT || 3000, () => console.log("Server running"));
+  app.listen(process.env.PORT || 3000, () => console.log("Server running on port 3000"));
 }
 
 startServer().catch(console.dir);

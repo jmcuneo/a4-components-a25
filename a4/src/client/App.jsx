@@ -5,13 +5,10 @@ function Table({runTable}){
   const [data, setData] = useState({})
 
   async function getData(){
-    const response = await fetch('/table', {
-        method: 'GET'
-    })
+   const response = await fetch('http://localhost:3000/table', { method: 'GET' });
     const appdata = await response.json()
-    const getFields = await fetch('/fields', {
-        method: 'GET'
-    })
+    const getFields = await fetch('http://localhost:3000/fields', { method: 'GET' });
+
 
     const fields = await getFields.json()
     setFields(fields.filter(password => password != 'password'))
@@ -20,12 +17,10 @@ function Table({runTable}){
 
   useEffect(() => {
     getData()
-  }, {runTable})
-
-}
+  }, [runTable])
 
 return(
-  <table class = "pure-table">
+  <table className = "pure-table">
     <thead>
       <tr>
         {fields.map((field => 
@@ -36,11 +31,117 @@ return(
     <tbody>
       <tr>
         {fields.map((field => 
-          <th key = {field}>{data[field]}</th>
+          <td key = {field}>{data[field]}</td>
         ))}
       </tr>
     </tbody>
   </table>
 )
+}
 
-export default App
+export default function App(){
+  const[runTable, setRunTable] = useState(0);
+
+  async function add(event){
+    event.preventDefault();
+    
+        const field = event.target.field.value,
+              toAdd = event.target.toAdd.value,
+              json = {field, toAdd},
+              body = JSON.stringify(json)
+
+        const response = await fetch("http://localhost:3000/add", {
+            method : "POST",
+            headers: { "Content-Type": "application/json" },
+            body
+        })
+
+        setRunTable(x => x + 1)
+        event.target.reset();
+  }
+
+  async function update(event){
+    event.preventDefault()  
+
+        const field = event.target.field.value,
+              toUpdate = event.target.toUpdate.value,
+              json = {field, toUpdate},
+              body = JSON.stringify(json)
+
+        const response = await fetch("http://localhost:3000/update", {
+            method : "POST",
+            headers: { "Content-Type": "application/json" },
+            body
+        })
+
+        const results = await response.json();
+
+        if(!results.success){
+            alert("Please enter a valid field!");
+        }
+
+        setRunTable(x => x + 1)
+        event.target.reset();
+  }
+
+  async function remove(event){
+    event.preventDefault()  
+
+        const field = event.target.field.value,
+              json = {field},
+              body = JSON.stringify(json)
+
+        const response = await fetch("http://localhost:3000/remove", {
+            method : "POST",
+            headers: { "Content-Type": "application/json" },
+            body
+        })
+
+        const results = await response.json();
+
+        if(!results.success){
+            alert("Please enter a valid field!");
+        }
+
+        setRunTable(x => x + 1);
+        event.target.reset();
+  }
+
+  return(
+    <div>
+      <h1>All Available Data</h1>
+      <Table runTable={runTable} />
+      <div id = "allForms">
+        <div id = "addForm">
+          <h2>Add Info To Your Account</h2>
+          <form onSubmit = {add} className = "pure-form">
+            <label htmlFor="field">Field</label> <br></br>
+            <input type = "text" name = "field" id = "field"/> <br></br><br></br>
+            <label htmlFor="toAdd">Value</label> <br></br>
+            <input type = "text" name = "toAdd" id = "toAdd"/> <br></br><br></br>
+            <input type = "submit" value = "submit" className = "pure-button pure-button-active"/> <br></br>
+          </form>   
+        </div>
+        <div id = "updateForm">
+          <h2>Update Info To Your Account</h2>
+          <form onSubmit = {update} className = "pure-form">  
+            <label htmlFor="field">Field</label> <br></br>
+            <input type = "text" name = "field" id = "field"/> <br></br><br></br>
+            <label htmlFor="toUpdate">Value</label> <br></br>
+            <input type = "text" name = "toUpdate" id = "toUpdate"/> <br></br><br></br>
+            <input type = "submit" value = "submit" className = "pure-button pure-button-active"/> <br></br>
+          </form>
+      </div>
+        <div id = "removeForm">
+        <h2>Remove Info From Your Account</h2>
+        <form onSubmit = {remove} className = "pure-form">
+          <label htmlFor="field">Field</label> <br></br>
+          <input type = "text" name = "field" id = "field"/> <br></br><br></br>
+          <input type = "submit" value = "submit" className = "pure-button pure-button-active"/> <br></br>
+      </form>
+    </div>
+      </div>
+    </div>
+  )
+}
+
