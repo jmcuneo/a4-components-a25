@@ -1,6 +1,4 @@
 import React, {useEffect, useState} from 'react'
-import 'beercss'
-import './App.css'
 
 const AccountHeader = () => {
     const [user, setUser] = useState({
