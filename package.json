@@ -4,9 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "proxy": "http://localhost:3000",
+  "exclude": ["src/client"],
   "scripts": {
     "dev": "ts-node src/server/main.ts",
-    "build": "tsc && vite build --root src/client",
+    "build": "tsc -p tsconfig.server.json && vite build --root src/client",
     "start": "node dist/server/main.js"
   },
   "dependencies": {
