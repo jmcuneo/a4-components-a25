@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Main Page</title>
+    <meta charset="utf-8">
+    <meta name = "viewport" content = "width=device-width, initial-scale=1">
+    <meta name="description" content="The movies that the user has logged here appear in a table. The user can also change the rating of a logged movie with a input box and star ratings.">
+    <script src="js/main.js"></script>
+    
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://unpkg.com/@sakun/system.css" />
+    
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  </head>
+  <body>
+    <div class = "window">
+        <button class = "btn" id="back">Back</button>
+        <div class = "title-bar">
+            <h1 class = "title">Your Logged Films</h1>
+        </div>
+        <h4>& You Can Change the Rating of a Logged Film.</h4>
+        <label for="changeTitle">Which Film to Change Rating?: (Enter the Full Title of the Film)</label>
+        <input type = "text" id="changeTitle" name="changeTitle">
+        <label for="rating">Your rating:</label>
+        
+        <div class ="rating">
+            <input type="radio" id="star5" name = "rating" value="5" onclick="rate(5)">
+            <label for="star5">★</label>
+
+            <input type="radio" id="star4" name = "rating" value="4" onclick="rate(4)">
+            <label for="star4">★</label>
+
+            <input type="radio" id="star3" name = "rating" value="3" onclick="rate(3)">
+            <label for="star3">★</label>
+
+            <input type="radio" id="star2" name = "rating" value="2" onclick="rate(2)">
+            <label for="star2">★</label>
+
+            <input type="radio" id="star1" name = "rating" value="1" onclick="rate(1)">
+            <label for="star1">★</label>
+        </div>
+        <br><br>
+        
+        <div class="center">
+            <button id="change" class = "btn">Change</button>
+        </div>
+        <hr>
+        <table id="films"></table>
+    </div>
+ 
+    
+  </body>
