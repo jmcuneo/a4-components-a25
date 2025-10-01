@@ -171,10 +171,10 @@ app.put("/api/checklists/:name/tasks/:index", async (req, res) => {
     }
 });
 
-const frontendPath = path.join(__dirname, "../../client/dist");
+const frontendPath = path.join(__dirname, "../client");
 app.use(express.static(frontendPath));
 
-app.get("*", (_, res) => {
+app.get("/", function (req, res) {
     res.sendFile(path.join(frontendPath, "index.html"));
 });
 

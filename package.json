@@ -7,7 +7,7 @@
   "exclude": ["src/client"],
   "scripts": {
     "dev": "ts-node src/server/main.ts",
-    "build": "tsc -p tsconfig.server.json && vite build --root src/client",
+    "build": "tsc -p tsconfig.server.json && vite build",
     "start": "node dist/server/main.js"
   },
   "dependencies": {
