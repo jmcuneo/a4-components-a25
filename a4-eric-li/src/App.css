@@ -175,3 +175,55 @@ footer {
   color: var(--color-5);
   font-size: 0.95rem;
 }
+
+/* Edit form styles */
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.edit-form input,
+.edit-form textarea {
+  padding: 8px 12px;
+  border: 2px solid var(--color-4);
+  border-radius: 6px;
+  font-size: 14px;
+  background: var(--color-1);
+  font-family: inherit;
+}
+
+.edit-form textarea {
+  resize: vertical;
+  min-height: 60px;
+  line-height: 1.4;
+}
+
+.edit-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.save-btn {
+  background: #4CAF50 !important;
+  color: white !important;
+}
+
+.cancel-btn {
+  background: #f44336 !important;
+  color: white !important;
+}
+
+.edit-btn {
+  background: #2196F3 !important;
+  color: white !important;
+}
+
+.todo-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}

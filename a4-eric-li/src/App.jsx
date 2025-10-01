@@ -9,6 +9,12 @@ function App() {
     taskDescription: '',
     taskDueDate: ''
   })
+  const [editingTodo, setEditingTodo] = useState(null)
+  const [editForm, setEditForm] = useState({
+    taskTitle: '',
+    taskDescription: '',
+    taskDueDate: ''
+  })
 
   // Check authentication status
   useEffect(() => {
@@ -81,6 +87,38 @@ function App() {
     }
   }
 
+  const startEdit = (todo) => {
+    setEditingTodo(todo._id)
+    setEditForm({
+      taskTitle: todo.taskTitle,
+      taskDescription: todo.taskDescription,
+      taskDueDate: todo.taskDueDate
+    })
+  }
+
+  const cancelEdit = () => {
+    setEditingTodo(null)
+    setEditForm({ taskTitle: '', taskDescription: '', taskDueDate: '' })
+  }
+
+  const saveEdit = async (id) => {
+    try {
+      const response = await fetch('/edit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, ...editForm })
+      })
+      if (response.ok) {
+        const updatedTodos = await response.json()
+        setTodos(updatedTodos)
+        setEditingTodo(null)
+        setEditForm({ taskTitle: '', taskDescription: '', taskDueDate: '' })
+      }
+    } catch (err) {
+      console.error('Error editing todo:', err)
+    }
+  }
+
   if (!user) {
     return (
       <div className="App">
@@ -135,14 +173,44 @@ function App() {
         ) : (
           todos.map(todo => (
             <div key={todo._id} className={`todo-item ${todo.completed ? 'completed' : ''}`}>
-              <h3>{todo.taskTitle}</h3>
-              <p>{todo.taskDescription}</p>
-              <p>Due: {new Date(todo.taskDueDate).toLocaleDateString()}</p>
-              <p>Days left: {todo.daysLeft}</p>
-              <button onClick={() => toggleTodo(todo._id, todo.completed)}>
-                {todo.completed ? 'Mark Incomplete' : 'Mark Complete'}
-              </button>
-              <button onClick={() => deleteTodo(todo._id)}>Delete</button>
+              {editingTodo === todo._id ? (
+                <div className="edit-form">
+                  <input
+                    type="text"
+                    value={editForm.taskTitle}
+                    onChange={(e) => setEditForm({ ...editForm, taskTitle: e.target.value })}
+                    placeholder="Task Title"
+                  />
+                  <textarea
+                    value={editForm.taskDescription}
+                    onChange={(e) => setEditForm({ ...editForm, taskDescription: e.target.value })}
+                    placeholder="Task Description"
+                  />
+                  <input
+                    type="date"
+                    value={editForm.taskDueDate}
+                    onChange={(e) => setEditForm({ ...editForm, taskDueDate: e.target.value })}
+                  />
+                  <div className="edit-buttons">
+                    <button onClick={() => saveEdit(todo._id)} className="save-btn">Save</button>
+                    <button onClick={cancelEdit} className="cancel-btn">Cancel</button>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <h3>{todo.taskTitle}</h3>
+                  <p>{todo.taskDescription}</p>
+                  <p>Due: {new Date(todo.taskDueDate).toLocaleDateString()}</p>
+                  <p>Days left: {todo.daysLeft}</p>
+                  <div className="todo-buttons">
+                    <button onClick={() => toggleTodo(todo._id, todo.completed)}>
+                      {todo.completed ? 'Mark Incomplete' : 'Mark Complete'}
+                    </button>
+                    <button onClick={() => startEdit(todo)} className="edit-btn">Edit</button>
+                    <button onClick={() => deleteTodo(todo._id)}>Delete</button>
+                  </div>
+                </>
+              )}
             </div>
           ))
         )}
