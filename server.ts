@@ -149,7 +149,6 @@ const groupMealsByDate = (): GroupedMeals => {
   return grouped;
 };
 
-
 app.get('/meals', (req: Request, res: Response) => {
   const grouped = groupMealsByDate();
   res.json(grouped);
