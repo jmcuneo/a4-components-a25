@@ -17,6 +17,7 @@ function App() {
         username: "User"
     })
     const [activeEditRow, setActiveEditRow] = useState(-1)
+    const [showNewPasswordRow, setShowNewPasswordRow] = useState(false)
     const getPasswords = async () => {
         const response = await fetch("/passwords", {
             method: "GET"
@@ -187,24 +188,28 @@ function App() {
                                         </td>
                                         {
                                             activeEditRow !== index ? (<td>
-                                                <button onClick={(e) => {
-                                                    e.preventDefault()
-                                                    setPasswordFormData({
-                                                        id: entry.id,
-                                                        website: entry.website,
-                                                        username: entry.username,
-                                                        password: entry.password
-                                                    })
-                                                    setActiveEditRow(index)
-                                                }
-                                                } className={"edit-save-button transparent circle"}>
+                                                <button disabled={showNewPasswordRow || (activeEditRow !== -1 && activeEditRow !== index)}
+                                                        style={{opacity: showNewPasswordRow || (activeEditRow !== -1 && activeEditRow !== index) ? 0 : 100}}
+                                                        onClick={(e) => {
+                                                            e.preventDefault()
+                                                            setPasswordFormData({
+                                                                id: entry.id,
+                                                                website: entry.website,
+                                                                username: entry.username,
+                                                                password: entry.password
+                                                            })
+                                                            setActiveEditRow(index)
+                                                        }
+                                                        } className={"edit-save-button transparent circle"}>
                                                     <i>edit</i>
                                                 </button>
-                                                <button onClick={async (e) => {
-                                                    e.preventDefault()
-                                                    await deletePassword(entry.id)
-                                                }
-                                                } className={"delete-cancel-button transparent circle"}>
+                                                <button disabled={showNewPasswordRow || (activeEditRow !== -1 && activeEditRow !== index)}
+                                                        style={{opacity: showNewPasswordRow || (activeEditRow !== -1 && activeEditRow !== index) ? 0 : 100}}
+                                                        onClick={async (e) => {
+                                                            e.preventDefault()
+                                                            await deletePassword(entry.id)
+                                                        }
+                                                        } className={"delete-cancel-button transparent circle"}>
                                                     <i>delete</i>
                                                 </button>
                                             </td>) : (<td>
@@ -232,6 +237,15 @@ function App() {
                                     </tr>)
                                 )
                             )}
+                            {
+                                showNewPasswordRow && (
+                                    <tr>
+                                        <td>
+                                            hi
+                                        </td>
+                                    </tr>
+                                )
+                            }
                             </tbody>
                         </table>
                     )}
@@ -240,7 +254,9 @@ function App() {
                 </div>
 
             </div>
-            <NewButton></NewButton>
+            <NewButton onClick={() => {
+                setShowNewPasswordRow(true)
+            }}></NewButton>
         </>
     )
 }
