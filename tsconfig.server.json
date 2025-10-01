@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "dist/server",
+    "rootDir": "src/server",
+    "module": "NodeNext",
+    "target": "ES2020",
+    "noEmit": false
+  },
+  "include": ["src/server"]
+}

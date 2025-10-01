@@ -1,35 +1,8 @@
-Assignment 4 - Components
-===
+## a4-Alexander-Kraemling
+your hosting link e.g. https://a4-alexanderkraemling-production.up.railway.app
 
-For this assignment you will re-implement the client side portion of *either* A2 or A3 using either React or Svelte components. If you choose A3 you only need to use components for the data display / updating; you can leave your login UI as is.
+My project allows you to create checklists and add tasks. Completed tasks move to the completed section and you can rename and delete them.
 
-[Svelte Tutorial](https://github.com/jmcuneo/cs4241-guides/blob/master/using.svelte.md)  
-[React Tutorial](https://github.com/jmcuneo/cs4241-guides/blob/master/using.react.md)  
+I turned my project into a react project. I used components for the input to add new tasks, for each individual task item, for the list of tasks, and for the checklist sidebar. I also removed auth0, and instead added a login page that just takes a username and does no authentication.
 
-You may also want to check out [this video of Prof. Roberts working through both of the above tutorials](https://echo360.org/media/75af2567-2f06-4851-baeb-1cfe8ea5cb48/public). 
-
-This project can be implemented on any hosting service (Render, DigitalOcean, Heroku, etc.). However, you must include all files in your GitHub repo so that the course staff can view them.
-
-Deliverables
----
-
-Do the following to complete this assignment:
-
-1. Implement your project with the above requirements.
-1. Test your project to make sure that when someone goes to your main page on Render, etc., it displays correctly.
-1. Ensure that your project has the proper naming scheme `a4-firstname-lastname` so we can find it.
-1. Fork this repository and modify the README to the specifications below. Be sure to add *all* project files.
-1. Create and submit a Pull Request to the original repo. Name the pull request using the following template: `a4-firstname-lastname`.
-
-Grading
----
-Unlike previous assignments, this assignment will be solely graded on whether or not you successfully complete it. Partial credit will be generously given.
-
-Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
----
-
-## Your Web Application Title
-
-your hosting link e.g. http://a4-charlieroberts.glitch.me
-
-Include a very brief summary of your project here and what you changed / added to assignment #3. Briefly (3–4 sentences) answer the following question: did the new technology improve or hinder the development experience?
+The new technology killed me. This was a truly miserable experience. I have a lot of experience with react, but for whatever reason auth0 and deploying to various hosting sites was near impossible with a separate server and client to deploy. I had to simplify a lot to get it working. Had I started in react, and had more control over the frameworks I used and kept the server and frontend totally separate, I think I would have had less trouble.
