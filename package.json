@@ -1,0 +1,38 @@
+{
+  "name": "a4-theosawyers",
+  "version": "1.0.0",
+  "description": "Assignment 4 - Components",
+  "author": "",
+  "type": "module",
+  "main": "server.improved.js",
+  "scripts": {
+    "start": "node server.improved.js",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "body-parser": "^2.2.0",
+    "express": "^4.21.2",
+    "express-session": "^1.18.2",
+    "mime": "^2.6.0",
+    "mongoose": "^8.18.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "vite": "^7.1.7",
+    "vite-express": "^0.21.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TSAW7/a3-TheoSawyers.git"
+  },
+  "keywords": [],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TSAW7/a3-TheoSawyers/issues"
+  },
+  "homepage": "https://github.com/TSAW7/a3-TheoSawyers#readme"
+}
