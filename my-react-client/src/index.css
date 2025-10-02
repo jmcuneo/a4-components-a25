@@ -1,0 +1,139 @@
+h1, p{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10vh;
+    
+}
+
+h4{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+label{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 5vh;
+    text-align: center;
+}
+
+table, th{
+    height: 50px;
+    width: 50px;
+    border-radius: 10px;
+    border: 1ps solid #a0a0a0;
+    background-color: rgb(201, 201, 201);
+
+    border:2px solid rgb(255, 255, 255);
+    padding: 30px;
+    
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+td{
+    height: 50px;
+    width: 50px;
+    border-radius: 50px;
+    border: 1ps solid #018a8a;
+    background-color: white;
+
+    border:2px solid rgb(255, 255, 255);
+    padding: 10px;
+    
+    margin-left: auto;
+    margin-right: auto;
+
+    word-wrap:break-word;
+}
+
+.view{
+    display: flex;
+    justify-content: right;
+    align-items: right;
+    text-align: right;
+}
+
+.center{
+    text-align: center;
+}
+
+input{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    width: 70%;
+}
+
+#username, #password{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    width: 10%;
+}
+
+.date{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    width: 20%;
+}
+
+.nonlog{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    width: 20%;
+}
+
+.login{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    width: 10%;
+}
+
+.rating{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+}
+.rating input{
+    display: none;
+    position: absolute;   /* remove from flow */
+    opacity: 0;           /* invisible but still clickable */
+    width: 0;
+    height: 0;
+}
+.rating label{
+    font-size: 50px;
+    color: #444;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.rating input:checked ~ label,
+.rating input:checked ~ label ~ label{
+    color: gold;
+}
+
+.rating label:hover,
+.rating label:hover ~ label{
+    color: gold;
+}
+
+.rating input[type="radio"]{
+    display: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+}
