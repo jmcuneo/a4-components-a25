@@ -21,6 +21,15 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true })); 
 app.use(express.static(path.join(__dirname, 'dist')));
 
+app.use((req, res, next) => {
+  const filePath = path.join(__dirname, req.path);
+  if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
+    res.sendFile(filePath);
+  } else {
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+  }
+});
+
 const uri = `mongodb+srv://${process.env.USERNM}:${process.env.PASS}@${process.env.HOST}/?retryWrites=true&w=majority&appName=WebwareA3`;
 
 
@@ -46,10 +55,11 @@ async function run() {
   console.log("error : ", err)
  }
 }
-
+/*
 app.get("/:all(.*)", (req, res) => {
   res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
+*/
 
 
 app.post('/login', async(req, res) => {
