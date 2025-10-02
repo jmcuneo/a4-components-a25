@@ -1,0 +1,6 @@
+
+> client@0.0.0 build
+> vite build # build React front-end - client/dist/
+
+vite v7.1.7 building for production...
+✓ 0 modules transformed.
