@@ -1,16 +1,13 @@
-# React + Vite
+Assignment 4 - Components
+===
+# Brandon Yeu
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Night Owl Prototype
 
-Currently, two official plugins are available:
+Deployment: https://night-owl-prototype.onrender.com
+example login: brandon1
+example password: brandon1
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Include a very brief summary of your project here and what you changed / added to assignment #3. Briefly (3–4 sentences) answer the following question: did the new technology improve or hinder the development experience?
 
-## React Compiler
-
-The React Compiler is not enabled on this template. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+This project allows users to RSVP and add themselves to a guestlist for events. In addition to assignment 3, I used React for my components/UI and separated my server from my client code. I would say the new technology certainly caused unforseen errors in the setup and initial development of the project. However, long term, React will be extremely helpful for expanding this project. The code written is easily reusable, so in future development, I will not need to write as much manually. The way I see it is that React/new technologies take more time and effort to complete and correct the setup, but they can greatly increase productivity and potential of web applications
