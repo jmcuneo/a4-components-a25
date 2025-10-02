@@ -14,8 +14,6 @@ const NavList = styled.div`
   display: flex;
   justify-content: center;
   gap: 2rem;
-  margin: 0;
-  padding: 0;
 `
 
 const NavItem = styled.a`

@@ -4,7 +4,6 @@ const SectionWrapper = styled.section`
     min-height: 100vh; //each section fill at least one screen
     background: #fce7f3; //pink-ish color
     padding: 2rem 2rem;
-    scroll-margin-top: 80px; // create some space for the navbar later
     display: flex;
     flex-direction: column;
     justify-content: center;
