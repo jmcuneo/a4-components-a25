@@ -1,35 +1,43 @@
-Assignment 4 - Components
-===
+# Car Inventory Management System
 
-For this assignment you will re-implement the client side portion of *either* A2 or A3 using either React or Svelte components. If you choose A3 you only need to use components for the data display / updating; you can leave your login UI as is.
+**Live Application:** https://a4-riley-meyers.onrender.com 
 
-[Svelte Tutorial](https://github.com/jmcuneo/cs4241-guides/blob/master/using.svelte.md)  
-[React Tutorial](https://github.com/jmcuneo/cs4241-guides/blob/master/using.react.md)  
+A full-stack React application for managing car inventories with user authentication.
 
-You may also want to check out [this video of Prof. Roberts working through both of the above tutorials](https://echo360.org/media/75af2567-2f06-4851-baeb-1cfe8ea5cb48/public). 
+## Project Overview
 
-This project can be implemented on any hosting service (Render, DigitalOcean, Heroku, etc.). However, you must include all files in your GitHub repo so that the course staff can view them.
+This application allows users to create accounts and maintain a personal inventory of their vehicles. Each car entry includes model, year, MPG, with automatically calculated efficiency ratings and vehicle age.
 
-Deliverables
----
+### What's New
+- Component-based architecture with reusable UI components
+- Client-side state management using React hooks
+- Dynamic updates without page refreshes
+- Better code organization and separation of concerns
 
-Do the following to complete this assignment:
+### Features
+- User registration and login with automatic account creation
+- Add, edit, and delete car entries
+- Automatic efficiency classification and age calculation
+- Responsive design for all devices
 
-1. Implement your project with the above requirements.
-1. Test your project to make sure that when someone goes to your main page on Render, etc., it displays correctly.
-1. Ensure that your project has the proper naming scheme `a4-firstname-lastname` so we can find it.
-1. Fork this repository and modify the README to the specifications below. Be sure to add *all* project files.
-1. Create and submit a Pull Request to the original repo. Name the pull request using the following template: `a4-firstname-lastname`.
+## Technical Implementation
 
-Grading
----
-Unlike previous assignments, this assignment will be solely graded on whether or not you successfully complete it. Partial credit will be generously given.
+### Frontend
+- React with functional components and hooks
+- Custom CSS with themed color scheme
+- Responsive design improvements
 
-Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
----
+### Backend
+- Express.js with RESTful API
+- MongoDB with Mongoose ODM
+- express-session for session management
 
-## Your Web Application Title
+## Development Experience
+- The React refactor at first took some time and did have complications.
+After an adjustment period ended up allowing the project to be more
+efficiently edited/debugged. Especially made styling easier when you
+could focus on individual components more.
 
-your hosting link e.g. http://a4-charlieroberts.glitch.me
-
-Include a very brief summary of your project here and what you changed / added to assignment #3. Briefly (3–4 sentences) answer the following question: did the new technology improve or hinder the development experience?
+## Challenges
+- Implementing secure session management with React
+- State management across multiple components
