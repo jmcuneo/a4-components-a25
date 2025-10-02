@@ -4,6 +4,7 @@ import path from 'path'
 import dotenv from 'dotenv'
 import { fileURLToPath } from "url";
 import { MongoClient, ServerApiVersion } from 'mongodb';
+import fs from 'fs'
 
 const app = express()
 
