@@ -1,35 +1,7 @@
-Assignment 4 - Components
-===
+## WACCA Score Tracker
 
-For this assignment you will re-implement the client side portion of *either* A2 or A3 using either React or Svelte components. If you choose A3 you only need to use components for the data display / updating; you can leave your login UI as is.
+https://a4-ashleyfontaine-a25.onrender.com
 
-[Svelte Tutorial](https://github.com/jmcuneo/cs4241-guides/blob/master/using.svelte.md)  
-[React Tutorial](https://github.com/jmcuneo/cs4241-guides/blob/master/using.react.md)  
+This application is a score tracker for the arcade game WACCA, with a presistent database maintaining the scores. Most of the application is the same as my previous versions, but due to React's rendering capabilities, the user no longer has to manually load the new scores. Due to time constraints the banner image and loading data from the server is not available in this version.
 
-You may also want to check out [this video of Prof. Roberts working through both of the above tutorials](https://echo360.org/media/75af2567-2f06-4851-baeb-1cfe8ea5cb48/public). 
-
-This project can be implemented on any hosting service (Render, DigitalOcean, Heroku, etc.). However, you must include all files in your GitHub repo so that the course staff can view them.
-
-Deliverables
----
-
-Do the following to complete this assignment:
-
-1. Implement your project with the above requirements.
-1. Test your project to make sure that when someone goes to your main page on Render, etc., it displays correctly.
-1. Ensure that your project has the proper naming scheme `a4-firstname-lastname` so we can find it.
-1. Fork this repository and modify the README to the specifications below. Be sure to add *all* project files.
-1. Create and submit a Pull Request to the original repo. Name the pull request using the following template: `a4-firstname-lastname`.
-
-Grading
----
-Unlike previous assignments, this assignment will be solely graded on whether or not you successfully complete it. Partial credit will be generously given.
-
-Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
----
-
-## Your Web Application Title
-
-your hosting link e.g. http://a4-charlieroberts.glitch.me
-
-Include a very brief summary of your project here and what you changed / added to assignment #3. Briefly (3–4 sentences) answer the following question: did the new technology improve or hinder the development experience?
+The new technology did hinder my development greatly initially. I ran into a lot of issues with how React and specifically Vite handled the variables and functions I designed for my server in the pervious versions. However, I can see how building projects from the ground up with this technology would make it fast and much easier than project 3 was to build initially, rather than converting a project like that into React and Vite rather haphazardly.
