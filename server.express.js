@@ -110,7 +110,8 @@ app.post('/api/entries', requireUser, async (req, res) => {
   }
   const doc = { user: req.user, model: String(model), year: +year, mpg: +mpg };
   const { insertedId } = await Entries.insertOne(doc);
-  res.status(201).json(withDerived({ _id: insertedId, ...doc }));
+  res.status(201).json(withDerived({ _id: String(insertedId), ...doc }));
+
 });
 
 app.put('/api/entries/:id', requireUser, async (req, res) => {

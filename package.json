@@ -6,6 +6,9 @@
     "mongodb": "^6.20.0"
   },
   "scripts": {
-    "start": "node server.express.js"
+    "start": "node server.express.js",
+    "dev": "node server.express.js",
+    "format": "npx prettier --write ."
   }
 }
+
