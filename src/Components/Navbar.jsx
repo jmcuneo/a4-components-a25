@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const Navigation = styled.nav`
+const Navigation = styled.div`
   position: fixed;
   top: 0;
   left: 0;
@@ -10,7 +10,7 @@ const Navigation = styled.nav`
   background: white;
   z-index: 100;
 `
-const NavList = styled.ul`
+const NavList = styled.div`
   display: flex;
   justify-content: center;
   gap: 2rem;
