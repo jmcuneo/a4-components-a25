@@ -29,6 +29,7 @@ const submit = async function(event){
 }
 
 const login = async function(event){
+    alert("logged");
     //alert("I don't want you to log in right now");
     event.preventDefault();
 

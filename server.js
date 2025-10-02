@@ -5,9 +5,11 @@ const express    = require('express'),
       info     = [],
       path = require("path");
 
-//app.use(express.static(path.join(__dirname, "public")));
-app.use( express.static( 'views'  ) )
-app.use( express.static( 'public'  ) )
+app.use(express.static(path.join(__dirname, "my-react-client/dist")));
+
+app.get(/^\/(?!data|submit|change|delete).*$/, (req, res) => {
+    res.sendFile(path.join(__dirname, "my-react-client/dist", "index.html"));
+});
 
 app.use(express.urlencoded({ extended: true }));
 
@@ -19,6 +21,8 @@ app.use( express.json() )
 
 var username;
 var password;
+
+
 
 app.get('/data', async (req, res) =>{
 
@@ -193,4 +197,7 @@ async function run() {
 }
 run().catch(console.dir);
 
-app.listen( process.env.PORT || 3000)	
+const PORT = process.env.PORT || 3000
+app.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
+});
