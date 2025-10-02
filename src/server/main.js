@@ -21,10 +21,6 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true })); 
 app.use(express.static(path.join(__dirname, 'dist')));
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-});
-
 const uri = `mongodb+srv://${process.env.USERNM}:${process.env.PASS}@${process.env.HOST}/?retryWrites=true&w=majority&appName=WebwareA3`;
 
 
@@ -135,6 +131,10 @@ app.post( '/update', async (req,res) => {
     res.status(200).json({success : true})
     }
 })
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
 
 async function startServer() {
   console.log(uri);
