@@ -369,7 +369,6 @@ app.post("/api/update", ensureAuth, async (req, res) => {
   }
 });
 
-
 // DELETE: In case the user does not want the data they inputted there 
 // any longer
 app.post("/api/delete", ensureAuth, async (req, res) => {
@@ -401,7 +400,7 @@ app.post("/api/delete", ensureAuth, async (req, res) => {
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, 'client', 'dist')));
 
-  app.get('*', (req, res, next) => {
+  app.get('/*', (req, res, next) => {
     if (
       req.path.startsWith('/api') ||
       req.path.startsWith('/auth') ||
@@ -422,7 +421,13 @@ if (process.env.NODE_ENV !== 'production') {
 
   // SPA fallback in dev (let API/status pass through)
   app.use((req, res, next) => {
-    if (req.path.startsWith('/api') || req.path === '/status') return next();
+    // let API/auth/status pass through
+    if (
+      req.path.startsWith('/api') ||
+      req.path.startsWith('/auth') ||
+      req.path === '/status'
+    ) return next();
+    // catch-all for everything else
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
   });
 }
