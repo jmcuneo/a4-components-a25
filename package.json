@@ -7,18 +7,20 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "server": "node ../server.js",
-    "client": "vite"
+    "client": "vite",
+    "build": "cd my-react-client && npm install && npm run build",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/crnorris1/a3-cameronnorris-a25.git"
+    "url": "git+https://github.com/crnorris1/a4-cameronnorris.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/crnorris1/a3-cameronnorris-a25/issues"
+    "url": "https://github.com/crnorris1/a4-cameronnorris/issues"
   },
-  "homepage": "https://github.com/crnorris1/a3-cameronnorris-a25#readme",
+  "homepage": "https://github.com/crnorris1/a4-cameronnorris#readme",
   "dependencies": {
     "bootstrap": "^5.3.8",
     "dotenv": "^17.2.2",
