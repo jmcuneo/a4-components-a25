@@ -1,7 +1,6 @@
 import express from  'express'
 import ViteExpress from 'vite-express'
-import { engine } from 'express-handlebars'
-import path, { dirname } from 'path'
+import path from 'path'
 import dotenv from 'dotenv'
 import { fileURLToPath } from "url";
 import { MongoClient, ServerApiVersion } from 'mongodb';
@@ -19,10 +18,7 @@ const __dirname = path.join(path.join(__tempDirc, '..'), '..')
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true })); 
-
-app.engine('handlebars', engine())
-app.set('view engine', 'handlebars')
-app.set('views', path.join(__dirname, '/src/views'))
+app.use(express.static(path.join(__dirname, 'src/client')));
 
 const uri = `mongodb+srv://${process.env.USERNM}:${process.env.PASS}@${process.env.HOST}/?retryWrites=true&w=majority&appName=WebwareA3`;
 
@@ -50,6 +46,10 @@ async function run() {
  }
 }
 
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
+});
+
 app.post('/login', async(req, res) => {
   const user = await collection.findOne({username : req.body.username})
   if (user){
@@ -58,31 +58,19 @@ app.post('/login', async(req, res) => {
         password : req.body.password  
     })
     if (userAndPass){
-      res.redirect('/index');
+      res.json({ success: true });
       username = req.body.username
       password = req.body.password 
     }
     else 
-      res.render("login", {msg: "Wrong password, please try again", layout : false})
+      res.json({ success: false, msg: "Wrong password. Please try again" })
   }
   else {
     const document = {username : req.body.username, password : req.body.password}
     await collection.insertOne(document)
-    res.render("login", {msg: "Account has been created, please login in again to access your account.", layout : false})
+    res.json({ success: false, msg: "Account created. Please log in again." });
   }
 });
-
-app.get('/index', (req, res) => {
-  res.sendFile(path.join(__dirname, '/index.html'));
-});
-
-
-app.get("/docs", async (req, res) => {
-    if (collection !== null) {
-        const docs = await collection.find({}).toArray()
-        res.json( docs )
-    }
-})
 
 app.get("/table", async (req, res)=> {
   const data = await collection.findOne({
@@ -96,11 +84,6 @@ app.get('/fields', async (req, res) =>{
  const doc = await collection.findOne({username : username})
   const fields = Object.keys(doc)
   res.end(JSON.stringify(fields));
-})
-
-
-app.get('/', (req, res) => {
-  res.render('login', { msg: null, layout: false })
 })
 
 
@@ -149,7 +132,7 @@ app.post( '/update', async (req,res) => {
 async function startServer() {
   console.log(uri);
   await run();
-  app.listen(process.env.PORT || 3000, () => console.log("Server running on port 3000"));
+  app.listen(process.env.PORT || 3000,);
 }
 
 startServer().catch(console.dir);
