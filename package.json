@@ -5,6 +5,7 @@
   "scripts": {
     "start": "node server.js",
     "start:dev": "nodemon server.js",
+    "build": "cd client && npm install && npm run build",
     "client:install": "cd client && npm install",
     "client:build": "cd client && npm run build"
   },
@@ -19,5 +20,8 @@
   },
   "devDependencies": {
     "nodemon": "^3.0.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
