@@ -15,6 +15,7 @@ let password = ""
 const __filename = fileURLToPath(import.meta.url);
 const __tempDirc = path.dirname(__filename);
 const __dirname = path.join(path.join(__tempDirc, '..'), '..')
+console.log(__dirname)
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true })); 
@@ -46,9 +47,10 @@ async function run() {
  }
 }
 
-app.get("*", (req, res) => {
+app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
+
 
 app.post('/login', async(req, res) => {
   const user = await collection.findOne({username : req.body.username})
