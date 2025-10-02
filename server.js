@@ -64,7 +64,6 @@ app.get("/dashboard-:key", async (req, res) => {
     } catch(err) {
         res.status(500).send(`Server error: ${err.message}`)
     }
-    res.sendFile(path.join(__dirname, "public", "dashboard.html"))
 })
 // send user account info
 app.get("/api/dashboard/:key/users", async (req, res) => {
