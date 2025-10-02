@@ -1,0 +1,375 @@
+body {
+  background-image: url('./images/guestlist-background.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin: 0;
+  min-height: 100vh;
+  padding-top: 60px;
+  color: #F9E0D9;
+  font-family: "Raleway", sans-serif;
+}
+
+:root {
+  --color-primary: #7D6167;
+  --color-primary-dark: #5C4950;
+  --color-primary-light: #E6DBD0;
+  --color-accent: #754F5B;
+}
+
+.navbar {
+  background-color: var(--color-primary-dark);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 50;
+  padding: 12px 24px;
+}
+
+.nav-left,
+.nav-right {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-link {
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  color: var(--color-primary-light);
+}
+
+.profile-icon {
+  cursor: pointer;
+  font-size: 22px;
+  color: #F9E0D9;
+}
+
+.dropdown {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: var(--color-primary);
+  border-radius: 5px;
+  margin-top: 8px;
+  min-width: 120px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.dropdown button {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 10px;
+  color: #F9E0D9;
+  text-align: left;
+  cursor: pointer;
+}
+
+.dropdown button:hover {
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+}
+
+#successCard {
+  background-color: var(--color-primary);
+  color: var(--color-primary-light);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  width: 320px;
+  text-align: center;
+  margin: 20px auto;
+  display: none;
+}
+
+#successCard button {
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+#successCard button:hover {
+  background-color: var(--color-primary);
+  color: var(--color-primary-light);
+}
+
+.form-card,
+.login-card,
+.results-card {
+  max-width: 400px;
+  width: 100%;
+  margin: 96px auto 0 auto;
+  padding: 32px;
+  background-color: rgba(93, 73, 84, 0.6);
+  border-radius: 16px;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  color: #F9E0D9;
+}
+
+.form-title,
+.results-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 24px;
+}
+
+.form,
+.form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: left;
+}
+
+.form-input {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  background-color: var(--color-accent);
+  color: #F9E0D9;
+}
+
+.form-fieldset {
+  margin-top: 8px;
+}
+
+.form-legend {
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.form-radio-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.btn,
+.submit-btn,
+.edit-btn,
+.save-btn,
+.cancel-btn,
+.delete-btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.btn,
+.submit-btn,
+.edit-btn,
+.save-btn {
+  background-color: var(--color-primary-light);
+  color: var(--color-primary-dark);
+}
+
+.btn:hover,
+.submit-btn:hover,
+.edit-btn:hover,
+.save-btn:hover {
+  background-color: var(--color-primary-dark);
+  color: #F9E0D9;
+}
+
+.cancel-btn,
+.delete-btn {
+  background-color: var(--color-accent);
+  color: #F9E0D9;
+}
+
+.cancel-btn:hover,
+.delete-btn:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.rsvp-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.rsvp-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--color-primary-dark);
+  padding: 16px;
+  border-radius: 12px;
+}
+
+.rsvp-name {
+  font-weight: 600;
+}
+
+.rsvp-guests {
+  font-size: 0.9rem;
+}
+
+.rsvp-actions,
+.edit-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.results-container {
+  max-width: 900px;
+  margin: 100px auto 50px;
+  padding: 20px;
+  font-family: sans-serif;
+  color: #f9e0d9;
+}
+
+.results-container h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.results-table-wrapper {
+  overflow-x: auto;
+  background-color: #5d4954;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.results-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.results-table th,
+.results-table td {
+  padding: 10px;
+  border: 1px solid #e6dbd0;
+  text-align: left;
+}
+
+.results-table th {
+  background-color: #754f5b;
+}
+
+.results-table tr:nth-child(even) {
+  background-color: #5c4950;
+}
+
+.results-table tr:nth-child(odd) {
+  background-color: #5d4954;
+}
+
+.edit-btn,
+.delete-btn {
+  padding: 5px 10px;
+  margin-right: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.edit-btn {
+  background-color: #e6dbd0;
+  color: #5d4954;
+}
+
+.edit-btn:hover {
+  background-color: #5d4954;
+  color: #f9e0d9;
+}
+
+.delete-btn {
+  background-color: #754f5b;
+  color: #f9e0d9;
+}
+
+.delete-btn:hover {
+  background-color: #5d4954;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.edit-card {
+  background-color: #5d4954;
+  padding: 20px;
+  width: 360px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.edit-card input {
+  padding: 8px;
+  border-radius: 5px;
+  border: none;
+  background-color: #754f5b;
+  color: #f9e0d9;
+}
+
+.edit-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.save-btn {
+  flex: 1;
+  background-color: #e6dbd0;
+  color: #5d4954;
+  padding: 8px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.save-btn:hover {
+  background-color: #5d4954;
+  color: #f9e0d9;
+}
+
+.cancel-btn {
+  flex: 1;
+  background-color: #754f5b;
+  color: #f9e0d9;
+  padding: 8px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.cancel-btn:hover {
+  background-color: #5d4954;
+}

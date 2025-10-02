@@ -1,35 +1,16 @@
-Assignment 4 - Components
-===
+# React + Vite
 
-For this assignment you will re-implement the client side portion of *either* A2 or A3 using either React or Svelte components. If you choose A3 you only need to use components for the data display / updating; you can leave your login UI as is.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-[Svelte Tutorial](https://github.com/jmcuneo/cs4241-guides/blob/master/using.svelte.md)  
-[React Tutorial](https://github.com/jmcuneo/cs4241-guides/blob/master/using.react.md)  
+Currently, two official plugins are available:
 
-You may also want to check out [this video of Prof. Roberts working through both of the above tutorials](https://echo360.org/media/75af2567-2f06-4851-baeb-1cfe8ea5cb48/public). 
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-This project can be implemented on any hosting service (Render, DigitalOcean, Heroku, etc.). However, you must include all files in your GitHub repo so that the course staff can view them.
+## React Compiler
 
-Deliverables
----
+The React Compiler is not enabled on this template. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-Do the following to complete this assignment:
+## Expanding the ESLint configuration
 
-1. Implement your project with the above requirements.
-1. Test your project to make sure that when someone goes to your main page on Render, etc., it displays correctly.
-1. Ensure that your project has the proper naming scheme `a4-firstname-lastname` so we can find it.
-1. Fork this repository and modify the README to the specifications below. Be sure to add *all* project files.
-1. Create and submit a Pull Request to the original repo. Name the pull request using the following template: `a4-firstname-lastname`.
-
-Grading
----
-Unlike previous assignments, this assignment will be solely graded on whether or not you successfully complete it. Partial credit will be generously given.
-
-Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
----
-
-## Your Web Application Title
-
-your hosting link e.g. http://a4-charlieroberts.glitch.me
-
-Include a very brief summary of your project here and what you changed / added to assignment #3. Briefly (3–4 sentences) answer the following question: did the new technology improve or hinder the development experience?
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
