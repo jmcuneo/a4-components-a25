@@ -9,4 +9,4 @@ This project adapts my A2 to use react, as A2 and the react example were both to
 
 Having the HTML and JS frontend logic in one file was better for understanding, as one could simply create the logic and display it all in one file. As someone who struggles with remembering what is in each file when they're not open, I prefer this. I also think the syntax of JSX is (usually) simpler than JS. 
 
-AI use: Used copilot to center help everything as the methods I know weren't working. 
+AI use: Used copilot to center help everything as the methods I know weren't working, and for some debugging. Used some search results for HTML -> React syntax. 
