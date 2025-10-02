@@ -125,7 +125,7 @@ function App() {
 
   const deleteRecord = async (index: number) => {
     if (window.confirm('Are you sure you want to delete this record?')) {
-      const newData = mileageData.filter((_: any, i: number) => i !== index);
+      const newData = mileageData.filter((_: MileageRecord, i: number) => i !== index);
 
       try {
         await fetch('/api/mileage', {
