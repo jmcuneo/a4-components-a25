@@ -1,0 +1,9 @@
+/* Custom styles for Mileage Tracker */
+.min-vh-100 {
+  min-height: 100vh;
+}
+
+/* Ensure proper spacing */
+.gap-2 {
+  gap: 0.5rem;
+}
