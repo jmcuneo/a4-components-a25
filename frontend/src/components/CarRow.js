@@ -1,42 +1,31 @@
 import React from 'react';
+import '../styles/App.css';
 
 const CarRow = ({ car, onEdit, onDelete }) => {
     const getEfficiencyBadgeClass = (efficiency) => {
         const classes = {
             'Poor': 'bg-danger',
-            'Average': 'bg-warning text-dark',
-            'Good': 'bg-info text-dark',
+            'Average': 'bg-warning',
+            'Good': 'bg-info',
             'Excellent': 'bg-success'
         };
         return classes[efficiency] || 'bg-secondary';
-    };
-
-    const getEfficiencyIcon = (efficiency) => {
-        const icons = {
-            'Poor': 'bi-emoji-frown',
-            'Average': 'bi-emoji-neutral',
-            'Good': 'bi-emoji-smile',
-            'Excellent': 'bi-emoji-heart-eyes'
-        };
-        return icons[efficiency] || 'bi-emoji-expressionless';
     };
 
     return (
         <tr className="align-middle">
             <td className="ps-4 fw-semibold">{car.model}</td>
             <td>
-                <span className="badge bg-light text-dark fs-6">{car.year}</span>
+                <span className="badge bg-light">{car.year}</span>
             </td>
             <td>
                 <div className="d-flex align-items-center">
-                    <i className="bi bi-fuel-pump text-muted me-2"></i>
                     <span className="fw-semibold">{car.mpg}</span>
                     <small className="text-muted ms-1">MPG</small>
                 </div>
             </td>
             <td>
-                <span className={`badge ${getEfficiencyBadgeClass(car.efficiency)} fs-6`}>
-                    <i className={`bi ${getEfficiencyIcon(car.efficiency)} me-1`}></i>
+                <span className={`badge ${getEfficiencyBadgeClass(car.efficiency)}`}>
                     {car.efficiency}
                 </span>
             </td>
@@ -44,20 +33,20 @@ const CarRow = ({ car, onEdit, onDelete }) => {
                 <span className="text-muted">{car.age} years</span>
             </td>
             <td className="text-center pe-4">
-                <div className="btn-group btn-group-sm" role="group">
+                <div className="d-flex gap-2 justify-content-center">
                     <button
-                        className="btn btn-outline-primary"
+                        className="btn btn-outline-primary btn-sm"
                         onClick={() => onEdit(car)}
                         title="Edit this vehicle"
                     >
-                        <i className="bi bi-pencil"></i>
+                        Edit
                     </button>
                     <button
-                        className="btn btn-outline-danger"
+                        className="btn btn-outline-danger btn-sm"
                         onClick={() => onDelete(car._id)}
                         title="Delete this vehicle"
                     >
-                        <i className="bi bi-trash"></i>
+                        Delete
                     </button>
                 </div>
             </td>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import '../styles/App.css';
 
 const CarForm = ({ onCarAdded, onShowAlert }) => {
     const [formData, setFormData] = useState({
@@ -31,7 +32,8 @@ const CarForm = ({ onCarAdded, onShowAlert }) => {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(formData)
+                body: JSON.stringify(formData),
+                credentials: 'include'
             });
 
             const result = await response.json();
@@ -52,19 +54,15 @@ const CarForm = ({ onCarAdded, onShowAlert }) => {
     };
 
     return (
-        <div className="card shadow-sm border-0 mb-4">
-            <div className="card-header bg-white py-3">
-                <h4 className="mb-0 text-primary">
-                    <i className="bi bi-plus-circle me-2"></i>
-                    Add New Vehicle
-                </h4>
+        <div className="card mb-4">
+            <div className="card-header">
+                <h4 className="mb-0 text-white">Add New Vehicle</h4>
             </div>
             <div className="card-body">
                 <form onSubmit={handleSubmit}>
-                    <div className="row g-3 align-items-end">
-                        <div className="col-md-4">
+                    <div className="d-flex flex-column flex-md-row gap-3 align-items-end">
+                        <div className="flex-fill">
                             <label htmlFor="model" className="form-label fw-semibold">
-                                <i className="bi bi-tag me-1"></i>
                                 Model
                             </label>
                             <input
@@ -78,9 +76,8 @@ const CarForm = ({ onCarAdded, onShowAlert }) => {
                                 required
                             />
                         </div>
-                        <div className="col-md-3">
+                        <div className="flex-fill">
                             <label htmlFor="year" className="form-label fw-semibold">
-                                <i className="bi bi-calendar me-1"></i>
                                 Year
                             </label>
                             <input
@@ -96,9 +93,8 @@ const CarForm = ({ onCarAdded, onShowAlert }) => {
                                 required
                             />
                         </div>
-                        <div className="col-md-3">
+                        <div className="flex-fill">
                             <label htmlFor="mpg" className="form-label fw-semibold">
-                                <i className="bi bi-fuel-pump me-1"></i>
                                 MPG
                             </label>
                             <input
@@ -114,10 +110,10 @@ const CarForm = ({ onCarAdded, onShowAlert }) => {
                                 required
                             />
                         </div>
-                        <div className="col-md-2">
+                        <div>
                             <button
                                 type="submit"
-                                className="btn btn-primary w-100 py-2"
+                                className="btn btn-primary w-100"
                                 disabled={isSubmitting}
                             >
                                 {isSubmitting ? (
@@ -126,10 +122,7 @@ const CarForm = ({ onCarAdded, onShowAlert }) => {
                                         Adding...
                                     </>
                                 ) : (
-                                    <>
-                                        <i className="bi bi-plus-lg me-2"></i>
-                                        Add Car
-                                    </>
+                                    'Add Car'
                                 )}
                             </button>
                         </div>

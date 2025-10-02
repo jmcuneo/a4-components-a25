@@ -26,10 +26,8 @@ mongoose.connection.on('error', (err) => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Serve static files from your original public directory (for CSS, JS, etc.)
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Serve static files from React build
 app.use(express.static(path.join(__dirname, 'frontend/build')));
 
 app.use(session({
@@ -42,23 +40,18 @@ app.use(session({
 app.use('/auth', authRoutes);
 app.use('/api/cars', carRoutes);
 
-// API route handlers
 app.get('/', (req, res) => {
     if (req.session.user) {
-        // If user is logged in, serve the React app
         res.sendFile(path.join(__dirname, 'frontend/build', 'index.html'));
     } else {
-        // If not logged in, also serve React app (it will show login page)
         res.sendFile(path.join(__dirname, 'frontend/build', 'index.html'));
     }
 });
 
 app.get('/app', (req, res) => {
     if (!req.session.user) {
-        // If not authenticated, redirect to home which will show login
         return res.redirect('/');
     }
-    // Serve React app for authenticated users
     res.sendFile(path.join(__dirname, 'frontend/build', 'index.html'));
 });
 
@@ -67,7 +60,6 @@ app.get('/logout', (req, res) => {
     res.redirect('/');
 });
 
-// Catch all handler - send back React's index.html for client-side routing
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'frontend/build', 'index.html'));
 });

@@ -13,7 +13,9 @@ function App() {
 
   const checkAuthStatus = async () => {
     try {
-      const response = await fetch('/api/cars');
+      const response = await fetch('/api/cars', {
+        credentials: 'include'  // Add this line
+      });
       if (response.ok) {
         const result = await response.json();
         if (result.success) {
@@ -38,19 +40,17 @@ function App() {
 
   if (loading) {
     return (
-        <div className="d-flex justify-content-center align-items-center min-vh-100 bg-gradient">
-          <div className="text-center">
-            <div className="spinner-border text-light mb-3" style={{width: '3rem', height: '3rem'}} role="status">
-              <span className="visually-hidden">Loading...</span>
-            </div>
-            <h5 className="text-white">Loading Car Inventory...</h5>
+        <div className="loading-container">
+          <div className="spinner-border text-light mb-3" style={{width: '3rem', height: '3rem'}} role="status">
+            <span className="visually-hidden">Loading...</span>
           </div>
+          <h5 className="text-white">Loading Car Inventory...</h5>
         </div>
     );
   }
 
   return (
-      <div className="App">
+      <div className="app-container">
         {user ? (
             <CarInventory username={user} onLogout={handleLogout} />
         ) : (
