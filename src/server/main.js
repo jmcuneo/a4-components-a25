@@ -18,7 +18,7 @@ const __dirname = path.join(path.join(__tempDirc, '..'), '..')
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true })); 
-app.use(express.static(path.join(__dirname, 'src/client')));
+app.use(express.static(path.join(__dirname, 'dist')));
 
 const uri = `mongodb+srv://${process.env.USERNM}:${process.env.PASS}@${process.env.HOST}/?retryWrites=true&w=majority&appName=WebwareA3`;
 
@@ -46,7 +46,7 @@ async function run() {
  }
 }
 
-app.get("/:all(*)", (req, res) => {
+app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
 
