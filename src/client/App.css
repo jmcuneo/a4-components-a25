@@ -4,6 +4,11 @@ body {
   font-family: "Oswald", sans-serif;
   font-size: 20px;
   text-align: center;
+  margin: 10px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 h1 {
@@ -44,4 +49,21 @@ ul li {
   padding: 20px;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.App {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
+
+form {
+  text-align: center;
+}
+
+#todolist {
+  text-align: left;
+  max-width: 600px;
+  margin: 0 auto;
 }

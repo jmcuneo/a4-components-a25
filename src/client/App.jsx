@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import "./App.css"  // This will include your existing styles
+import "./App.css"
 
 const Todo = props => {
   let itemColor;

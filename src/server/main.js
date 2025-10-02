@@ -3,7 +3,7 @@ import ViteExpress from 'vite-express'
 
 const app = express()
 
-// Updated data structure to include dates and overdue status
+//task, date, overdue status
 const appdata = [
   { "Task": "Dishes", "Duedate": 19991212, "Overdue": false },
   { "Task": "Homework", "Duedate": 20261210, "Overdue": true },
@@ -34,48 +34,32 @@ const checkOverdue = function () {
 }
 
 app.get('/read', (req, res) => {
-  checkOverdue() // Update overdue status before sending
+  checkOverdue()
   res.json(appdata)
 })
 
+// add new task
 app.post('/add', (req, res) => {
-  console.log('Add request body:', req.body) // Debug log
-  let check = false
 
-  // Find if task has already been created
-  for (let i = 0; i < appdata.length; i++) {
-    if (appdata[i]["Task"] === req.body.name || appdata[i]["Task"] === req.body.Task) {
-      // Delete existing task
-      appdata.splice(i, 1)
-      check = true
-      break
-    }
+  const newTask = {
+    "Task": req.body.name || req.body.Task,
+    "Duedate": parseInt(req.body.Duedate) || 99999999,
+    "Overdue": false
   }
 
-  if (!check) {
-    // Add new task - handle both formats (name/Task and dueDate/Duedate)
-    const newTask = {
-      "Task": req.body.name || req.body.Task,
-      "Duedate": parseInt(req.body.dueDate || req.body.Duedate) || 99999999,
-      "Overdue": false
-    }
-    appdata.push(newTask)
-  }
+  appdata.push(newTask)
 
-  // Update overdue status
+  // update overdues
   checkOverdue()
 
   res.json(appdata)
 })
 
 app.post('/change', function (req, res) {
-  console.log('Change request body:', req.body) // Debug log
   const idx = appdata.findIndex(v => v.Task === req.body.name)
-  if (idx !== -1) {
-    appdata[idx].completed = req.body.completed
-  }
+  appdata[idx].completed = req.body.completed
 
-  checkOverdue() // Update overdue status
+  checkOverdue()
   res.json(appdata)
 })
 
