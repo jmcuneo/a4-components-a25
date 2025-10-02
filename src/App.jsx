@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import './App.css'
 
 function App() {
   const [data, setData] = useState([])
@@ -37,31 +38,70 @@ function App() {
   } 
   
   return (
-    <div>
-      <h1>To-Do List</h1>
-      <input
-        type="date"
-        value={newItem.date}
-        onChange={e => setNewItem({ ...newItem, date: e.target.value })}
-      />
-      <input
-        type="text"
-        placeholder="Thing"
-        value={newItem.thing}
-        onChange={e => setNewItem({ ...newItem, thing: e.target.value })}
-      />
-      <button onClick={addItem}>Add</button>
-      <ul>
-        {data.todos && data.todos.map(item => (
-          <li key={item.id}>
-            <span style={{ textDecoration: item.done ? 'line-through' : 'none' }}>
-              {item.date} - {item.thing} - {item.dayRemaining}
-            </span>
-            {!item.done && <button onClick={() => checkdone(item.id)}>Done</button>}
-            <button onClick={() => deleteItem(item.id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
+    <div className="container">
+      <h1 className="title">✅ To-Do List</h1>
+
+      <div className="form">
+        <input
+          type="date"
+          value={newItem.date}
+          onChange={(e) => setNewItem({ ...newItem, date: e.target.value })}
+          className="input"
+        />
+        <input
+          type="text"
+          placeholder="Thing"
+          value={newItem.thing}
+          onChange={(e) => setNewItem({ ...newItem, thing: e.target.value })}
+          className="input"
+        />
+        <button onClick={addItem} className="btn add">
+          Add
+        </button>
+      </div>
+
+      {/* Table for todos */}
+      <table className="todo-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Task</th>
+            <th>Status</th>
+            <th>Days Remaining</th>
+            <th>Done</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.todos &&
+            data.todos.map((item) => (
+              <tr key={item.id}>
+                <td>{item.date}</td>
+                <td className={item.done ? "done" : ""}>{item.thing}</td>
+                <td>{item.done ? "✔ Done" : "⏳ Not Done"}</td>
+                <td>{item.dayRemaining}</td>
+                <td>
+                  {!item.done && (
+                    <button
+                      onClick={() => checkdone(item.id)}
+                      className="btn done"
+                    >
+                      Done
+                    </button>
+                  )}
+                </td>
+                <td>
+                  <button
+                    onClick={() => deleteItem(item.id)}
+                    className="btn delete"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+        </tbody>
+      </table>
     </div>
   )
 
