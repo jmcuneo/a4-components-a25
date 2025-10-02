@@ -1,0 +1,101 @@
+html, body, #root {
+  max-width: none !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box;
+}
+
+.container {
+  display: grid;
+  grid-template-areas: "header header" "form content" "footer footer";
+  grid-template-columns: 1fr 3fr;
+  padding-right: 60px;
+  padding-left: 60px;
+}
+
+.container div.header {
+  grid-area: header;
+  display: inline;
+  padding-bottom: 14px;
+}
+
+.container div.form {
+  grid-area: form;
+  padding-right: 80px;
+}
+
+.container div.content {
+  grid-area: content;
+}
+
+.container div.footer {
+  grid-area: footer;
+  text-align: right;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+form label {
+  display: inline;
+}
+
+#genre {
+  padding-top: 0;
+  padding-bottom: 10px;
+}
+
+#userInfo {
+  text-align: right;
+  padding: 10px;
+}
+
+th, td {
+  padding: 10px 30px;
+}
+
+.aligned {
+  text-align: center;
+}
+
+
+/* Login Page CSS */
+a#login.button {
+  color: white;
+}
+
+a:visited {
+  color: white;
+}
+
+.signIn {
+  padding-top: 230px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  max-width: 500px;
+}
+
+.loginPage {
+  display: flex;
+  justify-content: center;
+}
+
+#loginHeader {
+  text-align: center;
+  font-size: 70px;
+}
+
+#signInButton {
+  padding: 30px;
+}
+
+#userInfoLoggedOut {
+  text-align: right;
+  font-size: 16px;
+  padding-right: 100px;
+}
