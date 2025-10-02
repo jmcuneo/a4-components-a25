@@ -46,14 +46,17 @@ export default function Results() {
 
     const handleSave = async () => {
         const updated = {
-            ...formData,
+            yourname: formData.yourname,
+            event: formData.event,
             totalGuests: parseInt(formData.numAdditional) + 1,
+            phoneNumber: formData.phoneNumber,
+            emailAddress: formData.emailAddress,
         };
         try {
-            const res = await fetch("/api/edit", {
-                method: "POST",
+            const res = await fetch(`/update/${editing._id}`, {
+                method: "PUT",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ id: editing._id, updated }),
+                body: JSON.stringify(updated),
             });
             if (!res.ok) {
                 const errData = await res.json();
