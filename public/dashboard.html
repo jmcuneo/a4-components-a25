@@ -11,64 +11,21 @@
 
     <!-- Bootstrap core CSS -->
     <link href="./dashboard_files/bootstrap.min.css" rel="stylesheet">
+    <!-- React + ReactDOM from CDN -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <!-- Babel so browser understands JSX -->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 
     <!-- Custom styles for this template -->
     <link href="./dashboard_files/grid.css" rel="stylesheet">
   </head>
 
   <body data-new-gr-c-s-check-loaded="14.1254.0" data-gr-ext-installed="">
-    <div class="container">
-      <div>
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-          <a class="navbar-brand" target="_blank" rel="noopener noreferrer" href="https://www.google.com/search?q=tasker&oq=Tasker+&gs_lcrp=EgZjaHJvbWUqBggAEEUYOzIGCAAQRRg7Mg0IARAuGK8BGMcBGIAEMg0IAhAuGK8BGMcBGIAEMgcIAxAAGIAEMg0IBBAuGK8BGMcBGIAEMgoIBRAAGLEDGIAEMgcIBhAAGIAEMgcIBxAAGIAEMg0ICBAuGK8BGMcBGIAE0gEIMTMyOWowajeoAgCwAgA&sourceid=chrome&ie=UTF-8" ><img style="object-fit: contain; width: 4em; border-radius: 10px;" src="./assets/tasker.png"></a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-        
-          <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-            <ul class="navbar-nav mr-auto">
-              <li class="nav-item">
-                <a class="nav-link" href="/#home">Home <span class="sr-only">(current)</span></a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/#about">About</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/#donors">Donors</a>
-              </li>
-            </ul>
-          </div>
-        </nav>
-      </div>
-      <div style="padding: 2em;"></div>
-      <div>
-        <div id="user_name">
-          
-        </div>
-        <div>
-          <div style="margin-top: 1em;">
-            <p><a class="btn btn-primary btn-lg" onclick="logout(event)" href="/#home" role="button">Log Out »</a></p>
-          </div>
-        </div>
-
-        <h3>Your tasks are below with designated priority</h3>
-        <p>Tasks can be created with the menu below.</p>
-
-        <form id="inputTask" class="form-signup" onsubmit="submit_task(event)" style="margin-bottom: 2em;">
-          <label for="inputPriority" class="sr-only">Priority Number</label>
-          <input type="number" id="inputPriority" class="form-control" placeholder="Priority Number" required="true">
-          <label for="inputText" class="sr-only">Write Task Here</label>
-          <input type="text" id="inputText" class="form-control" placeholder="Write Task Here" required="true">
-        
-          <button class="btn btn-lg btn-primary btn-block" style="margin-top: 1em">Add Task</button>
-        </form>
-
-        <div id="task-box"></div>
-      </div> <!-- /container -->
-    </div>
-  
-<script src="./js/client_dashboard.js"></script>
-<script src="./js/client.js"></script>
+    <div id="root"></div>
+    <script type="module" src="./dashboard.jsx"></script>
+    <script src="./js/client.js"></script>
+  </body>
 
 <div id="give-freely-root-ejkiikneibegknkgimmihdpcbcedgmpo" class="give-freely-root" data-extension-id="ejkiikneibegknkgimmihdpcbcedgmpo" data-extension-name="Volume Booster" style="display: block;"><template shadowrootmode="open"><style>
   :host {
