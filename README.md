@@ -1,8 +1,8 @@
-Assignment 4 - Components
+Assignment 4 - Components - Cameron Norris
 
 ## Movie Log (With React)
 
-Render Link:
+Render Link: https://a4-cameronnorris-1.onrender.com/main
 
 For A4, I used React to modify my A3!
 I did not change much at all from A3, I simply refactored all of my code and files to run with React. This meant breaking down each of the components of the site into jsx files and linking them all together, keeping in mind the flow of the site.
