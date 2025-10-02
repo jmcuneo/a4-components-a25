@@ -11,16 +11,16 @@ export const gameDataStorage = [
         id: 2,
         name: "Squish-The-Cockroach",
         author: "Tien Nguyen",
-        thumbnail: "/thumbnail.png",
-        link: "",
+        thumbnail: "/Squish_the_cockroach.png",
+        link: "https://cockroach-squish.onrender.com/",
         description: "This game is for anyone who enjoys the calming feel of tap-and-click interactions. In a quick 30-second round, squish as many cockroaches as you can—each squish earns a credit. Log in at the end to save your score. Simple by design, it taps into self-regulation through sensory input: repetitive, small actions that can help ease stress, anxiety, and boredom."
     },
     {
         id: 3,
         name: "1000 Clicks in 10 minutes",
         author: "Benedict Antwi",
-        thumbnail: "/thumbnail.png",
-        link: "",
+        thumbnail: "/1000_clicks.png",
+        link: "https://benedictantwi-gameentry.onrender.com/",
         description: "The user is challenged to get 1,000 points within a timeframe of 10 minutes. To gain a point, the user can simply click on a button and it will add a point. However, the user can also trade points to gain powerups which could help them get points in a quicker timeframe. While the user will have 10 minutes to complete the challenge, it's best they complete it as fast as possible"
     },
     {
