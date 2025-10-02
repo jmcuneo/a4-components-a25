@@ -396,22 +396,7 @@ app.post("/api/delete", ensureAuth, async (req, res) => {
   }
 });
 
-// Now we serve built React application
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, 'client', 'dist')));
-
-  app.get('/*', (req, res, next) => {
-    if (
-      req.path.startsWith('/api') ||
-      req.path.startsWith('/auth') ||
-      req.path === '/status'
-    ) return next();
-
-    res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
-  });
-}
-
-// Keep /public
+// Development: serve /public (fallback for SPA in dev)
 if (process.env.NODE_ENV !== 'production') {
   app.use(express.static(path.join(__dirname, 'public')));
 
@@ -419,16 +404,29 @@ if (process.env.NODE_ENV !== 'production') {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
   });
 
-  // SPA fallback in dev (let API/status pass through)
+  // SPA fallback in dev (let API/auth/status pass through)
   app.use((req, res, next) => {
-    // let API/auth/status pass through
     if (
       req.path.startsWith('/api') ||
       req.path.startsWith('/auth') ||
       req.path === '/status'
     ) return next();
-    // catch-all for everything else
+
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  });
+}
+
+// Production: serve built React app
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, 'client', 'dist')));
+
+  app.get(/.*/, (req, res, next) => {
+    if (
+      req.path.startsWith('/api') ||
+      req.path.startsWith('/auth') ||
+      req.path === '/status'
+    ) return next();
+    res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
   });
 }
 
@@ -449,7 +447,8 @@ async function start() {
   Workouts = db.collection("workouts");
 
   await Workouts.createIndex({ username: 1, createdAt: 1 });
-  await Users.createIndex({ githubId: 1 },
+  await Users.createIndex(
+    { githubId: 1 },
     {
       unique: true,
       partialFilterExpression: { githubId: { $exists: true, $type: "string" } }
@@ -459,8 +458,8 @@ async function start() {
   console.log(`[mongo] connected → db="${DB_NAME}"`);
   app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));
 }
-                                                                        
-start().catch(err => {                                                    
-  console.error("Failed to start server:", err);                          
-  process.exit(1);                                                        
+
+start().catch(err => {
+  console.error("Failed to start server:", err);
+  process.exit(1);
 });
