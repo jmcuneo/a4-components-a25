@@ -1,35 +1,25 @@
-Assignment 4 - Components
-===
+Car Manager | CS4241 Assignment 3
 
-For this assignment you will re-implement the client side portion of *either* A2 or A3 using either React or Svelte components. If you choose A3 you only need to use components for the data display / updating; you can leave your login UI as is.
+Render Link: http://a3-michaelnapoleone-a25-production.up.railway.app
 
-[Svelte Tutorial](https://github.com/jmcuneo/cs4241-guides/blob/master/using.svelte.md)  
-[React Tutorial](https://github.com/jmcuneo/cs4241-guides/blob/master/using.react.md)  
+- The goal of this application is to act as a car manager for people who sign in through github to store information about cars they own and their performance 
+- Some challenges were: Auth0 is annoying to use because it will not actually log me out I have to clear the cookies and cache every time
+- Authentication: Auth0 because I have been in a group in Soft Eng that has used it before so I wanted to actually learn how it works too.
+- CSS Framework: Tailwind because I have experience with it from Soft Eng
+  - I made it use the font Roboto with fontFamily
+- Middleware:
+  - express.json - lets the server read JSON data
+  - .static  - acts as the bridge between frontend and backend
+  - session - keeps track of who's logged in across page loads
+  - passport - handles logging in (and with github)
+  - ensureAuthenticated - blocks access to car data unless logged in
 
-You may also want to check out [this video of Prof. Roberts working through both of the above tutorials](https://echo360.org/media/75af2567-2f06-4851-baeb-1cfe8ea5cb48/public). 
+Technical Achievements
 
-This project can be implemented on any hosting service (Render, DigitalOcean, Heroku, etc.). However, you must include all files in your GitHub repo so that the course staff can view them.
+    Tech Achievement 1: I used OAuth authentication via the GitHub strategy
+    Tech Achievement 2: Achieved 100% on Lighthouse
+    Tech Achievement 3: Deployed on Railway instead of render
 
-Deliverables
----
+Design/Evaluation Achievements
 
-Do the following to complete this assignment:
-
-1. Implement your project with the above requirements.
-1. Test your project to make sure that when someone goes to your main page on Render, etc., it displays correctly.
-1. Ensure that your project has the proper naming scheme `a4-firstname-lastname` so we can find it.
-1. Fork this repository and modify the README to the specifications below. Be sure to add *all* project files.
-1. Create and submit a Pull Request to the original repo. Name the pull request using the following template: `a4-firstname-lastname`.
-
-Grading
----
-Unlike previous assignments, this assignment will be solely graded on whether or not you successfully complete it. Partial credit will be generously given.
-
-Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
----
-
-## Your Web Application Title
-
-your hosting link e.g. http://a4-charlieroberts.glitch.me
-
-Include a very brief summary of your project here and what you changed / added to assignment #3. Briefly (3–4 sentences) answer the following question: did the new technology improve or hinder the development experience?
+    N/A, already have full credit

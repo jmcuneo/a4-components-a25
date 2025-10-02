@@ -1,0 +1,30 @@
+{
+  "name": "a3-michaelNapoleone",
+  "version": "1.0.0",
+  "description": "assignment 3 for webware server basics",
+  "author": "Michael Napoleone",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "vite"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0",
+    "express-session": "^1.18.2",
+    "mime": "^2.6.0",
+    "mongoose": "^8.18.2",
+    "passport": "^0.7.0",
+    "passport-github2": "^0.1.12",
+    "react-dom": "^19.2.0",
+    "vite": "^7.1.7",
+    "vite-express": "^0.21.1"
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e",
+  "main": "index.js",
+  "repository": "https://github.com/mtnapoleone/a4-components-a25.git",
+  "license": "MIT",
+  "devDependencies": {
+    "@vitejs/plugin-react-swc": "^4.1.0"
+  }
+}
