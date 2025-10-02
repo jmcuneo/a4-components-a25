@@ -1,42 +1,47 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+body {
+  background: rgb(157, 187, 240);
+  color: rgb(38, 62, 140);
+  font-family: "Oswald", sans-serif;
+  font-size: 20px;
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+h1 {
+  color: rgb(20, 37, 92);
+  font-size: 40px;
+  font-family: "Oswald", sans-serif;
+  text-align: center;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+ul {
+  list-style-type: none;
+  margin: 0;
+  font-family: "Oswald", sans-serif;
+  text-align: center;
+  background: rgb(85, 115, 180);
+  padding: 20px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+ul li {
+  background: rgb(184, 204, 244);
+  color: rgb(20, 37, 92);
+  padding: 10px;
+  margin-left: 20px;
 }
 
-.card {
-  padding: 2em;
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-top: 20px;
+  background-color: aliceblue;
 }
 
-.read-the-docs {
-  color: #888;
+.flex-item {
+  background-color: rgb(231, 61, 61);
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
