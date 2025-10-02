@@ -1,0 +1,30 @@
+{
+  "name": "a4-isabelcruzrivera-a25",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon src/server/main.js -w src/server",
+    "start": "NODE_ENV=production node src/server/main.js",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.1.13",
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0",
+    "mongodb": "^6.20.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "vite-express": "*"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "@vitejs/plugin-react": "^4.4.1",
+    "autoprefixer": "^10.4.20",
+    "nodemon": "^3.1.10",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^4.1.13",
+    "vite": "^6.3.3"
+  }
+}
