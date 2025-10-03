@@ -1,18 +1,14 @@
 {
-  "name": "car-tracker-with-react1111111",
+  "name": "car-tracker",
   "version": "1.0.0",
   "scripts": {
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "server": "cd server && npm run dev",
-    "client": "cd client && npm start",
-    "build": "cd client && npm run build",
-    "start": "cd server && npm start",
-    "install-all": "npm install && cd server && npm install && cd ../client && npm install"
+    "build": "cd client && npm install && npm run build",
+    "install-client": "cd client && npm install",
+    "install-server": "cd server && npm install",
+    "install-all": "npm run install-client && npm run install-server",
+    "start": "cd server && npm start"
   },
-  "devDependencies": {
-    "concurrently": "^8.2.2"
-  },
-  "keywords": ["react", "express", "mongodb", "cars"],
-  "author": "Joseph Abata",
-  "license": "ISC"
+  "engines": {
+    "node": "18.x"
+  }
 }
