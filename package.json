@@ -3,10 +3,16 @@
   "version": "1.0.0",
   "scripts": {
     "build": "cd client && npm install && npm run build",
-    "install-client": "cd client && npm install",
-    "install-server": "cd server && npm install",
-    "install-all": "npm run install-client && npm run install-server",
+    "install-all": "cd server && npm install && cd ../client && npm install",
     "start": "cd server && npm start"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongodb": "^5.8.0",
+    "bcrypt": "^5.1.1",
+    "express-session": "^1.17.3",
+    "dotenv": "^16.3.1",
+    "cors": "^2.8.5"
   },
   "engines": {
     "node": "18.x"
