@@ -1,35 +1,21 @@
 Assignment 4 - Components
 ===
+Render link: https://a4-hrithikaravishankar-components-1.onrender.com
 
-For this assignment you will re-implement the client side portion of *either* A2 or A3 using either React or Svelte components. If you choose A3 you only need to use components for the data display / updating; you can leave your login UI as is.
+This project is a reimplementation of my Assignment 2 (Grocery List app) using React. Users can add, edit, and delete grocery items. Each item includes a category and expiration date, and the app calculates the number of days left until expiration. The front end is built with React components and communicates with an Express server.
 
-[Svelte Tutorial](https://github.com/jmcuneo/cs4241-guides/blob/master/using.svelte.md)  
-[React Tutorial](https://github.com/jmcuneo/cs4241-guides/blob/master/using.react.md)  
+Challenges: 
+- setup issues:
+    * Had trouble with the initial npm setup due to npx create-vite-express creating a nested folder structure? had to get start over setup a couple of times
+Note:
+- Finally got my edit function to work after attempting it in assignment 2
 
-You may also want to check out [this video of Prof. Roberts working through both of the above tutorials](https://echo360.org/media/75af2567-2f06-4851-baeb-1cfe8ea5cb48/public). 
+Resources Used:
+- https://react.dev/ --> had to research JSX syntax, especially useState, useEffect
+- https://vite.dev/ along with professor's resources --> for setting up the project and running the development server
 
-This project can be implemented on any hosting service (Render, DigitalOcean, Heroku, etc.). However, you must include all files in your GitHub repo so that the course staff can view them.
-
-Deliverables
----
-
-Do the following to complete this assignment:
-
-1. Implement your project with the above requirements.
-1. Test your project to make sure that when someone goes to your main page on Render, etc., it displays correctly.
-1. Ensure that your project has the proper naming scheme `a4-firstname-lastname` so we can find it.
-1. Fork this repository and modify the README to the specifications below. Be sure to add *all* project files.
-1. Create and submit a Pull Request to the original repo. Name the pull request using the following template: `a4-firstname-lastname`.
-
-Grading
----
-Unlike previous assignments, this assignment will be solely graded on whether or not you successfully complete it. Partial credit will be generously given.
-
-Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
----
-
-## Your Web Application Title
-
-your hosting link e.g. http://a4-charlieroberts.glitch.me
+Reflection:
+The biggest change was learning how to manage the form and the list using React components and state. At first it was a little confusing switching from the way I structured things in A2, since I had to get used to how React organizes data and updates. Once I got past that, it actually made the app feel much more organized and easier to edit. Compared to A2, I feel like React gave me more control over the different parts of the app, especially when adding and editing items. Overall, it was a bit harder at the setup but React made the final version of the project cleaner to build.
 
 Include a very brief summary of your project here and what you changed / added to assignment #3. Briefly (3–4 sentences) answer the following question: did the new technology improve or hinder the development experience?
+
