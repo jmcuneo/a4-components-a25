@@ -1,68 +1,39 @@
+import { useState, useEffect } from "react";
+import CarForm from "./components/CarForm.jsx";
+import CarTable from "./components/CarTable.jsx";
 
-import { useState, useEffect } from 'react'
-import CarForm from './CarForm.jsx'
-import CarTable from './CarTable.jsx'
-import './App.css'
-
-function App() {
-    const [cars, setCars] = useState([])
-    const [editingCar, setEditingCar] = useState(null)
-    const [loading, setLoading] = useState(true)
+export default function App() {
+    const [cars, setCars] = useState([]);
+    const [editingCar, setEditingCar] = useState(null);
 
     useEffect(() => {
-        async function init() {
-            try {
-                const res = await fetch('/read')
-                const data = await res.json()
-                setCars(data)
-            } catch {
-                setCars([])
-            } finally {
-                setLoading(false)
-            }
-        }
-        init()
-    }, [])
+        fetch("/results")
+            .then(res => res.json())
+            .then(data => setCars(data));
+    }, []);
 
-    const handleAddOrUpdate = async (car, mode) => {
-        const method = mode === 'edit' ? 'PUT' : 'POST'
-        const res = await fetch('/submit', {
+    const handleSubmit = async (car) => {
+        const method = editingCar ? "PUT" : "POST";
+        const response = await fetch("/submit", {
             method,
-            headers: { 'Content-Type': 'application/json' },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(car)
-        })
-        const updated = await res.json()
-        setCars(updated)
-        setEditingCar(null)
-    }
+        });
+        const updated = await response.json();
+        setCars(updated);
+        setEditingCar(null);
+    };
 
-    const handleDelete = async (model) => {
-        const res = await fetch('/submit', {
-            method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ model })
-        })
-        const updated = await res.json()
-        setCars(updated)
-    }
-
-    if (loading) return <p className="text-white p-4">Loading...</p>
+    const handleEdit = (model) => {
+        const car = cars.find(c => c.model === model);
+        if (car) setEditingCar(car);
+    };
 
     return (
-        <div className="App p-4 text-white">
-            <h1 className="text-xl font-bold mb-4">Car Tracker</h1>
-            <CarForm
-                onSubmit={handleAddOrUpdate}
-                editingCar={editingCar}
-                cancelEdit={() => setEditingCar(null)}
-            />
-            <CarTable
-                cars={cars}
-                onEdit={(car) => setEditingCar(car)}
-                onDelete={handleDelete}
-            />
+        <div>
+            <h1>Car Tracker</h1>
+            <CarForm onSubmit={handleSubmit} editingCar={editingCar} />
+            <CarTable cars={cars} onEdit={handleEdit} />
         </div>
-    )
+    );
 }
-
-export default App
