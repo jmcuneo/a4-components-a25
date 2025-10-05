@@ -2,7 +2,7 @@ import express from 'express'
 import { parse } from 'svelte/compiler';
 import ViteExpress from 'vite-express'
 
-const port = process.env.PORT || 3000
+const port = 3000
 const app = express()
 const appdata = []
 
@@ -82,6 +82,6 @@ app.post( '/delete',  middleware_delete, (req, res) =>{
   res.end( req.json )
 });
 
-const listener = app.listen(port, "0.0.0.0")
+const listener = app.listen((process.env.PORT || port), "0.0.0.0")
 ViteExpress.bind(app, listener)
 
