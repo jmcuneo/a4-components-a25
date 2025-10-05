@@ -29,5 +29,5 @@
    * Use global.d.ts instead of compilerOptions.types
    * to avoid limiting type declarations.
    */
-  "include": ["../a4-tiffanysemexant-a25/vite-project/src/**/*.d.ts", "../a4-tiffanysemexant-a25/vite-project/src/**/*.js", "../a4-tiffanysemexant-a25/vite-project/src/**/*.svelte"]
+  "include": ["src/**/*.d.ts", "src/**/*.js", "src/**/*.svelte"]
 }
