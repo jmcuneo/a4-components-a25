@@ -1,8 +1,10 @@
 require("dotenv").config();
 
-const express = require('express')
-const session = require('express-session')
+const express = require('express');
+const session = require('express-session');
+const cors = require('cors');
 const bcrypt = require('bcrypt');
+
 
 const { ObjectId, MongoClient, ServerApiVersion } = require('mongodb');
 const uri = `mongodb+srv://${process.env.USERNM}:${process.env.PASS}@${process.env.HOST}/?retryWrites=true&w=majority&appName=Webware-Assignment-Three-A`;
@@ -12,6 +14,10 @@ const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended:true }))
 app.use(express.static('public'))
+app.use(cors({
+  origin: ['http://127.0.0.1:5173', 'http://localhost:5173'],
+  credentials: true
+}));
 app.use(session({
   secret: process.env.SECRET,
   resave: false,
@@ -52,8 +58,10 @@ function authorisation(request, response, next){
 
 app.get('/user', (request, response) => {
     if (request.session.user){
+        console.log("Success: " + request.session.user)
         response.json({ user: request.session.user, status: true })
     } else {
+        console.log("Fail: " + request.session.user)
         response.json({ status: false })
     }
 })
@@ -121,7 +129,7 @@ app.post('/login', async (request, response) => {
         }
 
         response.json({ success: true, user: { username: username } });
-        // console.log("Login Successful");
+        console.log("Login Succesful: " + request.session.user.username + request.session.user.id);
     } catch (error){
         console.error("Error Logging In: ", error);
         response.status(500).json({ error: "Failed To Login"});
@@ -129,7 +137,7 @@ app.post('/login', async (request, response) => {
 })
 
 app.post('/logout', (request, response) => {
-    // console.log("Logging out");
+    console.log("Logging out");
     request.session.destroy(() => response.json({ success: true }));
 })
 

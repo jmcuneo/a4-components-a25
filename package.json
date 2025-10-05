@@ -1,6 +1,6 @@
 {
-  "name": "webware-assignment-a-three",
-  "version": "2.0",
+  "name": "webware-assignment-a-four",
+  "version": "3.0",
   "description": "Game Review Site",
   "author": "Jimmy Martella",
   "scripts": {
@@ -8,12 +8,15 @@
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
     "dotenv": "^17.2.2",
     "express": "^5.1.0",
     "express-session": "^1.18.2",
-    "mime": "^2.6.0",
     "mongodb": "^6.20.0",
-    "mongoose": "^8.18.2",
-    "node": "^22.20.0"
+    "node": "^22.20.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-router-dom": "^7.9.3",
+    "vite": "^7.1.8"
   }
 }
