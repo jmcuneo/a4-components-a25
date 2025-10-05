@@ -47,7 +47,7 @@ app.delete('/submit', async (req, res) => {
   res.json(cars)
 })
 
-app.use(express.static(path.join(__dirname, 'client/dist'), {
+app.use(express.static(path.join(__dirname, '/src/client/dist'), {
   setHeaders: (res, filePath) => {
     if (filePath.endsWith('.js')) {
       res.setHeader('Content-Type', 'application/javascript')
@@ -56,10 +56,10 @@ app.use(express.static(path.join(__dirname, 'client/dist'), {
 }))
 
 app.use((req, res, next) => {
-  const requestedPath = path.join(__dirname, 'client/dist', req.url)
+  const requestedPath = path.join(__dirname, '/src/client/dist', req.url)
   fs.access(requestedPath, fs.constants.F_OK, (err) => {
     if (!err) return next()
-    res.sendFile(path.join(__dirname, 'client/dist/index.html'))
+    res.sendFile(path.join(__dirname, '/src/client/dist/index.html'))
   })
 })
 
