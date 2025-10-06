@@ -21,10 +21,13 @@ app.use(express.static(distPath, {
     },
 }));
 
-app.get("*", (req, res) => {
+app.use((req, res, next) => {
+    if (req.method !== "GET") return next();
+    const accept = req.headers.accept || "";
+    if (!accept.includes("text/html")) return next();
     res.sendFile(path.join(distPath, "index.html"));
 });
 
 app.listen(PORT, () => {
-    console.log(` Server running on port ${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });
