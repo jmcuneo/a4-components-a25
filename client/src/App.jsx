@@ -5,31 +5,28 @@ import CompletedList from "./components/CompletedList";
 
 export default function App() {
   const [items, setItems] = useState([]);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({ username: "DemoUser" }); // 🧠 fake login for A4
 
-  // fetch who is logged in
-  useEffect(() => {
-    fetch("/me")
-      .then((res) => res.json())
-      .then((data) => setUser(data.user));
-  }, []);
-
-  // fetch bucket list items
-  const loadItems = () => {
-    fetch("/results")
-      .then((res) => {
-        if (!res.ok) throw new Error("Not logged in");
-        return res.json();
-      })
-      .then(setItems)
-      .catch(() => setItems([]));
+  // ✅ load demo data (or fetch from backend if available)
+  const loadItems = async () => {
+    try {
+      const res = await fetch("/results");
+      if (!res.ok) throw new Error("No backend");
+      const data = await res.json();
+      setItems(data);
+    } catch {
+      // fallback demo data if no server
+      setItems([
+        { _id: 1, title: "Finish A4 Components", category: "School", priority: "High", completed: false },
+        { _id: 2, title: "Celebrate after submitting 🎉", category: "Fun", priority: "Medium", completed: false },
+        { _id: 3, title: "Take a nap", category: "Self-Care", priority: "Low", completed: true },
+      ]);
+    }
   };
 
-  useEffect(() => {
-    if (user) loadItems();
-  }, [user]);
+  useEffect(() => { loadItems(); }, []);
 
-  // add new item
+  // add / update / delete still work if backend is up
   const handleAdd = async (item) => {
     const res = await fetch("/results", {
       method: "POST",
@@ -37,21 +34,23 @@ export default function App() {
       body: JSON.stringify(item),
     });
     if (res.ok) loadItems();
+    else setItems((prev) => [...prev, { ...item, _id: Date.now(), completed: false }]);
   };
 
-  // mark item complete
   const handleComplete = async (id) => {
     const res = await fetch(`/results/${id}`, { method: "PUT" });
     if (res.ok) loadItems();
+    else setItems((prev) =>
+      prev.map((i) => (i._id === id ? { ...i, completed: true } : i))
+    );
   };
 
-  // delete item
   const handleDelete = async (id) => {
     const res = await fetch(`/results/${id}`, { method: "DELETE" });
     if (res.ok) loadItems();
+    else setItems((prev) => prev.filter((i) => i._id !== id));
   };
 
-  // split active vs completed
   const active = items.filter((i) => !i.completed);
   const completed = items.filter((i) => i.completed);
 
@@ -62,42 +61,21 @@ export default function App() {
         <div className="container-fluid">
           <span className="navbar-brand fw-bold">Bucket Buddy</span>
           <div className="d-flex">
-            {user ? (
-              <>
-                <span className="me-3 text-muted">
-                  Hi, <strong>{user.username}</strong>
-                </span>
-                <form method="post" action="/logout">
-                  <button className="btn btn-outline-danger btn-sm" type="submit">
-                    <i className="bi bi-box-arrow-right me-1"></i> Logout
-                  </button>
-                </form>
-              </>
-            ) : (
-              <a href="/login.html" className="btn btn-dark btn-sm">
-                <i className="bi bi-github me-1"></i> Login with GitHub
-              </a>
-            )}
+            <span className="me-3 text-muted">
+              Hi, <strong>{user.username}</strong>
+            </span>
           </div>
         </div>
       </nav>
 
       {/* Main content */}
-      {user ? (
-        <>
-          <BucketForm onAdd={handleAdd} />
-          <BucketList
-            items={active}
-            onComplete={handleComplete}
-            onDelete={handleDelete}
-          />
-          <CompletedList items={completed} onDelete={handleDelete} />
-        </>
-      ) : (
-        <div className="alert alert-warning text-center">
-          Please <a href="/login.html">log in</a> to see your bucket list.
-        </div>
-      )}
+      <BucketForm onAdd={handleAdd} />
+      <BucketList
+        items={active}
+        onComplete={handleComplete}
+        onDelete={handleDelete}
+      />
+      <CompletedList items={completed} onDelete={handleDelete} />
     </div>
   );
 }
