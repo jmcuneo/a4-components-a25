@@ -1,0 +1,42 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f7f7f7;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+.form-card {
+    background: white;
+    padding: 20px;
+    margin: 20px auto;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    max-width: 500px;
+}
+
+.form-card input, .form-card button {
+    margin: 5px;
+    padding: 8px;
+}
+
+table {
+    margin: 20px auto;
+    border-collapse: collapse;
+    width: 90%;
+    background: white;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+
+th {
+    background: #2d89ef;
+    color: white;
+}
