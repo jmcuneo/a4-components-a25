@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Car Entries — React App (A4)</title>
+  <meta name="description" content="Add, update, delete, and view your car entries using a React component UI." />
+  <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@2/css/pico.min.css">
+
+  <style>
+    :root { --maxw: 980px }
+    main { max-width: var(--maxw); margin: 2rem auto; padding: 0 1rem }
+    .appgrid { display: grid; gap: 1rem }
+  @media (min-width: 900px){ .appgrid-3 { grid-template-columns: 1fr 1fr 1fr } }
+    .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+    .skip-link:focus{left:1rem;top:1rem;width:auto;height:auto;background:#111;color:#fff;padding:.5rem .75rem;border-radius:.4rem}
+    :focus-visible{outline:2px solid currentColor;outline-offset:2px}
+    .muted{opacity:.8}
+    .table-wrap{overflow:auto}
+    th[role="button"]{cursor:pointer}
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+  <main id="main" tabindex="-1">
+    <div id="root"></div>
+  </main>
+
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <script type="text/babel" data-presets="react">
+    const { useEffect, useMemo, useState } = React;
+
+    // -------- UTILS -------------
+    const escapeHtml = (str) => String(str)
+      .replaceAll('&','&amp;').replaceAll('<','&lt;')
+      .replaceAll('>','&gt;').replaceAll('"','&quot;')
+      .replaceAll("'",'&#039;');
+
+    // api via OLOO delegation so that "this.base" wrks (Reference fromCh.6)
+    const apiProto = {
+      base: '',
+      async request(path, opts = {}) {
+        const res = await fetch(this.base + path, {
+          headers: { 'Content-Type': 'application/json', ...(opts.headers || {}) },
+          ...opts,
+        });
+        //  JSON or error handlig
+        const ct = res.headers.get('content-type') || '';
+        if (!res.ok) throw new Error(ct.includes('json') ? JSON.stringify(await res.json()) : await res.text());
+        return ct.includes('json') ? res.json() : res.text();
+      },
+      list(){ return this.request('/api/entries'); },
+      add(payload){ return this.request('/api/entries', { method:'POST', body: JSON.stringify(payload) }); },
+      update(id, body){ return this.request(`/api/entries/${encodeURIComponent(id)}`, { method:'PUT', body: JSON.stringify(body) }); },
+      remove(id){ return this.request(`/api/entries/${encodeURIComponent(id)}`, { method:'DELETE' }); },
+    };
+
+    // instance keeps only config — no duplicate methods
+    const api = Object.assign(Object.create(apiProto), { base: '' });
+
+
+    function Entry(fields = {}) { // constructor that assigns fields onto "this"
+        Object.assign(this, fields);
+    }
+
+    // pShows that "this" binding and default params (from: Ch.4–5 ES6 Ch.1)
+    Entry.prototype.age = function(now = new Date().getFullYear()) {
+        return now - Number(this.year || 0);
+    };
+
+    // ----------- Components--------
+    function AddForm({ onAdded, setStatus }){
+      const [model, setModel] = useState('');
+      const [year, setYear]   = useState('');
+      const [mpg, setMpg]     = useState('');
+      const [busy, setBusy]   = useState(false);
+
+      async function submit(e){
+        e.preventDefault();
+        setBusy(true);
+        try{
+          await api.add({ model, year: +year, mpg: +mpg });
+          setModel(''); setYear(''); setMpg('');
+          onAdded?.();
+        } catch(err){ 
+          //alert('Add failed: ' + (err?.message || err)); 
+          console.error(err);
+          setStatus?.('Add failed.');
+        }
+        finally{ setBusy(false); }
+      }
+
+      return (
+        <article>
+          <h2>Add Entry</h2>
+          <form onSubmit={submit} className="appgrid">
+            <label>Model<input value={model} onChange={e=>setModel(e.target.value)} required autoComplete="off" /></label>
+            <label>Year<input type="number" min={1886} step={1} value={year} onChange={e=>setYear(e.target.value)} required /></label>
+            <label>MPG<input type="number" min={1} step={1} value={mpg} onChange={e=>setMpg(e.target.value)} required /></label>
+            <button type="submit" disabled={busy}>Add</button>
+          </form>
+        </article>
+      );
+    }
+
+    function UpdateForm({ onUpdated,setStatus }){
+      const [id, setId]       = useState('');
+      const [model, setModel] = useState('');
+      const [year, setYear]   = useState('');
+      const [mpg, setMpg]     = useState('');
+      const [busy, setBusy]   = useState(false);
+
+      async function submit(e){
+        e.preventDefault();
+        const body = {};
+        if (model) body.model = model;
+        if (year)  body.year  = +year;
+        if (mpg)   body.mpg   = +mpg;
+        if (!id || Object.keys(body).length === 0){ alert('Provide an ID and at least one field.'); return; }
+        setBusy(true);
+        try{
+          await api.update(id, body);
+          setId(''); setModel(''); setYear(''); setMpg('');
+          onUpdated?.();
+        } catch(err) {
+          console.error(err);
+           setStatus?.('Update failed.');
+          }
+      }
+
+      return (
+        <article>
+          <h2>Update Entry</h2>
+          <form onSubmit={submit} className="appgrid">
+            <label>ID<input value={id} onChange={e=>setId(e.target.value)} required /></label>
+            <label>Model<input value={model} onChange={e=>setModel(e.target.value)} placeholder="(leave blank to keep)" /></label>
+            <label>Year<input type="number" min={1886} step={1} value={year} onChange={e=>setYear(e.target.value)} placeholder="(leave blank to keep)" /></label>
+            <label>MPG<input type="number" min={1} step={1} value={mpg} onChange={e=>setMpg(e.target.value)} placeholder="(leave blank to keep)" /></label>
+            <button type="submit" disabled={busy}>Update</button>
+            <small className="muted">Leave a field blank to keep its current value.</small>
+          </form>
+        </article>
+      );
+    }
+
+    function DeleteForm({ onDeleted, setStatus }){
+      const [id, setId]     = useState('');
+      const [busy, setBusy] = useState(false);
+      async function submit(e){
+        e.preventDefault();
+        if (!id) return;
+        //if (!confirm('Delete this entry?')) return;
+        setBusy(true);
+        try{
+          await api.remove(id);
+          setId('');
+          onDeleted?.();
+        } catch(err){ 
+          console.error(err);
+          setStatus?.('Delete failed.');
+        }
+        finally{ setBusy(false); }
+      }
+      return (
+        <article>
+          <h2>Delete Entry</h2>
+          <form onSubmit={submit} className="appgrid">
+            <label>ID<input value={id} onChange={e=>setId(e.target.value)} required /></label>
+            <button type="submit" disabled={busy}>Delete</button>
+          </form>
+        </article>
+      );
+    }
+
+    function Results({ rows, onCopyId, sortKey, sortDir, setSort }){
+      const [q, setQ] = React.useState('');
+
+      const baseRows = Array.isArray(rows) ? rows : [];
+
+      const filtered = React.useMemo(() => {
+        const s = (q || '').trim().toLowerCase();
+        if (!s) return baseRows;
+        return baseRows.filter(r =>
+          String(r._id || r.id).toLowerCase().includes(s) ||
+          String(r.model).toLowerCase().includes(s) ||
+          String(r.year).includes(s) ||
+          String(r.mpg).includes(s)
+        );
+      }, [baseRows, q]);
+
+      const sorted = React.useMemo(() => {
+        const arr = Array.isArray(filtered) ? filtered : [];
+        if (!sortKey) return arr;
+        return [...arr].sort((a,b) => {
+          const av = a?.[sortKey], bv = b?.[sortKey];
+          const an = typeof av === 'number', bn = typeof bv === 'number';
+          const base = (an && bn) ? (av - bv) : String(av ?? '').localeCompare(String(bv ?? ''));
+          return base * (sortDir === 'desc' ? -1 : 1);
+        });
+      }, [filtered, sortKey, sortDir]);
+
+      const avgMpg = Array.isArray(sorted) && sorted.length
+        ? (sorted.reduce((s,r)=> s + Number(r?.mpg || 0), 0) / sorted.length).toFixed(1)
+        : '0.0';
+
+      const header = (key, label) => (
+        <th role="button" aria-label={`Sort by ${label}`} onClick={()=>setSort(key)}>
+          {label}{sortKey===key ? (sortDir==='asc' ? ' ▲' : ' ▼') : ''}
+        </th>
+      );
+
+      return (
+        <article>
+          <header className="appgrid" style={{alignItems:'center', gap:'0.5rem', gridTemplateColumns:'1fr auto auto'}}>
+            <h2 style={{margin:0}}>Results</h2>
+            <input aria-label="Filter rows" type="search" placeholder="Filter by model/year/mpg…" value={q} onChange={e=>setQ(e.target.value)} />
+            <div style={{display:'flex', gap:'.5rem'}}>
+              <button onClick={()=> downloadJSON(sorted || [])}>JSON</button>
+              <button onClick={()=> downloadCSV(sorted || [])}>CSV</button>
+            </div>
+          </header>
+          <p className="muted"><strong>{Array.isArray(sorted) ? sorted.length : 0}</strong> cars • average MPG: <strong>{avgMpg}</strong></p>
+          <div className="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  {header('_id','ID')}
+                  {header('model','Model')}
+                  {header('year','Year')}
+                  {header('mpg','MPG')}
+                  {header('age','Age')}
+                </tr>
+              </thead>
+              <tbody>
+                {(Array.isArray(sorted) ? sorted : []).map(r => (
+                  <tr key={r._id || r.id}>
+                    <td style={{cursor:'copy'}} title="Click to copy ID" onClick={()=>onCopyId(String(r._id || r.id))}>{escapeHtml(String(r._id || r.id))}</td>
+                    <td>{escapeHtml(r.model)}</td>
+                    <td>{r.year}</td>
+                    <td>{r.mpg}</td>
+                    <td>{r.age ?? new Entry(r).age()}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </article>
+      );
+    }
+
+
+    function downloadJSON(rows){
+      const blob = new Blob([JSON.stringify(rows, null, 2)], { type:'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob); a.download = 'entries.json';
+      document.body.appendChild(a); a.click();
+      setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 0);
+    }
+    function downloadCSV(rows){
+      const header = ['_id','model','year','mpg','age'];
+      const esc = v => `"${String(v).replaceAll('"','""')}"`;
+      const lines = [header.join(',')].concat(rows.map(r => {
+        const age = r.age ?? new Entry(r).age();
+        return [r._id || r.id, r.model, r.year, r.mpg, age].map(esc).join(',');
+      }));
+      const blob = new Blob([lines.join('\n')], { type:'text/csv' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob); a.download = 'entries.csv';
+      document.body.appendChild(a); a.click();
+      setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 0);
+    }
+
+    function App(){
+      const [rows, setRows]   = useState([]);
+      const [status, setStatus] = useState('');
+      const [sortKey, setSortKey] = useState(null);  // --> '_id' | 'model' | 'year' | 'mpg' | 'age'
+      const [sortDir, setSortDir] = useState('asc'); // ----> 'asc' | 'desc'
+
+      function setSort(key){
+        if (sortKey === key) setSortDir(d => d==='asc' ? 'desc' : 'asc');
+        else { setSortKey(key); setSortDir('asc'); }
+      }
+
+      async function refresh(){
+        try{
+          const data = await api.list();
+          setRows(data);
+          setStatus(`Loaded ${data.length} item(s).`);
+        }catch(err){ setStatus(err?.message || String(err)); }
+      }
+
+      useEffect(()=>{ refresh(); }, []);
+
+      async function onCopyId(id){
+        try{ await navigator.clipboard.writeText(id); setStatus(`Copied ID: ${id}`); }
+        catch{ setStatus(`Select and copy: ${id}`); }
+      }
+
+      return (
+        <div className="appgrid">
+          <header>
+            <h1>Car Entries</h1>
+            <p className="muted">Signed-in users can manage their own entries. <a href="/results.html">Legacy results page</a> still available.</p>
+          </header>
+
+          <section className="appgrid appgrid-3">
+          <AddForm onAdded={refresh} setStatus={setStatus} />
+          <UpdateForm onUpdated={refresh} setStatus={setStatus} />
+          <DeleteForm onDeleted={refresh} setStatus={setStatus} />
+          </section>
+
+
+          <Results rows={rows} onCopyId={onCopyId} sortKey={sortKey} sortDir={sortDir} setSort={setSort} />
+
+          <p role="status" aria-live="polite">{status}</p>
+
+          <form onSubmit={async (e)=>{ e.preventDefault(); await fetch('/logout',{method:'POST'}); location.href = '/'; }}>
+            <button>Log out</button>
+          </form>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>
