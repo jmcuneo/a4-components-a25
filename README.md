@@ -17,5 +17,3 @@ Resources Used:
 Reflection:
 The biggest change was learning how to manage the form and the list using React components and state. At first it was a little confusing switching from the way I structured things in A2, since I had to get used to how React organizes data and updates. Once I got past that, it actually made the app feel much more organized and easier to edit. Compared to A2, I feel like React gave me more control over the different parts of the app, especially when adding and editing items. Overall, it was a bit harder at the setup but React made the final version of the project cleaner to build.
 
-Include a very brief summary of your project here and what you changed / added to assignment #3. Briefly (3–4 sentences) answer the following question: did the new technology improve or hinder the development experience?
-
