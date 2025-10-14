@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://a3-mariehearst-a25.onrender.com/sitemap.xml
