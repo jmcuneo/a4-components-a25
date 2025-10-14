@@ -8,6 +8,20 @@ const app = express();
 app.use(express.static("public"));
 app.use(express.json());
 
+//react nonsense
+import path from 'path'
+import { fileURLToPath } from 'url'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
+// Serve Vite build in production
+app.use(express.static(path.join(__dirname, 'dist')))
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'))
+})
+
+
 // Serve robots.txt
 app.get('/robots.txt', (req, res) => {
     res.type('text/plain');

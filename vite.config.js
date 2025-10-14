@@ -5,13 +5,13 @@ import react from '@vitejs/plugin-react-swc'
 export default defineConfig({
   plugins: [react()],
   server: {
-    proxy: {
+    proxy: process.env.NODE_ENV === 'development' ? {
       '/login': 'http://localhost:3000',
       '/logout': 'http://localhost:3000',
       '/getdata': 'http://localhost:3000',
       '/submit': 'http://localhost:3000',
       '/delete': 'http://localhost:3000',
       '/update': 'http://localhost:3000',
-    },
-  },
+    } : {}
+  }
 })
